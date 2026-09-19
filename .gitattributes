@@ -1,0 +1,3 @@
+# Keep every file in this package byte-identical across checkouts and installs.
+# The verification script compares this copy with installed copies by hash.
+* text=auto eol=lf
