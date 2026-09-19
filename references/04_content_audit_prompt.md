@@ -1,7 +1,10 @@
-# Step 4: Content Audit Prompt
+# Step 4: Content Audit, Fix, and Verify Prompt
 
-The audit is the last quality check before an English page is reviewed. Run it on every
-draft from the writing step. Never run the translation step before this passes.
+Step 4 runs three phases on every draft from the writing step: audit, fix, and
+verify. The audit finds and evidences every issue, the fix applies the
+corrections to the draft, and the verify phase re-checks each fix and sets the
+final verdict. This is the last quality check before an English page is reviewed.
+Never run the translation step before it passes.
 
 Two values are parameterised so the audit stays reusable across travel
 businesses: `{{CONTENT_ROOT}}` is the directory holding the pages under audit,
@@ -17,10 +20,11 @@ The audit framework below is the complete audit: ten core sections, followed
 by Section 11, policy compliance, Section 12, current AI-generation tells,
 and Section 13, the quality scorecard.
 
-Run it per draft. Write one findings file per page at `audit/<slug>.md` with
-severity and recommended fixes, and end each with a verdict line: PASS (no open Critical
-or Major findings) or BLOCKED (the blockers listed). The run checker requires
-one audit file per draft.
+Run it per draft. Write one record per page at `audit/<slug>.md` with three
+sections, `## Audit`, `## Fix`, and `## Verify`, and end it with a verdict line:
+PASS (no open Critical or Major findings after the fixes and the verification) or
+BLOCKED (the blockers listed). The run checker requires one record per draft, with
+a verdict.
 
 ---
 
@@ -32,7 +36,7 @@ You are a meticulous content auditor. Your task is to perform an exhaustive accu
 
 ## YOUR AUDIT FRAMEWORK
 
-Analyze the content (DO NOT REMOVE CONTENT OR CHANGE CONTENT JUST AUDIT) through each of the following 13 guidelines: (all 13; partial audits are a known failure mode), documenting every issue found:
+Audit the content (do not edit it during this phase; fixes happen in the fix phase) against each of the following 13 guidelines: (all 13; partial audits are a known failure mode), documenting every issue found:
 
 ### SUBAGENT REQUIREMENT (MANDATORY - VERY IMPORTANT)
 
@@ -64,7 +68,7 @@ If the codebase/page count is large, use additional subagents to split pages int
 **Apply these rules across the entire audit:**
 
 - **Use extensive web search** for non-trivial claims, statistics, platform references, legal/compliance statements, and time-sensitive guidance
-- **EM dashes are strictly forbidden: flag every occurrence for replacement; do not edit the content yourself**
+- **EM dashes are strictly forbidden: flag every occurrence in the audit, and replace it in the fix phase**
 - **Prefer primary sources first**: official documentation, original studies, government/regulator sources, peer-reviewed research, and platform help/policy pages
 - **Use a strict source hierarchy**: laws, regulators, courts, standards bodies, and first-party issuer docs should outrank secondary summaries whenever primary evidence exists
 - **Use exact excerpts and exact file paths** when flagging issues
@@ -640,7 +644,11 @@ A missing guideline mark means that check was skipped for that file. Do not prom
 
 ### RECOMMENDED ACTIONS
 
-[Prioritized list of fixes with effort estimates: Quick fix / Moderate / Research required]
+[Findings fixed in this pass, findings deferred and why, and the effort for each deferred item: Quick fix / Moderate / Research required]
+
+### FIX AND VERIFY RESULTS
+
+[Per finding: closed and verified, or still open with the reason. End with the PASS or BLOCKED verdict line.]
 
 ## ADDITIONAL CONTEXT (Optional)
 
@@ -928,9 +936,48 @@ the start of this section.
 
 ---
 
+## FIX PHASE
+
+Apply corrections to `drafts/<slug>.md` for every Critical and Major finding, and
+for Minor findings where the fix is clear and cheap. Record every fix in
+`audit/<slug>.md` under `## Fix`, one entry per finding:
+
+- the finding it closes, identified by its exact excerpt,
+- the exact before and after text,
+- why the change is correct, and the ledger row or source it rests on.
+
+Rules for the fix phase:
+
+- Never invent a fact, a number, a date, or a source to close a finding. If a fix
+  needs evidence the run does not have, leave the finding open and record what is
+  missing; it stays a blocker.
+- Fixes preserve the page's reader job, structure, and voice. A fix corrects the
+  claim or the wording; it does not rewrite the page.
+- Replace every em dash character and every em dash entity.
+- Keep the front matter accurate. If a fix changes the author, the reviewer, or
+  the `review_required` flag, update it.
+- After the fixes, rebuild `ALL_ARTICLES.html` from the fixed drafts.
+
+## VERIFY PHASE
+
+Re-check the fixed draft against every finding, using the same evidence standard
+as the audit. Record the result under `## Verify`, one entry per finding: closed,
+or still open with the reason. Then set the verdict line:
+
+- PASS when no Critical or Major finding remains open after the fixes and the
+  verification.
+- BLOCKED when any does, listing each blocker.
+
+Mark a finding closed only when the corrected claim now survives the check that
+failed it, never because a sentence changed. Adversarially re-verify every
+Critical and Major fix with a second subagent that sees only the fixed excerpt and
+the evidence, not the fixer's reasoning.
+
+---
+
 ## Checkpoint 2
 
-This is the second and last checkpoint of the run. Report the audits and stop.
-The operator reads the audited content and decides whether to translate any of
-it, and into which locales. Step 5 runs only for the pages and locales chosen
-here. Do not start translation on your own initiative.
+This is the second and last checkpoint of the run. Report the audited, fixed, and
+verified content and stop. The operator reads it and decides whether to translate
+any of it, and into which locales. Step 5 runs only for the pages and locales
+chosen here. Do not start translation on your own initiative.

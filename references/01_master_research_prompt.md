@@ -1,7 +1,8 @@
 # Step 1: Master Research Prompt, Travel Industry Sweep
 
 This file is the research prompt. It is not a template for generating one.
-Run it as written, against the operator's `context.md`.
+Run it as written, against the operator's `context.md` if one exists. The context
+file is optional; with none, the sweep runs unscoped.
 
 Check for `context.md` before anything else. If it exists, read it first: the
 business, sub-niche, markets, locales, audience, keywords, first-party data,
@@ -31,7 +32,7 @@ report about a different industry.
 
 ## Search method
 
-- Build seed queries from `context.md` first: one per combination of the
+- Build seed queries from `context.md` first (when one exists): one per combination of the
   business's sub-niche, each market served, and each reader decision, plus
   the keywords list, before any creative phrasing. Then run the sweep parts
   below.
@@ -363,7 +364,7 @@ the idea step.
 
 ## First-party data anchoring
 
-The context file lists the data assets the business uniquely holds. Turn
+When a context file exists, it lists the data assets the business uniquely holds. Turn
 each asset into research questions:
 
 - What patterns does the asset show (seasonality, failure modes, repeated
@@ -376,9 +377,9 @@ each asset into research questions:
 Record for each asset: the date range it covers, the privacy constraint that
 applies, and the topics it touches. Research that ignores first-party data
 produces a slate anyone could produce, which fails the pipeline's core
-principle before writing starts. If the context file lists no real assets, or
-marks them as illustrative or withheld, this section produces nothing: never
-simulate first-party data, and never let a later step reference data the
+principle before writing starts. If no context file exists, or it lists no real
+assets, or marks them as illustrative or withheld, this section produces nothing:
+never simulate first-party data, and never let a later step reference data the
 business has not supplied.
 
 ## Taxonomy, not a list
@@ -460,7 +461,7 @@ Open scope does not mean infinite scope.
 ## Launch: state the plan, then research immediately
 
 Begin by writing the plan into the run as a record, not a checkpoint: which
-sweep parts are in play given `context.md`, the themes to sweep, the seed
+sweep parts are in play given `context.md` (when one exists), the themes to sweep, the seed
 queries per theme, the markets to search and the languages to search in, the
 named Tier 1 sources to open first, the per-theme query budget, the saturation
 threshold, and the freshness window. Then run the sweep at once. There is no

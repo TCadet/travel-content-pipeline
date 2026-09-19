@@ -4,9 +4,9 @@ Turn the Step 1 research document into a scored, gated slate of pages worth
 building this cycle. This is the decision step. Its job is to kill weak ideas
 before anyone spends writing time on them.
 
-Read `context.md` and `research.md` from the current run before starting. If
-no context file exists, run unscoped: no business, audience, market, or
-first-party data is assumed or invented.
+Read `research.md` from the current run before starting, and `context.md` if one
+exists. The context file is optional. If no context file exists, run unscoped: no
+business, audience, market, or first-party data is assumed or invented.
 
 Bulk default: return 10 to 20 candidates. Fewer is correct when the idea gates kill
 the rest. Padding the slate to hit a number is a failure of this step.
@@ -20,8 +20,9 @@ these sources, and must name the source that produced it:
 
 - **Reader question backlog.** Support requests, refund reasons, questions staff
   answer repeatedly, and questions the site leaves unanswered.
-- **First-party data seams.** Anything in the context file's data assets with a
-  number, a pattern, a season, or a failure mode that competitors cannot see.
+- **First-party data seams.** Anything in the context file's data assets (when
+  one exists) with a number, a pattern, a season, or a failure mode that
+  competitors cannot see.
   If the assets are illustrative, empty, or withheld, this source produces
   nothing; never harvest from data the business has not actually supplied.
 - **Regulatory and issuer movement.** Changes to statutes, conventions, entry
@@ -75,7 +76,7 @@ a fail into a maybe.
    on a number nobody has published, kill or re-scope now.
 4. **Capacity reality.** A named author, and a named reviewer where the page
    touches legality, money, safety, or health, can complete it inside this cycle,
-   including the audit pass.
+   including the audit, fix, and verify pass.
 5. **No-template test.** The page is not an existing page with a noun swapped.
    If one outline would serve several candidates, only the strongest survives.
 6. **Purpose test.** The page would still be worth publishing if search engines
@@ -116,8 +117,8 @@ Rules:
 
 ## Deduplicate against the corpus and against each other
 
-The corpus is the `content_inventory` list in `context.md`, plus the run's own
-candidates. For each survivor, name the closest existing page and the
+The corpus is the `content_inventory` list in `context.md` when one exists, plus
+the run's own candidates. For each survivor, name the closest existing page and the
 relationship:
 
 - **Verbatim or near-verbatim:** update or merge, do not publish.

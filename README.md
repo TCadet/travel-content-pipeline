@@ -1,13 +1,14 @@
 # travel-content-pipeline
 
 A five-step content pipeline for travel and travel-documentation businesses. It
-turns open-ended research across the travel topic universe into differentiated,
-audited pages, and optionally into localized versions. The freshness window is
-yours to set, from any time to the last few days.
+turns open-ended research across the travel topic universe into differentiated
+pages that have been audited, fixed, and verified, and optionally into localized
+versions. The freshness window is yours to set, from any time to the last few
+days.
 
 Built for bulk: one cycle produces a travel research map, a scored slate of
-candidate pages, drafts for the kept ones, an audit on every draft, and
-translations when asked.
+candidate pages, drafts for the kept ones, an audit-fix-verify pass on every
+draft, and translations when asked.
 
 ## Why it exists
 
@@ -75,13 +76,13 @@ scripts need Node 18 or newer.
 Step 1  references/01_master_research_prompt.md         launches immediately
 Step 2  references/02_content_idea_generation_prompt.md CHECKPOINT 1: keep, redo research, or reselect
 Step 3  references/03_content_writing_prompt.md
-Step 4  references/04_content_audit_prompt.md           CHECKPOINT 2: review content, choose translation
+Step 4  references/04_content_audit_prompt.md           CHECKPOINT 2: review fixed content, choose translation
 Step 5  references/05_translation_prompt.md             optional, only if chosen at Checkpoint 2
 ```
 
-5. Nothing reaches Checkpoint 2 unaudited. The audit is the last quality check
-   for the English version, and translation runs only for the pages and locales
-   chosen at Checkpoint 2.
+5. Nothing reaches Checkpoint 2 unaudited or unfixed. Step 4 audits, fixes, and
+   verifies the English version, and translation runs only for the pages and
+   locales chosen at Checkpoint 2.
 
 ## How it works
 
@@ -90,19 +91,19 @@ Step 5  references/05_translation_prompt.md             optional, only if chosen
 | 1 Research | Travel map, topic taxonomy, dated topic list, claim ledger | Find every topic that matters across the travel universe, filtered by the freshness window you set |
 | 2 Ideas | Scored slate of 10 to 20 candidates, most killed by idea gates | Decide what deserves writing time |
 | 3 Writing | One draft per kept idea, plus `ALL_ARTICLES.html` combining every draft in the run | Produce pages a named human will stand behind |
-| 4 Audit | Per-page findings with severity and recommended fixes | Catch unsupported, misleading, templated, or policy-risky content |
+| 4 Audit, fix, verify | Per-page findings, the fixes applied, and the verification of each | Catch and correct unsupported, misleading, templated, or policy-risky content |
 | 5 Translation | Localized pages with a native review | Reach every locale the business serves, without machine-translated publishing |
 
 Two checkpoints keep bulk work honest: Checkpoint 1 on the idea slate and
-Checkpoint 2 on the audited content. Both are operator decisions, not model
-decisions. Step 1 needs no checkpoint: it writes its plan into the run and starts
-research at once.
+Checkpoint 2 on the audited, fixed, and verified content. Both are operator
+decisions, not model decisions. Step 1 needs no checkpoint: it writes its plan
+into the run and starts research at once.
 
 ## Design rules
 
 - Research scope is the whole travel topic universe, unless `research_scope`
-  in `context.md` narrows it. The freshness window is an operator setting,
-  and it decides only what counts as new for the batch.
+  in `context.md` (when one exists) narrows it. The freshness window is an
+  operator setting, and it decides only what counts as new for the batch.
   Standing rules may be older but must be re-checked live.
 - One reader job per page. A page that is another page with a noun swapped is a
   template and is killed.
@@ -154,9 +155,9 @@ The package checker verifies the file set, the audit prompt's framework and
 extension sections, the absence of em dashes, the translation preconditions, the
 context template fields, and that every reference file named by `SKILL.md`
 or this README exists. The run checker verifies a cycle's output: complete
-draft front matter, ledger rows that resolve, an audit with a verdict per draft,
-translations that never outrun a passing English audit, and an
-`ALL_ARTICLES.html` reading copy that covers every draft. Exit 0 plus the
+draft front matter, ledger rows that resolve, an audit, fix, and verify record
+with a verdict per draft, translations that never outrun a passing English audit,
+and an `ALL_ARTICLES.html` reading copy that covers every draft. Exit 0 plus the
 "verification passed" line means the checked thing is intact.
 
 ## Contributing

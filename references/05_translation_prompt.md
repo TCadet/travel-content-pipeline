@@ -1,10 +1,11 @@
 # Step 5: Translation and Localization Prompt
 
 Optional. This step runs only for the pages and locales the operator chose at
-Checkpoint 2, and only after the English page has passed the audit. It never
+Checkpoint 2, and only after the English page has passed the audit, fix, and
+verify. It never
 runs on the model's own initiative.
 
-**Precondition:** the English audit for the page shows no open Critical or Major
+**Precondition:** the English audit, fix, and verify for the page shows no open Critical or Major
 findings. If any remain, stop and say which, and do not translate.
 
 The pages and locales come from Checkpoint 2. If the operator chose none, stop.

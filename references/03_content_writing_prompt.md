@@ -2,14 +2,14 @@
 
 Write one draft per kept idea. Inputs for each draft:
 
-- `context.md` for audience, markets, locales, voice, and identity. If no
-  context file exists, write for a general travel reader and invent nothing
+- `context.md` (optional) for audience, markets, locales, voice, and identity. If
+  no context file exists, write for a general travel reader and invent nothing
   about the business.
 - `research.md` and its claim ledger for the facts.
 - The idea brief from the kept slate for the reader job and the shape.
 
 Bulk rules: same standard for every page, one file per page, and no page leaves
-this step as final. Everything here goes to the audit next.
+this step as final. Everything here goes to the audit, fix, and verify step next.
 
 ---
 
@@ -45,7 +45,8 @@ needs research; do not write around the gap.
 - Where a rule differs by market or locale, state each variant rather than
   generalizing.
 - Where the business has first-party data, publish it with its date range and
-  collection method, anonymized as the context file requires. Only data the
+  collection method, anonymized as the context file requires, when one exists.
+  Only data the
   business has actually supplied counts. If an asset is empty, illustrative,
   missing, or withheld, the page makes no reference to it or to its absence.
 
@@ -105,8 +106,8 @@ substance gets found and trusted. Every draft includes them.
   diagram of the procedure. Each asset gets descriptive alt text that says
   what the image shows, not the keyword it should rank for. No stock imagery
   that could illustrate any site.
-- **Structured data.** Emit the types the context file lists under
-  `schema_available`: Article with author, and reviewedBy only where the front
+- **Structured data.** Emit the types the context file (when one exists) lists
+  under `schema_available`: Article with author, and reviewedBy only where the front
   matter names a reviewer, FAQPage only for questions visible on the page, HowTo
   only for genuine step-by-step procedures. Never mark up content the reader
   cannot see.
@@ -203,7 +204,7 @@ secondary_queries: []
 intent:                  # informational | transactional | navigational
 cluster:                 # cluster name and hub/spoke role
 author:
-author_credentials:      # the basis of this author's expertise, from author_roles in context.md
+author_credentials:      # the basis of this author's expertise, from author_roles in context.md, when one exists
 review_required:         # true when the page touches legality, money, safety, or health, or makes a regulated_claims claim
 reviewer:                # named reviewer when review_required is true; otherwise "none"
 reviewer_credentials:    # the basis of the reviewer's expertise, from reviewer_roles, when review_required is true
@@ -250,7 +251,7 @@ the file, so it always covers the whole run.
 
 ---
 
-## Final check before handing to the audit
+## Final check before handing to the audit, fix, and verify step
 
 1. Every factual statement maps to a ledger row.
 2. Every official name is exact and sourced.

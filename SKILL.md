@@ -13,10 +13,11 @@ metadata:
 ## Overview
 
 A five-step pipeline that turns research across the travel topic universe into
-audited, optionally localized pages ready to publish. The freshness window is an
-operator setting, from any time to the last few days. Built for bulk: one run produces
-a travel research map, a scored slate of candidate pages, drafts for the kept
-ones, an audit pass, and localized versions on request.
+audited, fixed, verified, optionally localized pages ready to publish. The
+freshness window is an operator setting, from any time to the last few days.
+Built for bulk: one run produces a travel research map, a scored slate of
+candidate pages, drafts for the kept ones, an audit-fix-verify pass, and
+localized versions on request.
 
 Core principle: publish only what a reader cannot get anywhere else and a search
 engine cannot mass-produce. The idea gates and the operator checkpoints kill work
@@ -58,14 +59,14 @@ Do not use this skill for:
 Step 1  Research      travel industry sweep    launches at once
 Step 2  Ideas         scored candidate slate   CHECKPOINT 1: keep, redo research, or reselect
 Step 3  Writing       drafts for kept ideas
-Step 4  Audit         English audit pass       CHECKPOINT 2: review content, choose translation
+Step 4  Audit+fix+verify  English quality pass   CHECKPOINT 2: review content, choose translation
 Step 5  Translation   optional, only when chosen at Checkpoint 2
 ```
 
 Each step is a prompt in `references/`. A fresh run works them in order, and
 Step 1 starts researching at once, writing its plan into the run instead of
 waiting for approval. The run stops for the operator exactly twice: Checkpoint 1
-after the idea slate, and Checkpoint 2 after the audit. Do not start a later
+after the idea slate, and Checkpoint 2 after the audit, fix, and verify. Do not start a later
 step while a checkpoint is open. For follow-on article requests on an existing
 run, see Resuming a run below.
 
@@ -74,7 +75,7 @@ run, see Resuming a run below.
 | 1 | `references/01_master_research_prompt.md` | `research.md` with a dated topic list and a claim ledger |
 | 2 | `references/02_content_idea_generation_prompt.md` | `idea-slate.md` with scored candidates |
 | 3 | `references/03_content_writing_prompt.md` | `drafts/<slug>.md`, one file per kept idea |
-| 4 | `references/04_content_audit_prompt.md` | `audit/<slug>.md` per draft, with severity and recommended fixes |
+| 4 | `references/04_content_audit_prompt.md` | `audit/<slug>.md` per draft: audit, fixes, and verification, ending in a verdict |
 | 5 | `references/05_translation_prompt.md` | `translations/<slug>.<locale>.md`, only for what Checkpoint 2 chose |
 
 ## Run Shape
@@ -82,7 +83,7 @@ run, see Resuming a run below.
 Bulk is the default:
 
 - Step 1 researches the whole travel topic universe, unless `research_scope` in
-  `context.md` narrows it, and returns every distinct topic that fits the
+  `context.md` (when one exists) narrows it, and returns every distinct topic that fits the
   operator's freshness window, organized as themes, clusters, and page topics.
 - Step 2 returns a scored slate of 10 to 20 candidates. Fewer is acceptable when
   the idea gates kill the rest. Padding the slate is not. Checkpoint 1 follows: the
@@ -91,9 +92,9 @@ Bulk is the default:
 - Step 3 drafts only the ideas kept at Checkpoint 1, and rebuilds
   `ALL_ARTICLES.html`, one readable file with every article in the run and
   its citations.
-- Step 4 audits every draft. Nothing reaches Checkpoint 2 unaudited.
-  Checkpoint 2 follows: the operator reads the audited content and chooses which
-  pages, if any, to translate.
+- Step 4 audits, fixes, and verifies every draft. Nothing reaches Checkpoint 2
+  unaudited or unfixed. Checkpoint 2 follows: the operator reads the audited,
+  fixed, and verified content and chooses which pages, if any, to translate.
 - Step 5 runs only for the pages and locales chosen at Checkpoint 2.
 
 Keep one dated run directory per cycle. Every artifact carries its date, its
@@ -113,7 +114,7 @@ that is smaller: the operator asks for more articles from the same run.
   run. The one exception: when the freshness window has moved past a ledger
   row the new drafts will cite, re-verify that row live before drafting.
 - Step 4 still applies to every new draft: nothing reaches Checkpoint 2
-  unaudited, and the operator still chooses translation at Checkpoint 2.
+  unaudited or unfixed, and the operator still chooses translation at Checkpoint 2.
 - Rebuild `ALL_ARTICLES.html` whenever the draft set changes, so the file
   always covers every article in the run.
 
@@ -133,17 +134,20 @@ chooses one of three paths: keep it and draft the selected ideas, send it back
 for more research, or select different ideas. Only the ideas kept here go to
 Step 3. Everything else is killed with a named reason.
 
-**Checkpoint 2, after Step 4 (audit).** The operator reads the audited content
-and decides whether to translate any of it, and into which locales. Step 5 runs
-only for what is chosen here. No translation starts before this decision.
+**Checkpoint 2, after Step 4 (audit, fix, and verify).** The operator reads the
+audited, fixed, and verified content and decides whether to translate any of it,
+and into which locales. Step 5 runs only for what is chosen here. No translation
+starts before this decision.
 
 ## Rules That Apply to Every Step
 
 - No claim without a source the reader can open. Unverified statements are
   marked as unverified or cut.
+- Fixes never invent a fact, a date, or a source. A finding that needs evidence
+  the run does not have stays open.
 - The research scope is the whole travel topic universe, or the narrower scope
   `research_scope` sets. The freshness window is whatever the operator sets in
-  `context.md`, from any time to the last few days, and it applies only to what
+  `context.md` (when one exists), from any time to the last few days, and it applies only to what
   counts as new for this batch. When a window is set, anything framed as news or
   a change must come from inside it and carry its date; standing rules, statutes,
   and official documents may be older, but must be re-checked live and dated.
@@ -176,7 +180,8 @@ audit prompt's framework and extension sections, the absence of em dashes, the
 translation preconditions, and that the repository copy and every installed copy
 are identical. The second verifies a run's artifacts: among other checks, every
 draft has complete front matter, every cited ledger row exists, every draft has
-an audit with a verdict, no translation outruns a passing English audit, and
+an audit, fix, and verify record with a verdict, no translation outruns a passing
+English audit, and
 `ALL_ARTICLES.html` covers every draft. Exit 0 and the "verification passed"
 line mean the checked thing is intact.
 

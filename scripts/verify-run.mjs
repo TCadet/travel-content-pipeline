@@ -91,7 +91,7 @@ if (corpus) {
   notes.push("  --  R3 research.md not found; ledger resolution skipped");
 }
 
-// R4: every draft has an audit with an explicit verdict.
+// R4: every draft has an audit, fix, and verify record with an explicit verdict.
 const auditDir = path.join(runDir, "audit");
 const verdictOf = (slug) => {
   const p = path.join(auditDir, `${slug}.md`);
@@ -100,13 +100,18 @@ const verdictOf = (slug) => {
   return m ? m[1].toUpperCase() : null;
 };
 for (const slug of draftInfo.keys()) {
-  if (!fs.existsSync(path.join(auditDir, `${slug}.md`))) {
-    bad("R4", `${slug}: no audit file at audit/${slug}.md`);
+  const p = path.join(auditDir, `${slug}.md`);
+  if (!fs.existsSync(p)) {
+    bad("R4", `${slug}: no audit record at audit/${slug}.md`);
     continue;
   }
-  if (!verdictOf(slug)) bad("R4", `${slug}: audit has no PASS or BLOCKED verdict line`);
+  const text = read(p);
+  for (const section of ["Audit", "Fix", "Verify"]) {
+    if (!new RegExp(`^##\\s+${section}\\b`, "im").test(text)) bad("R4", `${slug}: audit record has no "## ${section}" section`);
+  }
+  if (!verdictOf(slug)) bad("R4", `${slug}: audit record has no PASS or BLOCKED verdict line`);
 }
-if (!fails.some((f) => f.startsWith("FAIL  R4"))) ok("R4 every draft audited with a verdict");
+if (!fails.some((f) => f.startsWith("FAIL  R4"))) ok("R4 every draft audited, fixed, and verified");
 
 // R5: translations never outrun a PASSING English audit, and carry a reviewer.
 const translations = listMd(path.join(runDir, "translations"));
