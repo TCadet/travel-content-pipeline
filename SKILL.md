@@ -10,6 +10,68 @@ metadata:
 
 # Travel Content Pipeline
 
+## Invocation
+
+Invoking this skill is the start command, not a conversation opener. On
+invocation, begin Step 1 immediately: create the run directory, write the
+research plan into it, and start the sweep. An invocation that contains
+nothing beyond this skill's name is still a full run command: start Step 1
+now. A bare invocation starts a new run; re-enter an existing one only when
+the operator's message explicitly asks for it (a named run, more articles
+from it, or a resume), per Resuming a run below.
+
+`context.md` is optional at every step. Look for it silently (the skill
+directory, the working directory, then the run directory). If it exists,
+apply it. If it does not, the run is open-ended by default: the whole travel
+universe, an open freshness window, and the defaults in the next section,
+recorded in the run log. Never treat the absence of `context.md` as a blocker
+and never ask the operator for one.
+
+The run stops for the operator exactly twice: Checkpoint 1 (after Step 2, the
+idea slate) and Checkpoint 2 (after Step 4, the audit, fix, and verify). There
+is no checkpoint at invocation and no third stop anywhere. Failure escalations
+inside a step (a missing ledger row, a template collision) are recorded in the
+run notes; they stop that page, not the run.
+
+Do not stop for any of these before Checkpoint 1:
+
+- asking which scope, market, or freshness window to use (the defaults apply)
+- asking where to put the run (the run directory default applies)
+- asking who the author or reviewer is (`PENDING` applies, resolved at
+  Checkpoint 2)
+- asking for `context.md` (it is optional; its absence is a supported mode)
+- presenting the plan and waiting for approval (the plan is written to the
+  run as a record while the sweep starts)
+- summarizing the skill back instead of running it
+
+If you notice yourself forming a question for the operator before Checkpoint
+1, the answer is in this file: proceed with the defaults.
+
+## Setup resolved silently at the start
+
+Resolve these from `context.md` when one exists, fill the rest with the
+defaults below, record them in the run log, and start. None of them is a
+question for the operator before Checkpoint 1.
+
+1. **Context.** `context.md` when present is read by every step. Absent, the
+   run is open-ended across the whole travel universe. The skill never
+   fabricates a context, a business, an audience, or first-party data to fill
+   the gap.
+2. **Run directory.** `runs/<YYYY-MM-DD>/` in the working directory, unless
+   `context.md` sets `content_root` or the operator names one. All artifacts
+   land there: `research.md`, `idea-slate.md`, `drafts/`, `audit/`,
+   `translations/`, `ALL_ARTICLES.html`, and the run log.
+3. **Freshness window.** From `context.md` when present. With none, the window
+   is open (any time) and each item's vintage is marked instead.
+4. **Author and reviewer.** From `context.md` when present. With none, front
+   matter records the author and any required reviewer as `PENDING`; the audit
+   flags each as an open finding, and the page stays unpublishable until the
+   operator supplies the names at Checkpoint 2. A missing name blocks
+   publication, never the run, and never becomes a mid-run question.
+5. **Capacity.** From `capacity_per_cycle` when present. With none, slate 10
+   to 20 scored candidates and draft everything kept at Checkpoint 1; the
+   operator can cut that number at Checkpoint 1.
+
 ## Overview
 
 A five-step pipeline that turns research across the travel topic universe into
@@ -41,17 +103,6 @@ Do not use this skill for:
 - Pure technical SEO fixes, link building, or paid campaigns.
 - Generating content the business cannot stand behind with a named author and,
   where the page requires one, a named reviewer.
-
-## Prerequisites
-
-1. Check for `context.md`. If it exists, every step reads it. If it does
-   not, the run proceeds anyway, unscoped: the whole travel universe, an open
-   freshness window unless the operator sets one, and no invented business
-   details. The skill never fabricates a context, a business, an audience, or
-   first-party data to fill the gap.
-2. Decide who authors and who reviews. If no reviewer exists for a page that
-   affects travel legality, money, safety, or health, the page is not written.
-3. Set editorial capacity: how many pages per cycle can clear both checkpoints.
 
 ## The Pipeline
 
@@ -124,6 +175,10 @@ The run stops for the operator exactly twice. Failure escalations inside a step
 (a missing ledger row, a template collision) stop that page and go in the run
 notes; they are not operator checkpoints.
 
+Between them the run never waits. Step 1 launches without approval, Steps 2
+through 4 run on their own, and no question halts the run before Checkpoint 1
+or between the checkpoints.
+
 Step 1 has no checkpoint: it writes its research plan into the run and launches
 the sweep immediately. The operator reads the plan and can amend scope, the
 freshness window, the per-theme query budget, or the saturation threshold while
@@ -163,7 +218,10 @@ starts before this decision.
 - No em dash characters in any copy (U+2014).
 - Named author on every page, and a named reviewer on every page that touches
   legality, money, safety, or health, recorded in front matter. The reviewer
-  field is always present; where no reviewer is required it reads `none`.
+  field is always present; where no reviewer is required it reads `none`. When
+  no names exist yet (no `context.md`), the fields read `PENDING` and the audit
+  flags them; the operator supplies the names at Checkpoint 2. A missing name
+  blocks publication, never the drafting run.
 - Capacity governs volume. Never draft faster than the checkpoints can clear.
 
 ## Verification

@@ -3,7 +3,8 @@
 Optional. Copy this file to `context.md` and fill it in. With it, every step of
 the pipeline reads it: it is the place the pipeline learns who the business is,
 who it serves, and what it can prove. Without it, the run proceeds open-ended
-across the whole travel universe and invents nothing.
+across the whole travel universe and invents nothing. Nothing here is required
+for a run; the pipeline never waits for this file and never asks for it.
 
 This is the only file that changes from one company to another. The prompts are
 written against these fields, so any travel business can run the same pipeline

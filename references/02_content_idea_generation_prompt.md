@@ -6,7 +6,8 @@ before anyone spends writing time on them.
 
 Read `research.md` from the current run before starting, and `context.md` if one
 exists. The context file is optional. If no context file exists, run unscoped: no
-business, audience, market, or first-party data is assumed or invented.
+business, audience, market, or first-party data is assumed or invented. Never
+ask for `context.md`; its absence is a supported, open-ended mode.
 
 Bulk default: return 10 to 20 candidates. Fewer is correct when the idea gates kill
 the rest. Padding the slate to hit a number is a failure of this step.
@@ -84,6 +85,10 @@ a fail into a maybe.
 7. **Trust feasibility.** The business can put a real author, and a reviewer
    where the page touches legality, money, safety, or health, behind every claim,
    and can stand behind the page publicly.
+
+When `context.md` is absent, no gate may fail merely because business details
+are unknown: record the author and reviewer slots as `PENDING`, keep the idea,
+and let the operator resolve names and capacity at Checkpoint 1.
 
 ---
 
@@ -211,8 +216,9 @@ The brief is the input to the writing step. No idea enters writing without one.
 
 ## Checkpoint 1
 
-This is the first of the run's two checkpoints. The operator reads the slate and
-chooses one of three paths: keep it and draft the selected ideas, send it back
-for more research against the same ledger or a fresh Step 1, or select a
-different set of ideas. Nothing enters the writing step until this choice is
-made.
+This is the first of the run's two checkpoints, and the run's first stop of any
+kind. The operator reads the slate and chooses one of three paths: keep it and
+draft the selected ideas, send it back for more research against the same
+ledger or a fresh Step 1, or select a different set of ideas. Nothing enters
+the writing step until this choice is made. Do not pause for anything else
+before this point.

@@ -69,8 +69,10 @@ scripts need Node 18 or newer.
    directory and fill it in. It is not required: with no context file the run
    proceeds open-ended, across the whole travel universe, with an open freshness
    window and no first-party data.
-3. Create a dated run directory, for example `runs/YYYY-MM-DD/`.
-4. Run the steps in order:
+3. Invoke the skill. The run starts at Step 1 immediately: it creates a dated
+   run directory (for example `runs/YYYY-MM-DD/`), writes its research plan
+   into the run, and begins the sweep. The first stop is Checkpoint 1.
+4. The steps in order:
 
 ```
 Step 1  references/01_master_research_prompt.md         launches immediately
@@ -96,11 +98,16 @@ Step 5  references/05_translation_prompt.md             optional, only if chosen
 
 Two checkpoints keep bulk work honest: Checkpoint 1 on the idea slate and
 Checkpoint 2 on the audited, fixed, and verified content. Both are operator
-decisions, not model decisions. Step 1 needs no checkpoint: it writes its plan
-into the run and starts research at once.
+decisions, not model decisions. There is no third stop: Step 1 needs no
+checkpoint and launches without approval, and nothing else pauses the run
+between the two checkpoints.
 
 ## Design rules
 
+- Invocation starts the run. There is no approval pause before Step 1, no
+  question before Checkpoint 1, and no stop other than the two checkpoints.
+  `context.md` is optional in every step; with none, the run is open-ended
+  across the whole travel universe.
 - Research scope is the whole travel topic universe, unless `research_scope`
   in `context.md` (when one exists) narrows it. The freshness window is an
   operator setting, and it decides only what counts as new for the batch.
@@ -116,7 +123,9 @@ into the run and starts research at once.
 - No em dash characters in any copy.
 - Named author on every page, and a named reviewer on every page that touches
   legality, money, safety, or health. The reviewer field is always present;
-  where no reviewer is required it reads `none`.
+  where no reviewer is required it reads `none`. Without a context file the
+  fields read `PENDING` and the audit flags them; a missing name blocks
+  publication, not the run.
 
 ## Configuration
 

@@ -122,7 +122,10 @@ substance gets found and trusted. Every draft includes them.
 Attribution is metadata, not body copy. The front matter carries the named
 author with the basis of their expertise, the `review_required` flag, and, where
 that flag is true, the named reviewer with theirs; where no reviewer is required
-the reviewer field reads `none`. The body carries exactly one trust element: the
+the reviewer field reads `none`. With no `context.md`, the fields read
+`author: PENDING` and `reviewer: PENDING` where review is required; the audit
+flags them and the operator supplies the names at Checkpoint 2. Never stop the
+run to ask for a name. The body carries exactly one trust element: the
 sources section, linking the primary sources the reader can open, not summaries
 of them. No byline block, no about-this-page section, no corrections footer, no
 automation disclosure in the body.

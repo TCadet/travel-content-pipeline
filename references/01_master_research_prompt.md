@@ -1,10 +1,17 @@
 # Step 1: Master Research Prompt, Travel Industry Sweep
 
+Invoked, this step starts at once. Do not ask the operator anything before or
+during the sweep: `context.md` is optional, and with none this is an
+open-ended run across the whole travel universe. The plan is written into the
+run as a record and research starts immediately; the run's first stop is
+Checkpoint 1, after Step 2.
+
 This file is the research prompt. It is not a template for generating one.
 Run it as written, against the operator's `context.md` if one exists. The context
 file is optional; with none, the sweep runs unscoped.
 
-Check for `context.md` before anything else. If it exists, read it first: the
+Check silently for `context.md` (skill directory, working directory, run
+directory) before anything else. If it exists, read it first: the
 business, sub-niche, markets, locales, audience, keywords, first-party data,
 research scope, and freshness window in that file scope how the sweep below is
 applied. Every part is considered; if `research_scope` narrows the sweep, the
@@ -453,8 +460,9 @@ Open scope does not mean infinite scope.
 - The run stops when every in-scope theme is saturated or exhausted,
   whichever comes first. The report states which themes hit which condition.
 - If the freshness window returns little, say so. A short honest topic list
-  is the correct output. Widen the window only with the operator's
-  agreement, and never relabel old material as news to fill the list.
+  is the correct output. Never halt the run to ask about widening: note the
+  window as amendable by the operator and ship the honest list. Never relabel
+  old material as news to fill the list.
 
 ---
 
