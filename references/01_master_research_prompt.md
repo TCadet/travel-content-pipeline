@@ -101,7 +101,7 @@ sites are normal in travel research.
   quoted in a Tier 2 source.
 - Record the access method used for every difficult source.
 - A source that cannot be opened by any method is not a source. Mark the
-  claim `UNVERIFIED` and list it in coverage gaps with what was tried.
+  claim `unanswerable` and list it in coverage gaps with what was tried.
 - Never cite a source from its snippet, its title, or another page's summary
   of it.
 

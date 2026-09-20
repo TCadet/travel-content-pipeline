@@ -2,8 +2,7 @@
 
 Optional. This step runs only for the pages and locales the operator chose at
 Checkpoint 2, and only after the English page has passed the audit, fix, and
-verify. It never
-runs on the model's own initiative.
+verify. It never runs on the model's own initiative.
 
 **Precondition:** the English audit, fix, and verify for the page shows no open Critical or Major
 findings. If any remain, stop and say which, and do not translate.
@@ -131,6 +130,6 @@ Confirm, in the target language:
 - [ ] Language annotations are reciprocal and the canonical points to this
   locale's version.
 - [ ] For pages affecting legality, money, safety, or health in this locale, the
-  the local market check is done.
+  local market check is done.
 
 Status stays `draft` until every checklist item is complete.

@@ -55,8 +55,8 @@ misses either one does not leave this step, and the final check below and the
 audit both enforce them.
 
 - **Density floor.** A draft carries at least 1,200 words of article body,
-  counted with the Sources section excluded. The word
-  count is the floor, not the standard: density is. The page must answer the
+  counted with the Sources section excluded. The word count is the floor, not
+  the standard: density is. The page must answer the
   reader's decision at practitioner depth: the mechanism, the exceptions, the
   failure point at each step, the exact figures with their dates and sources,
   the follow-up questions a practitioner would ask next, and the worked example
@@ -85,8 +85,7 @@ audit both enforce them.
   generalizing.
 - Where the business has first-party data, include it with its date range and
   collection method, anonymized as the context file requires, when one exists.
-  Only data the
-  business has actually supplied counts. If an asset is empty, illustrative,
+  Only data the business has actually supplied counts. If an asset is empty, illustrative,
   missing, or withheld, the page makes no reference to it or to its absence.
 
 ---

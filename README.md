@@ -126,7 +126,8 @@ between the two checkpoints.
   with the substance to justify every one of them. The writing step enforces
   the count; the audit kills filler.
 - Citation floor. Every article carries at least two distinct, openable
-  sources in its Sources section. The writing step enforces it.
+  sources in its Sources section. The writing step enforces it; the audit
+  flags a draft with fewer as a Major finding.
 - No claim without a source the reader can open.
 - No content optimized against AI-detector scores. Detector output is not a
   quality signal and not a ranking signal.
@@ -151,7 +152,7 @@ business, an audience, keywords, or data to compensate; anything a missing
 context would have supplied is simply absent, and pages are built from
 primary sources alone.
 
-The template lists every field the prompts read, including the freshness
+The template carries the business facts the prompts work from: the freshness
 window, the business and lane, audience, keywords, first-party data assets,
 editorial operation (including a seasonality calendar), scope, voice, technical
 context, and the content inventory.

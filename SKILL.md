@@ -67,8 +67,8 @@ question for the operator before Checkpoint 1.
 ## Overview
 
 A five-step pipeline that turns research across the travel topic universe into
-audited, fixed, verified, and optionally localized pages. The
-freshness window is an operator setting, from any time to the last few days.
+audited, fixed, verified, and optionally localized pages. The freshness window
+is an operator setting, from any time to the last few days.
 Built for bulk: one run produces a travel research map, a scored slate of
 candidate pages, drafts for the kept ones, an audit-fix-verify pass, and
 localized versions on request.

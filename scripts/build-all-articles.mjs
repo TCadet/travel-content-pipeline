@@ -11,9 +11,15 @@ if (!fs.existsSync(draftsDir)) {
 const esc = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+const SAFE_URL = /^(https?:|mailto:|#|\/|\.\/|\.\.\/)/i;
+
 function inline(s) {
   return esc(s)
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, text, url) => {
+      const target = url.trim();
+      if (!SAFE_URL.test(target)) return text + " (" + target + ")";
+      return '<a href="' + target.replace(/"/g, "&quot;") + '">' + text + "</a>";
+    })
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>");
 }
@@ -76,7 +82,7 @@ function render(md) {
 const files = fs.readdirSync(draftsDir).filter((f) => f.endsWith(".md")).sort();
 const sections = [];
 for (const f of files) {
-  const raw = fs.readFileSync(path.join(draftsDir, f), "utf8").replace(/^\uFEFF/, "");
+  const raw = fs.readFileSync(path.join(draftsDir, f), "utf8").replace(/^\uFEFF/, "").replace(/\r\n?/g, "\n");
   const titleMatch = raw.match(/^#\s+(.*)$/m);
   if (!titleMatch) continue;
   const title = titleMatch[1].trim();
