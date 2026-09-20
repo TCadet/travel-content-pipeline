@@ -75,18 +75,22 @@ Categories are not sources. Every claim traces to a named source, ranked:
 - **Tier 1, primary.** Statutes, regulations, official gazettes, issuing
   authorities, border agencies, transport operators' official conditions,
   government travel advisories, court and tribunal records, official fee
-  schedules.
+  schedules, peer-reviewed research, official government or organization data,
+  and primary research.
 - **Tier 2, corroborating.** Named trade outlets (Skift, Travel Weekly,
-  PhocusWire, Simple Flying, anna.aero, TTG), named experts with verifiable
-  credentials, official industry bodies (UN Tourism, WTTC, IATA, ACI, STR),
-  audited statistics.
+  PhocusWire, Simple Flying, anna.aero, TTG), major outlets, established
+  industry sources, named experts with verifiable credentials, official
+  industry bodies (UN Tourism, WTTC, IATA, ACI, STR), audited statistics.
 - **Tier 3, contextual.** Practitioner communities: r/travel, r/solotravel,
   r/awardtravel, r/travelhacks, r/digitalnomad, r/cruise, r/Interrail,
-  FlyerTalk, Tripadvisor destination forums. Usable for operational knowledge
-  and phrasing, never as the sole support for a factual claim. Treat any
-  single forum claim as anecdote: include it only with attribution (who,
-  where, when) and corroboration, or framed explicitly as practitioner
-  opinion.
+  FlyerTalk, Tripadvisor destination forums. Also blogs, small outlets, and
+  company marketing materials. Usable for operational knowledge and phrasing,
+  never as the sole support for a factual claim. Treat any single forum claim
+  as anecdote: include it only with attribution (who, where, when) and
+  corroboration, or framed explicitly as practitioner opinion.
+- **Tier 4, social.** Social media posts and anonymous sources. Never a source
+  for a factual claim; usable at most as attributed color beside a
+  higher-tier source.
 
 Every claim in the ledger carries its tier. A claim resting only on Tier 3 is
 labeled as such.
@@ -454,7 +458,7 @@ confidence | locales_affected | contradicts
 ```
 
 - `claim_type`: rule, fee, date, statistic, procedure, opinion, or anecdote.
-- `tier`: 1, 2, or 3 as defined above.
+- `tier`: 1, 2, 3, or 4 as defined above.
 - `confidence`: verified, reported by the source, self-reported, practitioner
   consensus, single-source, or unanswerable.
 - `locales_affected`: the markets and languages the claim holds for, or

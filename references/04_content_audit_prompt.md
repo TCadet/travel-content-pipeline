@@ -164,10 +164,14 @@ openable sources. A draft with fewer is a Major finding.
 
 - **Link status**: If URL provided, is it likely still active? (Flag suspicious patterns like old blog URLs, discontinued products, rebranded companies)
 - **Source authority**: Is the source credible for this claim?
-  - Tier 1: Peer-reviewed, official government/org data, primary research
-  - Tier 2: Major outlets, established industry sources
-  - Tier 3: Blogs, small outlets, company marketing materials
-  - Tier 4: Social media, forums, anonymous sources
+  - Tier 1, primary: peer-reviewed research, official government or
+    organization data, primary research, statutes, regulations, official
+    records
+  - Tier 2, corroborating: major outlets, established industry sources, named
+    trade outlets, official industry bodies, audited statistics
+  - Tier 3, contextual: practitioner communities and forums, blogs, small
+    outlets, company marketing materials
+  - Tier 4, social: social media, anonymous sources
 - **Source bias**: Does the source have a vested interest in the claim being true?
 - **Quote accuracy**: If quoting someone, flag for verification
 
