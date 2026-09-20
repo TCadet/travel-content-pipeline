@@ -85,8 +85,9 @@ audit both enforce them.
   generalizing.
 - Where the business has first-party data, include it with its date range and
   collection method, anonymized as the context file requires, when one exists.
-  Only data the business has actually supplied counts. If an asset is empty, illustrative,
-  missing, or withheld, the page makes no reference to it or to its absence.
+  Only data the business has actually supplied counts. If an asset is empty,
+  illustrative, missing, or withheld, the page makes no reference to it or to
+  its absence.
 
 ---
 
