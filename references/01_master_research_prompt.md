@@ -41,8 +41,12 @@ report about a different industry.
 
 - Build seed queries from `context.md` first (when one exists): one per combination of the
   business's sub-niche, each market served, and each reader decision, plus
-  the keywords list, before any creative phrasing. Then run the sweep parts
-  below.
+  the keywords list, before any creative phrasing. Then each theme gets its
+  trend-surface queries before anything else: rising queries, autocomplete,
+  People Also Ask, and year-paired phrasings for the freshness window
+  ("travel to X 2027"), one per market served. Rising phrasings found this
+  way enter the theme's seed list ahead of the keyword-list seeds. Then run
+  the sweep parts below.
 - Search in the language of the source, not only in English. Entry rules for
   a market are documented by that market's authority, in that market's
   language. Record the language of every source.
@@ -55,6 +59,14 @@ report about a different industry.
 - Follow citations. A trade article that paraphrases a regulation is a
   pointer to the regulation, not a source for it. Open the thing it points
   to.
+- Capture comparative material where it exists: fee schedules, rate tables,
+  per-market and per-carrier variants, escalation calendars. Tables with named
+  sources beat prose summaries for the density the later steps build pages
+  from, and they expose the exact rows competitors usually miss.
+- Collect the exceptions, the failure points, and the edge cases alongside
+  the rule: what gets refused, what gets fined, which step stalls a booking,
+  what the ranking pages get wrong. A page that states the rule in one line
+  is not a page; the friction is what makes it dense and differentiated.
 
 ## Source quality architecture
 
@@ -121,11 +133,29 @@ expert consensus. An honest gap is a valid research output.
 
 ## The sweep
 
-Twelve parts cover the travel industry. Each part lists what to investigate
+Twelve thematic parts cover the travel industry, and Part 0, the trend
+sweep, runs first and shapes the rest. Each part lists what to investigate
 with named authorities, companies, and systems. For each part that produces
 anything usable, drill down to the specific change or requirement, the
 specific market, the specific document, the specific date, and the specific
 reader it affects.
+
+Depth per page topic, not just per theme: a page topic that survives the sweep
+should carry at least three claim-ledger rows across rule, fee, date,
+procedure, statistic, and contradiction types, so the writing step can build a
+dense, informative page without re-researching. Where a topic ends the sweep
+with fewer, mark it `depth-thin` in the taxonomy with the number of rows it
+has; the idea step treats depth-thin topics as merge or kill candidates rather
+than standalone pages, because a one-fact page is a fragment.
+
+### Part 0: Trend sweep (runs first)
+
+Before the twelve thematic parts, sweep what is moving now in the operator's
+markets: rising travel queries for the freshness window, destination news
+velocity, airline-route and hotel and attraction openings, and event
+calendars. The output is a short ranked list of what is moving, written into
+the plan. It shapes the budgets that follow: themes the trend sweep hits get
+their query budget first and doubled, themes it shows nothing about get half.
 
 ### Part 1: Entry rules, visas, and border systems
 
@@ -365,6 +395,14 @@ judge demand without relying on a single keyword tool:
 - Seasonality: whether interest in the topic peaks in a known window (a
   season, a holiday period, an application deadline cycle), and when that
   window next opens. Record it even when it is "no seasonal pattern found".
+- Momentum: rising, peaking, stable, or declining over the freshness window,
+  with the dated evidence behind it (a trend-surface reading, a dated
+  news-coverage count, a booking-window shift), or the literal phrase "no
+  dated trend evidence found". A topic with no directional evidence is never
+  treated as current.
+- Who searches and when: the origin market driving the interest, and how far
+  ahead of travel the searching happens.
+- Rising phrasings recorded verbatim, not paraphrased.
 
 This is discovery evidence for the planner; the ranking decision belongs to
 the idea step.
@@ -456,7 +494,12 @@ Open scope does not mean infinite scope.
   the number in the plan, five is a sane default) surface no new distinct
   page topic, no new Tier 1 source, and no new contradiction.
 - Each theme gets a query budget, stated in the plan, so one deep rabbit
-  hole cannot consume the whole run.
+  hole cannot consume the whole run. The default scales with scope: 5
+  queries per theme when `research_scope` narrows the sweep, 8 per theme
+  when the run is unscoped across the whole travel universe, because an
+  unscoped sweep at the narrower budget ends every theme budget-exhausted
+  before saturation can fire, and shallow rows starve the density the later
+  steps require.
 - The run stops when every in-scope theme is saturated or exhausted,
   whichever comes first. The report states which themes hit which condition.
 - If the freshness window returns little, say so. A short honest topic list
@@ -469,10 +512,12 @@ Open scope does not mean infinite scope.
 ## Launch: state the plan, then research immediately
 
 Begin by writing the plan into the run as a record, not a checkpoint: which
-sweep parts are in play given `context.md` (when one exists), the themes to sweep, the seed
-queries per theme, the markets to search and the languages to search in, the
-named Tier 1 sources to open first, the per-theme query budget, the saturation
-threshold, and the freshness window. Then run the sweep at once. There is no
+sweep parts are in play given `context.md` (when one exists), the themes to
+sweep, the trend sweep's ranked list of what is moving and the budget skew
+it sets, the seed queries per theme, the markets to search and the languages
+to search in, the named Tier 1 sources to open first, the per-theme query
+budget, the saturation threshold, and the freshness window. Then run the
+sweep at once. There is no
 approval wait. The operator reads the plan and can amend scope, window, budget,
 or saturation while the sweep is under way; record any amendment and its effect
 in the run log.
@@ -482,7 +527,11 @@ in the run log.
 - Work theme by theme, and finish each theme to the plan's depth before
   moving on. If the runtime supports parallel workers, one worker per theme
   with the same ledger schema is acceptable; merge their outputs into one
-  document.
+  document. When workers run in parallel, the plan assigns each worker a
+  disjoint claim-ID range (for example C-1xx, C-2xx, C-3xx) before launch, so
+  ledger IDs never collide at merge time; a collision found at merge is a
+  plan defect, and the merge step renumbers and records the change in the run
+  log.
 - Keep a run log: queries tried, sources opened, sources blocked, themes
   saturated. The log is what makes the coverage claims in the report
   checkable.
@@ -508,7 +557,8 @@ Return one research document with these sections:
      requirement.
    - Demand and result-page signals: phrasings travellers use, who ranks
      now, what the ranking pages miss, whether answer engines already
-     resolve the query, and the seasonal window if one exists.
+     resolve the query, the seasonal window if one exists, and the momentum
+     direction with its dated evidence.
    - (Open windows only) The item's vintage and why it is still worth a
      page.
 4. **Background reference.** Standing rules, statutes, official documents,
@@ -550,6 +600,8 @@ in the verification report:
    about a different industry.
 8. The topic list is honest about its length. Padding here poisons the idea
    step.
+9. The plan records Part 0's ranked list of what is moving, and the theme
+   budgets reflect the skew it set.
 
 ## Follow-up areas
 

@@ -4,7 +4,7 @@ description: Use when a travel or travel-documentation site needs to produce con
 license: MIT
 compatibility: Any agent that reads SKILL.md. The verification script requires Node 18 or newer; the prompts and context file have no runtime dependencies.
 metadata:
-  version: "2.0.0"
+  version: "2.3.0"
   author: travel-content-pipeline contributors
 ---
 
@@ -136,8 +136,13 @@ Bulk is the default:
 - Step 1 researches the whole travel topic universe, unless `research_scope` in
   `context.md` (when one exists) narrows it, and returns every distinct topic that fits the
   operator's freshness window, organized as themes, clusters, and page topics.
-- Step 2 returns a scored slate of 10 to 20 candidates. Fewer is acceptable when
-  the idea gates kill the rest. Padding the slate is not. Checkpoint 1 follows: the
+  The sweep opens with a trend sweep that runs first: rising travel queries,
+  destination news velocity, route and hotel openings, and the event calendar,
+  ranked into a "what's moving" list that shapes the theme budgets.
+- Step 2 returns a scored slate of 10 to 20 candidates, each carrying its
+  demand signal: momentum, window, and the rising phrasings the research found.
+  Fewer is acceptable when the idea gates kill the rest. Padding the slate is
+  not. Checkpoint 1 follows: the
   operator keeps the slate, sends it back for more research, or reselects the
   ideas to draft.
 - Step 3 drafts only the ideas kept at Checkpoint 1, and rebuilds
@@ -213,6 +218,13 @@ starts before this decision.
   a template and gets killed.
 - Real specificity: names, numbers, dates, and procedures must constrain the
   claim or help the reader act. Decorative specificity is a tell, not a fix.
+- Density floor: every article fully answers its reader's decision at
+  practitioner depth. The run checker enforces a minimum of 1,200 words of
+  article body (front matter and Sources excluded); a thinner draft fails the
+  writing step's handoff, and a longer draft full of filler fails the audit.
+- Citation floor: every article's Sources section carries at least two
+  distinct, openable sources. The run checker fails a draft with fewer; a
+  single-source page stops at the writing step until a second source exists.
 - No content optimized against AI-detector scores. Detector output is not a
   quality signal and is not a ranking signal.
 - No em dash characters in any copy (U+2014).
@@ -226,11 +238,13 @@ starts before this decision.
 
 ## Verification
 
-Two checkers live in `scripts/`:
+Two checkers and their helpers live in `scripts/`:
 
 ```
 node scripts/verify-pipeline.mjs
 node scripts/verify-run.mjs <run-directory>
+node scripts/test-verify-run.mjs                    # the run checker's self-tests
+node scripts/build-all-articles.mjs <run-directory> # rebuild the reading copy
 ```
 
 The first verifies the package itself: among other checks, the file set, the
@@ -239,9 +253,13 @@ translation preconditions, and that the repository copy and every installed copy
 are identical. The second verifies a run's artifacts: among other checks, every
 draft has complete front matter, every cited ledger row exists, every draft has
 an audit, fix, and verify record with a verdict, no translation outruns a passing
-English audit, and
-`ALL_ARTICLES.html` covers every draft. Exit 0 and the "verification passed"
-line mean the checked thing is intact.
+English audit, the density and citation floors hold, and
+`ALL_ARTICLES.html` covers every draft. It also enforces the publication
+gate: a draft marked `publishable: true` must carry a named author and, where
+review is required, a named reviewer. Exit 0 and the "verification passed"
+line mean the checked thing is intact. Its own behavior is covered by
+`node scripts/test-verify-run.mjs`, which runs the checker against passing and
+violating fixture runs.
 
 ## Adapting to a Different Travel Business
 
@@ -257,4 +275,6 @@ own lane, markets, locales, data assets, and capacity.
 - `references/` the five step prompts
 - `scripts/verify-pipeline.mjs` the package checker
 - `scripts/verify-run.mjs` the run-artifact checker
+- `scripts/test-verify-run.mjs` the run checker's self-tests
+- `scripts/build-all-articles.mjs` the `ALL_ARTICLES.html` builder
 - `LICENSE` MIT

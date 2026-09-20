@@ -33,6 +33,30 @@ needs research; do not write around the gap.
 
 ---
 
+## Hard floors
+
+Two requirements are hard for every article this pipeline produces. A draft that
+misses either one does not leave this step, and the run checker enforces both on
+every draft at verify time.
+
+- **Density floor.** A draft carries at least 1,200 words of article body,
+  counted with the front matter and the Sources section excluded. The word
+  count is the floor, not the standard: density is. The page must answer the
+  reader's decision at practitioner depth: the mechanism, the exceptions, the
+  failure point at each step, the exact figures with their dates and sources,
+  the follow-up questions a practitioner would ask next, and the worked example
+  or comparison the reader can act on. A draft that hits 1,200 words with
+  filler is worse than a short one: it will be killed at the audit for
+  padding. A draft under the floor is not a page yet; send it back to the
+  ledger and the brief, not to padding.
+- **Citation floor.** The Sources section carries at least two distinct,
+  openable sources the reader can visit. A page whose claims rest on one
+  document stops here until a second source exists, either by researching one
+  more ledger row or by splitting the page. The run checker fails a draft with
+  fewer than two citations in its Sources section.
+
+---
+
 ## Substance requirements per draft
 
 - Every section contains at least one specific fact, number, named entity, or
@@ -125,7 +149,10 @@ that flag is true, the named reviewer with theirs; where no reviewer is required
 the reviewer field reads `none`. With no `context.md`, the fields read
 `author: PENDING` and `reviewer: PENDING` where review is required; the audit
 flags them and the operator supplies the names at Checkpoint 2. Never stop the
-run to ask for a name. The body carries exactly one trust element: the
+run to ask for a name. The front matter carries `publishable: false` until
+then; it flips to `true` at Checkpoint 2 only when the names are in place, and
+the run checker fails a draft marked publishable whose author or required
+reviewer still reads `PENDING`. The body carries exactly one trust element: the
 sources section, linking the primary sources the reader can open, not summaries
 of them. No byline block, no about-this-page section, no corrections footer, no
 automation disclosure in the body.
@@ -217,6 +244,7 @@ ledger_rows: []          # claim ids used, in order of appearance
 internal_links: []       # hub and sibling slugs this page links to
 media: []                # planned assets, each with alt text
 schema_types: []         # structured data types emitted
+publishable: false       # flips to true at Checkpoint 2, only when the author and any required reviewer are named
 ---
 
 [article body]
@@ -251,6 +279,8 @@ front matter and everything after the sources. No navigation, no status
 labels, no pipeline commentary: the file contains the articles and their
 citations, nothing else. New drafts from later passes are added by rebuilding
 the file, so it always covers the whole run.
+`scripts/build-all-articles.mjs <run-directory>` does the rebuild; use it
+instead of hand-rolling a renderer per run.
 
 ---
 
@@ -269,3 +299,7 @@ the file, so it always covers the whole run.
 8. The draft does not look like its siblings.
 9. The body contains no trust blocks or process material: it ends at the
    sources section.
+10. The density floor holds: at least 1,200 words of body text, with the
+    substance to justify every one of them.
+11. The citation floor holds: at least two distinct openable sources in the
+    Sources section.

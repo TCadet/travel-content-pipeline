@@ -42,7 +42,7 @@ if (drafts.length && !fs.existsSync(path.join(runDir, "idea-slate.md"))) {
 if (!fails.some((f) => f.startsWith("FAIL  R1"))) ok(`R1 core artifacts consistent (${drafts.length} drafts)`);
 
 // R2: every draft has complete front matter, and the reviewer rule holds.
-const requiredKeys = ["title", "meta_title", "meta_description", "slug", "primary_query", "author", "author_credentials", "review_required", "reviewer", "cluster", "intent", "ledger_rows"];
+const requiredKeys = ["title", "meta_title", "meta_description", "slug", "primary_query", "author", "author_credentials", "review_required", "reviewer", "cluster", "intent", "ledger_rows", "publishable"];
 const presentKeys = ["secondary_queries", "markets", "locales", "internal_links", "media", "schema_types"];
 const draftInfo = new Map();
 for (const file of drafts) {
@@ -177,6 +177,42 @@ if (drafts.length) {
   }
 }
 if (!fails.some((f) => f.startsWith("FAIL  R7"))) ok("R7 ALL_ARTICLES.html covers every draft");
+
+// R8: density floor: the article body (front matter and Sources excluded) meets the minimum.
+const MIN_BODY_WORDS = 1200;
+// R9: citation floor: the Sources section carries at least two distinct openable links.
+const MIN_CITATIONS = 2;
+for (const file of drafts) {
+  const slug = path.basename(file, ".md");
+  const text = read(file);
+  const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+  if (!m) continue; // R2 already flags missing front matter
+  const body = m[2];
+  const srcIdx = body.search(/^##\s+Sources\b/im);
+  const prose = srcIdx >= 0 ? body.slice(0, srcIdx) : body;
+  const words = (prose.toLowerCase().match(/[a-z0-9']+/g) || []).length;
+  if (words < MIN_BODY_WORDS) bad("R8", `${slug}: body is ${words} words, under the ${MIN_BODY_WORDS}-word density floor`);
+  const sources = srcIdx >= 0 ? body.slice(srcIdx) : "";
+  const links = (sources.match(/\]\(https?:\/\/[^)\s]+\)/g) || []).length;
+  if (links < MIN_CITATIONS) bad("R9", `${slug}: Sources section carries ${links} citation(s), under the ${MIN_CITATIONS}-citation floor`);
+}
+if (!fails.some((f) => f.startsWith("FAIL  R8"))) ok(`R8 density floor met (min ${MIN_BODY_WORDS} words of body)`);
+if (!fails.some((f) => f.startsWith("FAIL  R9"))) ok(`R9 citation floor met (min ${MIN_CITATIONS} sources)`);
+
+// R10: publication gate: a draft marked publishable carries real names.
+for (const file of drafts) {
+  const slug = path.basename(file, ".md");
+  const fm = frontMatter(read(file));
+  if (!fm) continue; // R2 already flags missing front matter
+  if ((fmValue(fm, "publishable") || "").toLowerCase() !== "true") continue;
+  const author = (fmValue(fm, "author") || "").toLowerCase();
+  if (!author || author === "pending") bad("R10", `${slug}: marked publishable but author is PENDING`);
+  if ((fmValue(fm, "review_required") || "").toLowerCase() === "true") {
+    const rv = (fmValue(fm, "reviewer") || "").toLowerCase();
+    if (!rv || rv === "none" || rv === "pending") bad("R10", `${slug}: marked publishable but reviewer is PENDING/none`);
+  }
+}
+if (!fails.some((f) => f.startsWith("FAIL  R10"))) ok("R10 publication gate honored (publishable drafts carry a named author and required reviewer)");
 
 for (const n of notes) console.log(n);
 if (fails.length) {

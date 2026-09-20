@@ -90,8 +90,8 @@ Step 5  references/05_translation_prompt.md             optional, only if chosen
 
 | Step | What it produces | Why it exists |
 | --- | --- | --- |
-| 1 Research | Travel map, topic taxonomy, dated topic list, claim ledger | Find every topic that matters across the travel universe, filtered by the freshness window you set |
-| 2 Ideas | Scored slate of 10 to 20 candidates, most killed by idea gates | Decide what deserves writing time |
+| 1 Research | Travel map, topic taxonomy, dated topic list, claim ledger | Find every topic that matters across the travel universe, trend-first, filtered by the freshness window you set |
+| 2 Ideas | Scored slate of 10 to 20 candidates, each carrying its demand signal, most killed by idea gates | Decide what deserves writing time |
 | 3 Writing | One draft per kept idea, plus `ALL_ARTICLES.html` combining every draft in the run | Produce pages a named human will stand behind |
 | 4 Audit, fix, verify | Per-page findings, the fixes applied, and the verification of each | Catch and correct unsupported, misleading, templated, or policy-risky content |
 | 5 Translation | Localized pages with a native review | Reach every locale the business serves, without machine-translated publishing |
@@ -112,10 +112,21 @@ between the two checkpoints.
   in `context.md` (when one exists) narrows it. The freshness window is an
   operator setting, and it decides only what counts as new for the batch.
   Standing rules may be older but must be re-checked live.
+- Demand first. Research opens with a trend sweep (rising queries, destination
+  news velocity, route and hotel openings, the event calendar), and every idea
+  on the slate carries its demand signal: momentum, window, and the rising
+  phrasings the research found. A topic with no demand signal has to earn its
+  slot another way.
 - One reader job per page. A page that is another page with a noun swapped is a
   template and is killed.
 - Real specificity only. Names, numbers, dates, and procedures must constrain
   the claim or help the reader act.
+- Density floor. Every article answers its reader's decision at practitioner
+  depth: at least 1,200 words of body text (front matter and Sources
+  excluded), with the substance to justify every one of them. The run checker
+  enforces the count; the audit kills filler.
+- Citation floor. Every article carries at least two distinct, openable
+  sources in its Sources section. The run checker enforces it.
 - No claim without a source the reader can open.
 - No content optimized against AI-detector scores. Detector output is not a
   quality signal and not a ranking signal.
@@ -158,6 +169,7 @@ From the skill directory:
 ```bash
 node scripts/verify-pipeline.mjs              # package integrity
 node scripts/verify-run.mjs runs/YYYY-MM-DD   # one cycle's artifacts
+node scripts/build-all-articles.mjs runs/YYYY-MM-DD  # rebuild the reading copy
 ```
 
 The package checker verifies the file set, the audit prompt's framework and
@@ -166,8 +178,15 @@ context template fields, and that every reference file named by `SKILL.md`
 or this README exists. The run checker verifies a cycle's output: complete
 draft front matter, ledger rows that resolve, an audit, fix, and verify record
 with a verdict per draft, translations that never outrun a passing English audit,
-and an `ALL_ARTICLES.html` reading copy that covers every draft. Exit 0 plus the
-"verification passed" line means the checked thing is intact.
+the density floor (at least 1,200 words of article body per draft, front matter
+and Sources excluded), the citation floor (at least two distinct openable
+sources in each Sources section), and the publication gate (a draft marked
+`publishable: true` must carry a named author and, where review is required, a
+named reviewer), and an `ALL_ARTICLES.html` reading copy that
+covers every draft. Exit 0 plus the "verification passed" line means the checked
+thing is intact. The run checker's own behavior is covered by
+`node scripts/test-verify-run.mjs`, which runs it against passing and violating
+fixture runs.
 
 ## Contributing
 

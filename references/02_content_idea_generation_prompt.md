@@ -55,6 +55,11 @@ Bulk publishing compounds when pages reinforce each other. For each candidate:
   transactional (do or buy), or navigational (reach a specific place). Intent
   drives page shape in the writing step, and a slate that is all one intent
   deserves a stated reason.
+- **Demand signal.** From Step 1's record: the momentum direction, the
+  seasonal or event window, and the exact rising phrasings the research
+  found. Every candidate carries this field; where the research found no
+  signal, record that. A candidate with no demand signal and no first-party
+  datum is not scored as a standalone; it merges into its cluster's hub.
 - **Timing.** If the research recorded a seasonal window or deadline cycle for
   the topic, set the publish-by date that lets the page be live before the
   window opens. A page that lands after its season is a wasted slot in this
@@ -85,6 +90,18 @@ a fail into a maybe.
 7. **Trust feasibility.** The business can put a real author, and a reviewer
    where the page touches legality, money, safety, or health, behind every claim,
    and can stand behind the page publicly.
+8. **Density and interest bar.** The topic has the substance to sustain the
+   writing step's density floor: at least three supportable claim rows across
+   rule, fee, date, procedure, statistic, and contradiction types; dated
+   trend rows (statistic or anecdote rows carrying dated demand evidence)
+   count toward this floor, and one dated trend row may substitute for one
+   rule row. The topic also needs something a reader would call interesting:
+   tension between sources, money at stake, a dated change, a
+   counterintuitive fact, or a correction of what currently ranks. A topic
+   with one supportable fact is killed here or merged into its cluster's
+   hub, because a one-fact page is a fragment, not an article. The ledger
+   marks topics as depth-thin when Step 1 left them with fewer rows; a
+   depth-thin topic does not survive this gate as a standalone page.
 
 When `context.md` is absent, no gate may fail merely because business details
 are unknown: record the author and reviewer slots as `PENDING`, keep the idea,
@@ -101,10 +118,10 @@ Score 1 to 5 per criterion, apply the weight, and show the arithmetic.
 | Differentiation | 25% | The datum or experience exists nowhere else |
 | Reader value | 20% | It removes a real cost: money, delay, rejection, risk |
 | Evidence strength | 15% | Primary sources and first-party numbers already in hand |
-| Business fit | 15% | The reader this page serves is the reader the business sells to |
+| Business fit | 10% | The reader this page serves is the reader the business sells to |
 | Trust fit | 10% | The business is a credible, nameable source for this |
-| Timing | 5% | Publishing now meets a seasonal or deadline window head-on |
-| Build cost | 10% | Fits capacity without displacing better pages |
+| Timing | 15% | A dated rising or peaking demand wave with a publish-by date inside it; a stable-demand topic scores at most 3 |
+| Build cost | 5% | Fits capacity without displacing better pages |
 
 Rules:
 
@@ -112,7 +129,13 @@ Rules:
   total.
 - Any candidate scoring below 3 on Business fit must justify its slot in one
   sentence (a trust or audience-building play), or it is dropped.
+- Interest and density potential are judged inside Reader value and
+  Differentiation, not as a separate score: the denser, more decision-loaded
+  candidate scores higher, and a thin topic that slipped past the gates is
+  killed rather than scored generously.
 - Ties break on reader value, never on keyword volume.
+- A Reader value score above 3 must be supported by currency evidence: a
+  dated trend row from Step 1 showing the reader is incurring this cost now.
 - A slate that is all one page type, one intent, or one cluster is a warning.
   Say so.
 - Show the per-criterion scores and the weighted arithmetic for every
@@ -146,7 +169,7 @@ Write both parts to `idea-slate.md` in the run directory.
 **A. Ranked slate**, one row per candidate:
 
 ```
-ID | Working title | Reader job | Intent | Cluster (hub/spoke) | Differentiation asset | Score | Publish-by | Closest existing page | Relationship | Decision (build/update/merge/kill) | Reason if killed
+ID | Working title | Reader job | Intent | Cluster (hub/spoke) | Differentiation asset | Demand signal | Score | Publish-by | Closest existing page | Relationship | Decision (build/update/merge/kill) | Reason if killed
 ```
 
 **B. Research brief for every idea marked build:**
@@ -158,11 +181,15 @@ ID | Working title | Reader job | Intent | Cluster (hub/spoke) | Differentiation
 - Intent: informational | transactional | navigational
 - Cluster and role: [cluster name, hub or spoke]
 - Publish-by: [date, if a seasonal or deadline window applies]
+- Demand signal: momentum, window, exact rising phrasings
 - Primary query and 3 to 5 real phrasings:
 - First-party evidence to publish: asset, figures, date range, privacy limits
 - Primary sources to obtain: named authority, statute, issuer, document
 - Named entities required: correct official names
 - Answer shapes required: definitions, comparisons, procedures, numbers
+- Density plan: the sections this page will carry and the specific facts,
+  figures, tables, worked examples, or failure points that fill each one, to
+  meet the writing step's density floor
 - Internal links to place: hub page and sibling pages from the same cluster
 - Author and reviewer where required:
 - What this page must not become: the template trap for this topic
@@ -202,11 +229,12 @@ The brief is the input to the writing step. No idea enters writing without one.
 ## Final check
 
 1. Every candidate traces to a harvest source.
-2. Every survivor passed all seven gates; every kill names its gate.
+2. Every survivor passed all eight gates; every kill names its gate.
 3. Every score shows its arithmetic; no sub-3 differentiation survived, and any
    sub-3 business fit carries its one-sentence justification.
 4. Every build idea has a brief, a named author, a reviewer where required, a
-   cluster and role, an intent class, and a publish-by date where timing matters.
+   demand signal, a cluster and role, an intent class, and a publish-by date
+   where timing matters.
 5. The slate is not several copies of one page, and not all one page type, one
    intent, or one cluster.
 6. No idea rests on detector evasion, keyword volume alone, or word count.
