@@ -9,10 +9,10 @@ runs on the model's own initiative.
 findings. If any remain, stop and say which, and do not translate.
 
 The pages and locales come from Checkpoint 2. If the operator chose none, stop.
-For pages that affect legality, money, safety, or health in a locale, a market
-review is mandatory, not optional: someone who knows the local rules confirms
-the page is correct for that market, not just correctly translated. That review
-is part of the translation, not a new operator stop.
+For pages that affect legality, money, safety, or health in a locale, a local
+market check is mandatory, not optional: someone who knows the local rules
+confirms the page is correct for that market, not just correctly translated.
+That check is part of the translation, not a new operator stop.
 
 ---
 
@@ -42,7 +42,7 @@ Checkpoint 2.
 - **Structured data and metadata.** Title, description, slug convention,
   canonical annotations, language annotations, and schema fields localized
   consistently, with the source page identified.
-- **Trust layer.** Author and reviewer from the front matter carry over to the
+- **Trust layer.** The source article's sources and dates carry over to the
   locale, not dropped.
 
 ## What localization must not do
@@ -51,8 +51,8 @@ Checkpoint 2.
   contain.
 - Drop caveats, exceptions, or market-specific conditions because they read
   awkwardly in the target language.
-- Machine-translate and ship. A human who reads the language must review
-  before the page is finalized.
+- Machine-translate and release without a language check. A human who reads
+  the language must check the page first.
 - Reuse one locale's phrasing in another.
 
 ---
@@ -105,25 +105,21 @@ meta_title:
 meta_description:
 slug:
 locale:
-translator:
-native_reviewer:
-author:
-reviewer:
 translated: <date>
-status: draft | reviewed
+status: draft | final
 terms_used: <termbase reference>
 ---
 
 [localized body]
 ```
 
-Localization notes (terms kept in the source language, conversions, intentional omissions, and the reviewer checklist result) go in your run notes or handoff message, never in the page file.
+Localization notes (terms kept in the source language, conversions, intentional omissions, and the checklist result) go in your run notes or handoff message, never in the page file.
 
 ---
 
-## Native reviewer checklist
+## Quality checklist
 
-The reviewer confirms, in the target language:
+Confirm, in the target language:
 
 - [ ] The page answers the same reader job as the English source.
 - [ ] Official names and legal text are correct for this locale.
@@ -131,12 +127,10 @@ The reviewer confirms, in the target language:
 - [ ] Numbers, dates, currency, and units are correct and natural.
 - [ ] Nothing was added that the English page does not say.
 - [ ] The page reads as written by a person from this locale, not translated.
-- [ ] The trust layer is present and accurate.
+- [ ] The source article's sources and dates are carried over and accurate.
 - [ ] Language annotations are reciprocal and the canonical points to this
   locale's version.
 - [ ] For pages affecting legality, money, safety, or health in this locale, the
-  market reviewer has confirmed local correctness.
+  the local market check is done.
 
-Status stays `draft` until this checklist is complete, and the named native
-reviewer is the one who marks it `reviewed`. Nothing leaves this step marked
-`reviewed` without a named native reviewer.
+Status stays `draft` until every checklist item is complete.

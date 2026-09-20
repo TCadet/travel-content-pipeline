@@ -2,10 +2,9 @@
 name: travel-content-pipeline
 description: Use when a travel or travel-documentation site needs to produce content in bulk, when building a repeatable research-to-content operation, when planning an editorial batch across any part of the travel topic universe, or when drafting, auditing, and localizing multiple travel pages per cycle. Also use when content quality, scaling, or localization discipline is the problem rather than a single page.
 license: MIT
-compatibility: Any agent that reads SKILL.md. The verification script requires Node 18 or newer; the prompts and context file have no runtime dependencies.
+compatibility: Any agent that reads SKILL.md. The reading-copy builder needs Node 18 or newer; the prompts and context file have no runtime dependencies.
 metadata:
-  version: "2.3.0"
-  author: travel-content-pipeline contributors
+  version: "2.4.0"
 ---
 
 # Travel Content Pipeline
@@ -37,8 +36,6 @@ Do not stop for any of these before Checkpoint 1:
 
 - asking which scope, market, or freshness window to use (the defaults apply)
 - asking where to put the run (the run directory default applies)
-- asking who the author or reviewer is (`PENDING` applies, resolved at
-  Checkpoint 2)
 - asking for `context.md` (it is optional; its absence is a supported mode)
 - presenting the plan and waiting for approval (the plan is written to the
   run as a record while the sweep starts)
@@ -63,27 +60,22 @@ question for the operator before Checkpoint 1.
    `translations/`, `ALL_ARTICLES.html`, and the run log.
 3. **Freshness window.** From `context.md` when present. With none, the window
    is open (any time) and each item's vintage is marked instead.
-4. **Author and reviewer.** From `context.md` when present. With none, front
-   matter records the author and any required reviewer as `PENDING`; the audit
-   flags each as an open finding, and the page stays unpublishable until the
-   operator supplies the names at Checkpoint 2. A missing name blocks
-   publication, never the run, and never becomes a mid-run question.
-5. **Capacity.** From `capacity_per_cycle` when present. With none, slate 10
+4. **Capacity.** From `capacity_per_cycle` when present. With none, slate 10
    to 20 scored candidates and draft everything kept at Checkpoint 1; the
    operator can cut that number at Checkpoint 1.
 
 ## Overview
 
 A five-step pipeline that turns research across the travel topic universe into
-audited, fixed, verified, optionally localized pages ready to publish. The
+audited, fixed, verified, and optionally localized pages. The
 freshness window is an operator setting, from any time to the last few days.
 Built for bulk: one run produces a travel research map, a scored slate of
 candidate pages, drafts for the kept ones, an audit-fix-verify pass, and
 localized versions on request.
 
-Core principle: publish only what a reader cannot get anywhere else and a search
-engine cannot mass-produce. The idea gates and the operator checkpoints kill work
-that would fail that test.
+Core principle: a page earns its place only when a reader cannot get the same
+thing anywhere else and a search engine cannot mass-produce it. The idea gates
+and the operator checkpoints kill work that would fail that test.
 
 ## When to Use
 
@@ -101,8 +93,6 @@ Do not use this skill for:
 
 - A single one-off page with no sourcing requirements.
 - Pure technical SEO fixes, link building, or paid campaigns.
-- Generating content the business cannot stand behind with a named author and,
-  where the page requires one, a named reviewer.
 
 ## The Pipeline
 
@@ -219,47 +209,34 @@ starts before this decision.
 - Real specificity: names, numbers, dates, and procedures must constrain the
   claim or help the reader act. Decorative specificity is a tell, not a fix.
 - Density floor: every article fully answers its reader's decision at
-  practitioner depth. The run checker enforces a minimum of 1,200 words of
-  article body (front matter and Sources excluded); a thinner draft fails the
-  writing step's handoff, and a longer draft full of filler fails the audit.
+  practitioner depth. The writing step and the audit enforce a minimum of
+  1,200 words of article body (the Sources section excluded); a thinner draft
+  does not pass the writing step, and a longer draft full of filler fails the
+  audit.
 - Citation floor: every article's Sources section carries at least two
-  distinct, openable sources. The run checker fails a draft with fewer; a
-  single-source page stops at the writing step until a second source exists.
+  distinct, openable sources. A draft with fewer does not pass the writing
+  step; a single-source page stops there until a second source exists.
 - No content optimized against AI-detector scores. Detector output is not a
   quality signal and is not a ranking signal.
 - No em dash characters in any copy (U+2014).
-- Named author on every page, and a named reviewer on every page that touches
-  legality, money, safety, or health, recorded in front matter. The reviewer
-  field is always present; where no reviewer is required it reads `none`. When
-  no names exist yet (no `context.md`), the fields read `PENDING` and the audit
-  flags them; the operator supplies the names at Checkpoint 2. A missing name
-  blocks publication, never the drafting run.
 - Capacity governs volume. Never draft faster than the checkpoints can clear.
 
 ## Verification
 
-Two checkers and their helpers live in `scripts/`:
+The audit step is the quality gate: every draft gets one record at
+`audit/<slug>.md` with the audit, the fixes, and the verification, ending in a
+PASS or BLOCKED verdict. Nothing reaches Checkpoint 2 unaudited or unfixed, and
+no translation runs before its English original passes.
+
+The reading copy is rebuilt when the draft set changes:
 
 ```
-node scripts/verify-pipeline.mjs
-node scripts/verify-run.mjs <run-directory>
-node scripts/test-verify-run.mjs                    # the run checker's self-tests
-node scripts/build-all-articles.mjs <run-directory> # rebuild the reading copy
+node scripts/build-all-articles.mjs <run-directory>
 ```
 
-The first verifies the package itself: among other checks, the file set, the
-audit prompt's framework and extension sections, the absence of em dashes, the
-translation preconditions, and that the repository copy and every installed copy
-are identical. The second verifies a run's artifacts: among other checks, every
-draft has complete front matter, every cited ledger row exists, every draft has
-an audit, fix, and verify record with a verdict, no translation outruns a passing
-English audit, the density and citation floors hold, and
-`ALL_ARTICLES.html` covers every draft. It also enforces the publication
-gate: a draft marked `publishable: true` must carry a named author and, where
-review is required, a named reviewer. Exit 0 and the "verification passed"
-line mean the checked thing is intact. Its own behavior is covered by
-`node scripts/test-verify-run.mjs`, which runs the checker against passing and
-violating fixture runs.
+One `ALL_ARTICLES.html` at the run root covers every draft. The builder needs
+Node 18 or newer; the prompts and the context file have no runtime
+dependencies.
 
 ## Adapting to a Different Travel Business
 
@@ -273,8 +250,5 @@ own lane, markets, locales, data assets, and capacity.
 - `context.example.md` the configuration template to copy and fill
 - `README.md` install, quickstart, and design rules
 - `references/` the five step prompts
-- `scripts/verify-pipeline.mjs` the package checker
-- `scripts/verify-run.mjs` the run-artifact checker
-- `scripts/test-verify-run.mjs` the run checker's self-tests
 - `scripts/build-all-articles.mjs` the `ALL_ARTICLES.html` builder
 - `LICENSE` MIT

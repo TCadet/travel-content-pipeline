@@ -64,8 +64,6 @@ data_asset:            # one block per asset; repeat this block for each
 ## Editorial operation
 
 ```
-author_roles:          # who can be a named author, with credentials
-reviewer_roles:        # who can review which page classes
 capacity_per_cycle:    # pages that can clear both checkpoints this cycle
 seasonality_calendar:  # demand peaks and deadline cycles per market, with dates
 ```
@@ -73,7 +71,7 @@ seasonality_calendar:  # demand peaks and deadline cycles per market, with dates
 ## Scope
 
 ```
-in_scope:              # topics and page types this business will publish
+in_scope:              # topics and page types this business covers
 out_of_scope:          # topics, claims, or markets excluded, with the reason
 regulated_claims:      # claims that need legal or compliance review
 competitors:           # named, if comparison pages are allowed
@@ -92,7 +90,7 @@ brand_rules:           # words and claims the brand uses or avoids
 ```
 content_root:          # directory holding pages, used by the audit
 url_pattern:           # how slugs and locales are addressed
-schema_available:      # Person, reviewedBy, and other supported types
+schema_available:      # Article and other structured data types the site supports
 ```
 
 ## Content inventory

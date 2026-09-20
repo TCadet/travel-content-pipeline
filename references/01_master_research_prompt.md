@@ -28,7 +28,7 @@ gap. The freshness window decides what counts as new for this batch.
 
 Map the current state of the travel industry well enough that a senior
 practitioner learns something, then reduce that map to a dated taxonomy of
-page topics the business can publish this cycle. The output is not a
+page topics the business can cover this cycle. The output is not a
 beginner's overview of travel. It is practitioner-grade: specific changes,
 named authorities, exact fees, real dates, and the operational knowledge that
 guides omit. Every paragraph must carry at least one specific fact, number,
@@ -76,7 +76,7 @@ Categories are not sources. Every claim traces to a named source, ranked:
   authorities, border agencies, transport operators' official conditions,
   government travel advisories, court and tribunal records, official fee
   schedules.
-- **Tier 2, corroborating.** Named trade publications (Skift, Travel Weekly,
+- **Tier 2, corroborating.** Named trade outlets (Skift, Travel Weekly,
   PhocusWire, Simple Flying, anna.aero, TTG), named experts with verifiable
   credentials, official industry bodies (UN Tourism, WTTC, IATA, ACI, STR),
   audited statistics.
@@ -267,7 +267,7 @@ national park timed-entry pilots, Machu Picchu circuits).
 
 **6.2 Permits and quotas.** Permit lotteries, quota systems, and guide
 requirements for trails, peaks, and protected areas in scope, with open
-dates and odds where published.
+dates and odds where available.
 
 **6.3 The tour industry.** Moves by GetYourGuide, Viator, Klook, and local
 operator associations that change what travellers can book or what it costs.
@@ -299,7 +299,7 @@ protection, refund deadlines, and complaint handling obligations.
 
 **8.3 Travel insurance.** Coverage changes, exclusions that matter (named
 perils, adventure activities, pre-existing conditions), and claim trends
-from named insurers' published reports.
+from named insurers' official reports.
 
 ### Part 9: Safety, health, and advisories
 
@@ -322,7 +322,7 @@ and dates.
 Tourism Barometer, WTTC economic impact research, IATA passenger statistics,
 ACI airport rankings, STR hotel data, ForwardKeys booking intelligence,
 Mastercard Travel Industry Trends, Skyscanner Horizons, Expedia Unpack,
-Google travel trend reports. What each actually says, its publication date,
+Google travel trend reports. What each actually says, when it was issued,
 its denominator and methodology, and what it means for the operator's
 markets. These numbers are not comparable across studies; record the
 denominator and origin of every statistic used.
@@ -353,7 +353,7 @@ adoption, and loyalty-gated pricing that change where the best price sits.
 What desk staff, agents, frequent travellers, and operations people know that
 guides omit. Every item labeled: proven, practitioner consensus, or
 single-source anecdote. This material comes disproportionately from Tier 3
-sources; the label is what makes it publishable honestly. If credible
+sources; the label is what makes it usable honestly. If credible
 first-hand accounts are thin for a topic, keep the section short and fully
 attributed; invented insider tips are worse than a brief section.
 
@@ -416,7 +416,7 @@ each asset into research questions:
   questions, regional differences) that no competitor can see?
 - Which of those patterns map to topics the sweep found, and which suggest
   topics the sweep missed entirely?
-- What is the smallest publishable unit of the asset: a figure, a range, a
+- What is the smallest usable unit of the asset: a figure, a range, a
   ranked list, a before-and-after?
 
 Record for each asset: the date range it covers, the privacy constraint that
@@ -445,7 +445,7 @@ spot template risk before writing starts.
 
 ## Claim ledger
 
-One row per factual claim, with this schema:
+One row per factual claim, with this schema (the ledger stays in the research document and never appears in an article file):
 
 ```
 claim_id | topic_id | claim | claim_type | source_url | source_title |
@@ -455,14 +455,16 @@ confidence | locales_affected | contradicts
 
 - `claim_type`: rule, fee, date, statistic, procedure, opinion, or anecdote.
 - `tier`: 1, 2, or 3 as defined above.
-- `confidence`: verified, reported by the source, practitioner consensus,
-  single-source, or unanswerable.
+- `confidence`: verified, reported by the source, self-reported, practitioner
+  consensus, single-source, or unanswerable.
 - `locales_affected`: the markets and languages the claim holds for, or
   `all`.
 - `contradicts`: the id of any ledger row it disagrees with, or empty.
 
 The ledger is the backbone of the pipeline: the writing step is forbidden
-from asserting anything that is not a row here.
+from asserting anything that is not a row here. The article file itself
+carries no claim ids, no row lists, and no citation markers; it cites only
+through the links in its Sources section.
 
 An example row, with a deliberately generic topic, shown field by field:
 
@@ -551,7 +553,7 @@ Return one research document with these sections:
    For each:
    - Working title and the reader it serves.
    - What changed or what matters, with the date.
-   - The source, with URL, publication date, language, and tier.
+   - The source, with URL, issue date, language, and tier.
    - Why it is new relative to what the site already covers.
    - How durable it is: a one-week item, a one-month item, or a permanent
      requirement.
@@ -616,7 +618,7 @@ If any of these appear in the output, the run has failed regardless of how
 much material it produced:
 
 - A topic list with no sources, or with sources that were never opened.
-- English-only research for a business that publishes in other languages.
+- English-only research for a business that serves other languages.
 - A flat list with no clusters, so every page is planned in isolation.
 - A ledger with claims but no excerpts, so the writing step cannot check
   wording against evidence.

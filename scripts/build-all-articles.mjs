@@ -76,12 +76,20 @@ function render(md) {
 const files = fs.readdirSync(draftsDir).filter((f) => f.endsWith(".md")).sort();
 const sections = [];
 for (const f of files) {
-  const raw = fs.readFileSync(path.join(draftsDir, f), "utf8");
-  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
-  if (!m) continue;
-  const title = (m[1].match(/^title:\s*(.*)$/m) || [])[1] || f;
-  const slug = ((m[1].match(/^slug:\s*(.*)$/m) || [])[1] || path.basename(f, ".md")).trim();
-  sections.push(`<section id="${slug}">\n<h1>${esc(title)}</h1>\n${render(m[2].trim())}\n</section>`);
+  const raw = fs.readFileSync(path.join(draftsDir, f), "utf8").replace(/^\uFEFF/, "");
+  const titleMatch = raw.match(/^#\s+(.*)$/m);
+  if (!titleMatch) continue;
+  const title = titleMatch[1].trim();
+  const slug = path.basename(f, ".md");
+  let content = raw.slice(raw.indexOf(titleMatch[0]) + titleMatch[0].length).trim();
+  const srcMatch = content.match(/^##\s+Sources\s*$/m);
+  if (srcMatch) {
+    const srcStart = content.indexOf(srcMatch[0]);
+    const rest = content.slice(srcStart + srcMatch[0].length);
+    const nextHead = rest.search(/^#{1,4}\s/m);
+    if (nextHead !== -1) content = content.slice(0, srcStart + srcMatch[0].length + nextHead).trim();
+  }
+  sections.push(`<section id="${slug}">\n<h1>${esc(title)}</h1>\n${render(content)}\n</section>`);
 }
 
 const html = `<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>All articles</title>\n<style>body{font:16px/1.6 Georgia,serif;max-width:760px;margin:2rem auto;padding:0 1rem}h1{margin-top:2.5rem}table{border-collapse:collapse}th,td{border:1px solid #999;padding:.35rem .6rem;text-align:left}</style>\n</head>\n<body>\n${sections.join("\n")}\n</body>\n</html>\n`;

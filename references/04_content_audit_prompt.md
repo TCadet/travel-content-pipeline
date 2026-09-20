@@ -3,7 +3,7 @@
 Step 4 runs three phases on every draft from the writing step: audit, fix, and
 verify. The audit finds and evidences every issue, the fix applies the
 corrections to the draft, and the verify phase re-checks each fix and sets the
-final verdict. This is the last quality check before an English page is reviewed.
+final verdict. This is the last quality check before an English page is final.
 Never run the translation step before it passes.
 
 Two values are parameterised so the audit stays reusable across travel
@@ -23,8 +23,8 @@ and Section 13, the quality scorecard.
 Run it per draft. Write one record per page at `audit/<slug>.md` with three
 sections, `## Audit`, `## Fix`, and `## Verify`, and end it with a verdict line:
 PASS (no open Critical or Major findings after the fixes and the verification) or
-BLOCKED (the blockers listed). The run checker requires one record per draft, with
-a verdict.
+BLOCKED (the blockers listed). The audit step requires one record per draft,
+with a verdict.
 
 ---
 
@@ -60,7 +60,7 @@ If the codebase/page count is large, use additional subagents to split pages int
 - Do not allow duplication/consistency work to replace page-level review
 - Have the main agent consolidate conflicts, overlaps, and unresolved findings
 - If any subagent cannot verify something confidently, surface that uncertainty explicitly rather than hiding it
-- Adversarially verify every Critical and Major finding with a second subagent that receives ONLY the file path, exact excerpt, and evidence (never the first agent's reasoning, verdict, or severity, which contaminate reviewers) and has the mandate "kill this finding if you can" by re-running anything checkable (fetch the URL, redo the search) rather than re-arguing it
+- Adversarially verify every Critical and Major finding with a second subagent that receives ONLY the file path, exact excerpt, and evidence (never the first agent's reasoning, verdict, or severity, because those contaminate the verification) and has the mandate "kill this finding if you can" by re-running anything checkable (fetch the URL, redo the search) rather than re-arguing it
 - Keep a Critical/Major finding only if finder and verifier agree; otherwise downgrade or drop it and note the disagreement
 
 ### GLOBAL AUDIT DISCIPLINE
@@ -157,13 +157,16 @@ RECOMMENDATION: [Keep | Update | Remove | Add source]
 
 ### 3. SOURCE & CITATION AUDIT
 
+**Citation floor:** the Sources section carries at least two distinct,
+openable sources. A draft with fewer is a Major finding.
+
 **For every citation, reference, or linked source:**
 
 - **Link status**: If URL provided, is it likely still active? (Flag suspicious patterns like old blog URLs, discontinued products, rebranded companies)
 - **Source authority**: Is the source credible for this claim?
   - Tier 1: Peer-reviewed, official government/org data, primary research
-  - Tier 2: Major publications, established industry sources
-  - Tier 3: Blogs, small publications, company marketing materials
+  - Tier 2: Major outlets, established industry sources
+  - Tier 3: Blogs, small outlets, company marketing materials
   - Tier 4: Social media, forums, anonymous sources
 - **Source bias**: Does the source have a vested interest in the claim being true?
 - **Quote accuracy**: If quoting someone, flag for verification
@@ -584,7 +587,7 @@ Scope: the run's draft set, or every file in `{{CONTENT_ROOT}}` when a corpus is
 - Total files discovered: [#]
 - Total files audited: [#]
 - Total files with no substantive content: [#]
-- Confirm every file in scope was reviewed: [Yes/No]
+- Confirm every file in scope was audited: [Yes/No]
 - Confirm required subagents were used: [Yes/No]
 
 ### SUBAGENT COVERAGE
@@ -667,19 +670,23 @@ A missing guideline mark means that check was skipped for that file. Do not prom
 4. Every Critical/Major finding survived a verifier that saw only the excerpt and evidence.
 5. No invented perplexity/burstiness numbers or AI-percentage scores; no AI finding rests on a lone vocabulary tell.
 6. All coverage gaps are listed, not hidden.
+7. The density floor holds: at least 1,200 words of article body, with the
+   substance to justify every one of them.
+8. The citation floor holds: at least two distinct, openable sources in the
+   Sources section.
 
 
 ---
 
 ### 11. POLICY COMPLIANCE (quality rater guidelines, helpful content, spam policies)
 
-Audit the page against published search quality and spam frameworks in addition
+Audit the page against the search quality and spam frameworks in addition
 to the accuracy, sourcing, and detection work above. The priority questions are
 whether the page serves a real reader job, and whether the site shows a
 scaled-content pattern.
 
 **Voice and scope.** Audit the page as a quality rater would, and audit its
-relationship to the rest of the site as a spam-policy reviewer would. The rater
+relationship to the rest of the site as a spam-policy auditor would. The rater
 question is "would a person find this page genuinely helpful for its stated
 purpose". The policy question is "does this page, or the sitewide pattern it
 belongs to, match a named spam policy".
@@ -692,10 +699,7 @@ belongs to, match a named spam policy".
 - **Main content quality.** Is there substantial original main content that
   answers the query without a second search, or a thin summary of pages that
   already rank?
-- **Who, how, and why.** Who made the page, how, and why. For topics that affect
-  money, safety, health, or legality, the page must name the author and reviewer
-  and the basis of their expertise, in its front matter or metadata at minimum.
-  Flag missing or unverifiable personhood signals.
+- **Who, how, and why.** Who made the page, how, and why, stated in the page's own sourcing. For topics that affect money, safety, health, or legality, the page must trace every claim to a source the reader can open. Flag claims whose support cannot be traced.
 - **Experience, expertise, authoritativeness, trust.** Identify which of the
   four is load-bearing for this topic and whether the page supplies it.
 - **Topic scope fit.** Does the page stay inside a lane this business can
@@ -710,7 +714,7 @@ belongs to, match a named spam policy".
 
 #### 11.2 Helpful content guidance
 
-- **People-first test.** Would the page still be worth publishing if search
+- **People-first test.** Would the page still be worth making if search
   engines did not exist? If no, record a finding.
 - **Search-engine-first signals.** Query variants stacked on one page, sections
   written to match search phrasing rather than to answer a question, and content
@@ -730,7 +734,7 @@ only where evidence supports it:
 - **Scaled content abuse.** Pages produced at scale that add little value,
   whether by automation, humans, or a mix. Look for near-identical pages that
   differ by a swapped noun, location, or outline order.
-- **Site reputation abuse.** Content published on the site to exploit its
+- **Site reputation abuse.** Content placed on the site to exploit its
   authority rather than its expertise.
 - **Doorway pages.** Pages that funnel readers to a destination without adding
   value of their own.
@@ -774,7 +778,7 @@ UNVERIFIED POLICY ASSERTIONS: [anything not confirmed against a source you opene
 
 - [ ] Page purpose stated in one sentence, reader job named.
 - [ ] Main content assessed for originality against the existing corpus.
-- [ ] Who, how, and why documented; author and reviewer named where required.
+- [ ] Who, how, and why documented; claims trace to named sources.
 - [ ] Rater-style tier assigned with evidence, not tone.
 - [ ] People-first test answered honestly, including a fail where it is a fail.
 - [ ] Each named spam policy tested with evidence, or marked not applicable.
@@ -834,7 +838,7 @@ These are the dangerous ones, because they imitate credibility:
 
 - **Invented first-person experience.** "When I renewed mine last spring"
   anecdotes from a generator with no travel history. An experience claim that
-  no named person will stand behind is worse than no experience claim.
+  nobody can stand behind is worse than no experience claim.
 - **Fabricated experts.** Quoted specialists with generic names, no
   affiliation, and no findable body of work.
 - **Plausible statistics.** Round numbers presented with false confidence, or
@@ -867,7 +871,7 @@ These are the dangerous ones, because they imitate credibility:
   well-sourced pages are Minor at most. Clusters of evidence-level tells are
   Major. Fabricated experience or expert claims are Critical.
 - Record what would settle the question when it cannot be settled from the
-  content alone (ask the author, check the CMS history, request the source).
+  content alone (check the CMS history, request the source, trace who produced the page).
 
 #### 12.6 Module checklist
 
@@ -886,9 +890,8 @@ These are the dangerous ones, because they imitate credibility:
 
 Score the page 1 to 10 on each criterion, with the reasoning recorded in two
 to four sentences before the number. A score below 6 on any criterion produces
-a finding at Major severity, except authorship or citation quality on a page
-that touches legality, money, safety, or health, where a score below 7 is
-Critical.
+a finding at Major severity. For pages that touch legality, money, safety, or
+health, a score below 7 on citation quality is a Critical finding.
 
 #### 13.1 Purpose and intent
 Helpful-first or search-first. A page created primarily to attract search
@@ -896,12 +899,10 @@ traffic fails here regardless of polish. Evidence: the reader job is named
 and answered, the title promises what the page delivers, and no section
 exists only to catch a query.
 
-#### 13.2 Authorship and accountability
-Is the entity behind the page identifiable and accountable? Check the named
-author, and where this page touches legality, money, safety, or health, the named
-reviewer, in the front matter, with the basis of their expertise, and
-whether the business can be contacted and stands behind corrections. An
-anonymous, untraceable page on a legality, money, safety, or health topic is
+#### 13.2 Accountability and sourcing
+Is the page accountable for what it states? Check that its claims trace to
+sources a reader can open and that the sourcing is stated, not implied. A page
+on a legality, money, safety, or health topic whose claims cannot be traced is
 a Critical finding.
 
 #### 13.3 Citation quality
@@ -923,16 +924,17 @@ finding regardless of writing quality.
 #### 13.6 Reader value density
 Identify the reader's pain point and whether the page resolves it. Flag
 sections that could be cut without loss, generic advice that fits any
-destination, and padding. Every section must earn its place.
+destination, and padding. Every section must earn its place. Confirm the
+density floor: at least 1,200 words of article body, with the substance to
+justify every one of them. Below the floor is a Major finding; filler above
+it is a finding too.
 
 #### 13.7 Writing quality
-Lexical variety, sentence length averaging roughly 15 to 20 words with
-deliberate variation, active voice by default, limited hedge adverbs. Note
-specific passages, not impressions.
+Lexical variety, article text inside the STE sentence limits (maximum 20
+words in an instruction and 25 in a description), active voice, limited
+hedge adverbs. Note specific passages, not impressions.
 
 Report the seven scores with their reasoning in the audit's summary section.
-The stricter authorship and citation threshold for sensitive pages is stated at
-the start of this section.
 
 ---
 
@@ -954,8 +956,6 @@ Rules for the fix phase:
 - Fixes preserve the page's reader job, structure, and voice. A fix corrects the
   claim or the wording; it does not rewrite the page.
 - Replace every em dash character and every em dash entity.
-- Keep the front matter accurate. If a fix changes the author, the reviewer, or
-  the `review_required` flag, update it.
 - After the fixes, rebuild `ALL_ARTICLES.html` from the fixed drafts.
 
 ## VERIFY PHASE

@@ -21,9 +21,9 @@ file, without changing the prompts.
 
 ## Who it is for
 
-- Travel, tourism, and travel-documentation sites, whether publishing in one
-  language or many.
-- Editorial leads who need a repeatable research-to-reviewed-content cycle.
+- Travel, tourism, and travel-documentation sites, whether serving readers in
+  one language or many.
+- Editorial leads who need a repeatable research-to-audited-content cycle.
 - Teams that want one source of truth for what changed in travel this
   cycle, instead of rehashing evergreen topics.
 
@@ -59,8 +59,8 @@ directory name `travel-content-pipeline` so agents discover it.
 On Windows, copy the folder to `%USERPROFILE%\.claude\skills\`,
 `%USERPROFILE%\.config\opencode\skills\`, or `%USERPROFILE%\.agents\skills\`.
 
-The prompts and context file have no runtime dependencies. The checker
-scripts need Node 18 or newer.
+The prompts and context file have no runtime dependencies. The reading-copy
+builder needs Node 18 or newer.
 
 ## Quickstart
 
@@ -78,7 +78,7 @@ scripts need Node 18 or newer.
 Step 1  references/01_master_research_prompt.md         launches immediately
 Step 2  references/02_content_idea_generation_prompt.md CHECKPOINT 1: keep, redo research, or reselect
 Step 3  references/03_content_writing_prompt.md
-Step 4  references/04_content_audit_prompt.md           CHECKPOINT 2: review fixed content, choose translation
+Step 4  references/04_content_audit_prompt.md           CHECKPOINT 2: review content, choose translation
 Step 5  references/05_translation_prompt.md             optional, only if chosen at Checkpoint 2
 ```
 
@@ -92,9 +92,9 @@ Step 5  references/05_translation_prompt.md             optional, only if chosen
 | --- | --- | --- |
 | 1 Research | Travel map, topic taxonomy, dated topic list, claim ledger | Find every topic that matters across the travel universe, trend-first, filtered by the freshness window you set |
 | 2 Ideas | Scored slate of 10 to 20 candidates, each carrying its demand signal, most killed by idea gates | Decide what deserves writing time |
-| 3 Writing | One draft per kept idea, plus `ALL_ARTICLES.html` combining every draft in the run | Produce pages a named human will stand behind |
+| 3 Writing | One draft per kept idea, plus `ALL_ARTICLES.html` combining every draft in the run | Produce the pages the business stands behind |
 | 4 Audit, fix, verify | Per-page findings, the fixes applied, and the verification of each | Catch and correct unsupported, misleading, templated, or policy-risky content |
-| 5 Translation | Localized pages with a native review | Reach every locale the business serves, without machine-translated publishing |
+| 5 Translation | Localized pages, checked in the target language | Reach every locale the business serves, without machine-translated releases |
 
 Two checkpoints keep bulk work honest: Checkpoint 1 on the idea slate and
 Checkpoint 2 on the audited, fixed, and verified content. Both are operator
@@ -122,21 +122,16 @@ between the two checkpoints.
 - Real specificity only. Names, numbers, dates, and procedures must constrain
   the claim or help the reader act.
 - Density floor. Every article answers its reader's decision at practitioner
-  depth: at least 1,200 words of body text (front matter and Sources
-  excluded), with the substance to justify every one of them. The run checker
-  enforces the count; the audit kills filler.
+  depth: at least 1,200 words of body text (the Sources section excluded),
+  with the substance to justify every one of them. The writing step enforces
+  the count; the audit kills filler.
 - Citation floor. Every article carries at least two distinct, openable
-  sources in its Sources section. The run checker enforces it.
+  sources in its Sources section. The writing step enforces it.
 - No claim without a source the reader can open.
 - No content optimized against AI-detector scores. Detector output is not a
   quality signal and not a ranking signal.
 - Capacity governs volume.
 - No em dash characters in any copy.
-- Named author on every page, and a named reviewer on every page that touches
-  legality, money, safety, or health. The reviewer field is always present;
-  where no reviewer is required it reads `none`. Without a context file the
-  fields read `PENDING` and the audit flags them; a missing name blocks
-  publication, not the run.
 
 ## Configuration
 
@@ -145,9 +140,8 @@ against those fields, so a tour operator, a visa service, a travel-insurance
 broker, or a destination guide can run the same five steps.
 
 `context.md` is your copy of `context.example.md`, filled in. It is the only
-file that changes from one business to another, and it is yours: the package
-checker excludes it from its integrity hash, so your business details never
-affect verification and never ship with the skill.
+file that changes from one business to another, and it is yours: your business
+details never ship with the skill.
 
 The skill checks for `context.md` and uses it if present, but the default is
 to run without one. An absent context file means an unscoped run: the whole
@@ -164,36 +158,26 @@ context, and the content inventory.
 
 ## Verification
 
-From the skill directory:
+The audit step is the quality gate: one record per draft at `audit/<slug>.md`
+with the audit, the fixes, and the verification, ending in a PASS or BLOCKED
+verdict. Nothing reaches Checkpoint 2 unaudited, and no translation runs before
+its English original passes.
+
+To rebuild the reading copy:
 
 ```bash
-node scripts/verify-pipeline.mjs              # package integrity
-node scripts/verify-run.mjs runs/YYYY-MM-DD   # one cycle's artifacts
-node scripts/build-all-articles.mjs runs/YYYY-MM-DD  # rebuild the reading copy
+node scripts/build-all-articles.mjs runs/YYYY-MM-DD
 ```
 
-The package checker verifies the file set, the audit prompt's framework and
-extension sections, the absence of em dashes, the translation preconditions, the
-context template fields, and that every reference file named by `SKILL.md`
-or this README exists. The run checker verifies a cycle's output: complete
-draft front matter, ledger rows that resolve, an audit, fix, and verify record
-with a verdict per draft, translations that never outrun a passing English audit,
-the density floor (at least 1,200 words of article body per draft, front matter
-and Sources excluded), the citation floor (at least two distinct openable
-sources in each Sources section), and the publication gate (a draft marked
-`publishable: true` must carry a named author and, where review is required, a
-named reviewer), and an `ALL_ARTICLES.html` reading copy that
-covers every draft. Exit 0 plus the "verification passed" line means the checked
-thing is intact. The run checker's own behavior is covered by
-`node scripts/test-verify-run.mjs`, which runs it against passing and violating
-fixture runs.
+One `ALL_ARTICLES.html` at the run root covers every draft. The builder needs
+Node 18 or newer.
 
 ## Contributing
 
 Issues and pull requests are welcome. Keep the prompts travel-centered and
 business-agnostic: a change that only helps one company belongs in that
-company's `context.md`, not in the prompts. Run the checker before opening a
-pull request, and describe the failure the change prevents.
+company's `context.md`, not in the prompts. Re-read the affected prompts and this README before
+opening a pull request, and describe the failure the change prevents.
 
 ## License
 
