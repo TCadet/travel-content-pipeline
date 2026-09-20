@@ -40,9 +40,76 @@ these sources, and must name the source that produced it:
 - **Existing-page conflicts.** Pages that disagree with each other or that a
   reader cannot use without a second source. These are update or merge
   candidates, not new pages.
+- **Novel and offbeat movement.** New or newly resurfaced experiences, venues,
+  festivals, routes, attractions, and micro-trends with dated evidence of
+  traveller interest, from the Step 1 offbeat lane (Part 13). Wackiness alone
+  is not a reader job.
 
 For every candidate, write one sentence on why a competitor could not produce
 the same page.
+
+---
+
+## The offbeat lane (novelty candidates)
+
+**This is the most important lane in this step.** Score and brief its
+candidates first, and when a capacity cut forces a choice between candidates
+that are otherwise equal (including reader value), keep the offbeat one.
+
+Part 13 of the Step 1 sweep surfaces novel, innovative, and offbeat travel
+subjects. Candidates from it enter this step like every other candidate and
+pass or fail the same eight gates. In a context-less run they count toward the
+trip-experience and trip-decision share of the slate, never toward the
+administration half.
+
+Four points decide most of them:
+
+- **Gate 1 first.** One traveller, one situation, one decision. "This place is
+  strange" is not a reader job. The decision is go or skip, when to go, how to
+  book, what it costs, what to expect, or what to do when it is sold out.
+- **Gate 5 with full force.** Novelty roundups are this lane's template trap:
+  ten odd museums, ten big things, ten weird festivals, all with one outline.
+  Keep one topic only when a single decision covers the set; otherwise keep
+  the strongest and kill the rest.
+- **Gate 8 interest is traveller interest.** The subject needs one of the
+  gate's interest signals (tension between sources, money at stake, a dated
+  change, a counterintuitive fact, or a correction of what currently ranks)
+  plus dated demand evidence: an opening date, a ticket or booking window, a
+  festival date, a coverage count, or a platform data release with its
+  denominator. A viral claim without a dated source is not a signal.
+- **Differentiation asset.** For this lane the asset is usually a
+  primary-source synthesis (operator, venue, or organizer documents opened
+  live) or the first dated listing of something new, not the novelty itself.
+  Sources skew to operator and venue newsrooms, tourism boards, festival
+  organizers, culture and trend press, and catalog sites such as Roadside
+  America and Atlas Obscura (Tier 3, with corroboration). Government documents
+  stay valid where they apply, but they are not the lane's backbone.
+
+Two lane-specific scoring notes, which supplement the scoring rules above:
+
+- **Timing.** A viral spike scores at most 3 unless the page can go live
+  inside the dated wave; a festival or an opening scores 5 when the live-by
+  date precedes the window. A passed event scores at most 2 and usually merges
+  into the cluster hub or the next cycle's calendar item.
+- **Reader value.** Curiosity alone does not clear 3. The candidate must
+  remove a real cost or risk: a wasted trip, a sold-out window, a closed
+  season, a booking step that surprises the reader, or money spent on the
+  wrong ticket.
+
+Worked gate calls (how this lane's candidates die):
+
+- A world's-largest claim with no decision and no dated change: kill gate 1.
+- Ten odd museums in one outline: keep the strongest, kill the rest at gate 5.
+- A trend reported with no dated source and no denominator: kill gate 8.
+- A festival that ended last month with no next-year date: park it, do not
+  build; the vintage row stays in the ledger for the next cycle.
+
+Brief requirements for this lane: fill the brief's existing answer shapes
+with the on-site answers (what the reader will actually see or do, the booking
+window, the access and cost rules, the season, and the sold-out or closed
+fallback), and make the kill criterion specific to this lane (the opening is
+postponed, the festival cancels, the operator changes the price or the window,
+or the only dated source disappears).
 
 ---
 
@@ -206,6 +273,8 @@ The brief is the input to the writing step. No idea enters writing without one.
 ## Anti-patterns
 
 - Listicles of destinations, countries, or documents that differ by a noun.
+- Novelty topics with no traveller decision, novelty roundups that share
+  one outline, and trend pages built on an undated viral claim.
 - Volume quotas or output targets decoupled from capacity.
 - Ideas justified by beating AI detectors or outsmarting an algorithm.
 - Word-count targets as a quality proxy.
@@ -242,6 +311,9 @@ The brief is the input to the writing step. No idea enters writing without one.
    intent, or one cluster.
 6. No idea rests on detector evasion, keyword volume alone, or word count.
 7. Gaps are listed as gaps, not dressed up as findings.
+8. Offbeat-lane candidates name one traveller decision, carry dated interest
+   evidence and a live-by date where a window exists, and are not novelty
+   roundups.
 
 ---
 

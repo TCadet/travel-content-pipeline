@@ -155,6 +155,12 @@ with fewer, mark it `depth-thin` in the taxonomy with the number of rows it
 has; the idea step treats depth-thin topics as merge or kill candidates rather
 than standalone pages, because a one-fact page is a fragment.
 
+A thirteenth lane, Part 13, runs alongside the twelve thematic parts. It
+sweeps novel, innovative, and offbeat travel subjects, so the sweep does not
+lean on government and regulatory documents alone. It keeps the same evidence
+standard, the same claim-ledger schema, and the same stop rules as every other
+part. Its budget is the lane-level exception stated in Part 13.
+
 ### Part 0: Trend sweep (runs first)
 
 Before the twelve thematic parts, sweep what is moving now in the operator's
@@ -379,6 +385,96 @@ trigger them.
 **12.4 On-the-ground practice.** Queue timing, entry-point selection,
 shoulder-day travel, and the operational knowledge that separates a smooth
 trip from a stranded one, with attribution.
+
+### Part 13: Novel, innovative, and offbeat travel
+
+**This is the most important lane in the sweep.** Budget the lane first,
+never halve it when the trend sweep shows nothing, and spend its one theme
+budget on the sub-lanes the trend sweep shows movement in.
+
+This lane is additive to the twelve thematic parts above. It exists so the
+sweep does not lean on government and regulatory documents alone. It carries
+the same rules as every other part: one travel reader per page topic, the same
+claim-ledger schema, openable sources, absolute dates, and the same saturation
+threshold. The trend sweep feeds it: viral, opening, and record signals from
+Part 0 shape which sub-lanes get the budget.
+
+**13.1 Novel stays, venues, and attractions.** World-first and unusual
+accommodations and venues: converted lighthouses, prisons, planes, cranes, and
+silos; underwater, ice, and treetop hotels; themed brand stays; new museum
+concepts; immersive venues such as LED domes and Sphere productions; novelty
+parks; and record-holding rides and structures. Open the venue or operator
+newsroom for the opening date, the ticket mechanics, the price, and the
+booking window; open the attractions trade press for the operating context.
+Named sources: Blooloop, Theme Park Insider, Amusement Today, and IAAPA for
+the attractions industry; Guinness World Records for a record claim; the venue
+or brand newsroom as a self-reported source.
+
+**13.2 Quirky festivals and calendar oddities.** Named festivals with an
+unusual hook (single-ingredient food festivals, odd world championships,
+one-time anniversaries, folk rites with a fixed date), with dates, locations,
+the organizer, and the ticketing or free-entry rule. Open the festival
+organizer and the municipal or national tourism page first, then the regional
+press for the lived experience. A festival that has already passed is a
+vintage item: keep it only with a reason, such as an annual window that
+reopens or a next-year date already announced.
+
+**13.3 Novel transport and routes.** Unusual rail, ferry, cable, and road
+experiences: historic funiculars and mountain railways, record road and rail
+stretches, novelty and micro-cruises, and new long-distance walking and
+cycling routes. Open the operator page for the schedule, the booking window,
+and the price where published; open the route authority or trail association
+for the official status. Named sources: operator press rooms, cruise trade
+press, national rail and road authorities, long-distance trail associations.
+
+**13.4 Viral and micro-trends.** Social-first travel phenomena with dated
+evidence: lore-tripping, convenience-store food hunts, sleep tourism,
+astrowellness, sportcations, dupe destinations, set-jetting, and the like.
+Treat a trend claim as a claim: name the study, the platform dataset, or the
+dated coverage count, and record the denominator. Platform and booking-data
+releases are Tier 2 sources: label them self-reported and record the
+denominator. Trade and trend press (Skift, PhocusWire, Globetrender, and their
+peers) reports the claim first; open the underlying study or dataset before
+the claim enters the ledger. Social posts are Tier 4 color beside a higher
+tier, never the support. A trend with no dated evidence is not a topic.
+
+**13.5 Roadside and folk attractions.** Big things, folk art environments, odd
+monuments, and long-running local rites that draw visitors. Open the state or
+local tourism board, the regional press, and catalog sites such as Roadside
+America and Atlas Obscura (Tier 3, with corroboration from the operator or the
+managing authority).
+
+**13.6 Campaigns with an unusual hook.** Destination campaigns built on a
+novelty, when they change what a traveller can book or see. Tourism board
+material is self-reported; label it that way, and prefer the campaign's own
+booking or access mechanic over its reach claims.
+
+**13.7 The lane's cross-overs.** Many offbeat subjects belong to another part
+as well: a themed hotel is Part 5, a novelty cruise is Part 3, a festival
+travel spike is Part 4, a museum or ride is Part 6. File the topic under the
+cluster that serves the
+reader's decision and cross-reference the other part, so the taxonomy stays
+one map rather than two.
+
+**Ledger depth for a novelty topic.** A world-first attraction needs more than
+the announcement: the opening date and the operator's own statement (date),
+the ticket price and the booking window (fee, procedure), the access or
+height rule (rule), and what happens at the end of its season or preview
+period (date). If the only row is the announcement, the topic is depth-thin
+and merges into its cluster hub.
+
+**Rules for this lane.** Wacky is not a demand signal: every candidate carries
+a dated signal (an opening date, a ticket or booking window, a festival date,
+a coverage count, or a data release with its denominator). One traveller
+decision per topic: go or skip, when to go, how to book, what it costs, what
+to expect, what to do when it is sold out or closed. A subject that is merely
+strange is not a page. The no-template test applies with full force: ten odd
+museums are one topic only when one decision covers all ten; otherwise keep
+the strongest. A novelty topic needs a durability label and a live-by date
+where a window exists, because this lane decays faster than the others.
+Government documents remain valid where they apply (a permit for a folk
+festival, a park rule for an odd event), but this lane does not depend on
+them.
 
 ---
 
