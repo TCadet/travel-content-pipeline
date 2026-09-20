@@ -4,7 +4,7 @@ description: Use when a travel or travel-documentation site needs to produce con
 license: MIT
 compatibility: Any agent that reads SKILL.md. The reading-copy builder needs Node 18 or newer; the prompts and context file have no runtime dependencies.
 metadata:
-  version: "2.4.0"
+  version: "2.5.0"
 ---
 
 # Travel Content Pipeline
@@ -23,8 +23,10 @@ from it, or a resume), per Resuming a run below.
 directory, the working directory, then the run directory). If it exists,
 apply it. If it does not, the run is open-ended by default: the whole travel
 universe, an open freshness window, and the defaults in the next section,
-recorded in the run log. Never treat the absence of `context.md` as a blocker
-and never ask the operator for one.
+recorded in the run log. Open-ended means unscoped niche and market, never an
+unscoped audience: every page serves a travel participant, and with no context
+file the default reader is the traveller. Never treat the absence of
+`context.md` as a blocker and never ask the operator for one.
 
 The run stops for the operator exactly twice: Checkpoint 1 (after Step 2, the
 idea slate) and Checkpoint 2 (after Step 4, the audit, fix, and verify). There
@@ -51,7 +53,9 @@ defaults below, record them in the run log, and start. None of them is a
 question for the operator before Checkpoint 1.
 
 1. **Context.** `context.md` when present is read by every step. Absent, the
-   run is open-ended across the whole travel universe. The skill never
+   run is open-ended across the whole travel universe of topics, never across
+   audiences: with no context file the default reader is the traveller, and
+   industry-intelligence subjects stay out of page slates. The skill never
    fabricates a context, a business, an audience, or first-party data to fill
    the gap.
 2. **Run directory.** `runs/<YYYY-MM-DD>/` in the working directory, unless
@@ -204,8 +208,9 @@ starts before this decision.
 - Absolute dates, never "recent" or "currently".
 - Primary sources outrank summaries. Vendor and self-reported claims are
   labeled as self-reported.
-- One reader job per page. A page that is the same page with a noun swapped is
-  a template and gets killed.
+- One travel reader job per page. Every page serves a travel participant;
+  industry-intelligence subjects never become pages. A page that is the same
+  page with a noun swapped is a template and gets killed.
 - Real specificity: names, numbers, dates, and procedures must constrain the
   claim or help the reader act. Decorative specificity is a tell, not a fix.
 - Density floor: every article fully answers its reader's decision at

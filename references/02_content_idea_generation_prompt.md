@@ -6,7 +6,9 @@ before anyone spends writing time on them.
 
 Read `research.md` from the current run before starting, and `context.md` if one
 exists. The context file is optional. If no context file exists, run unscoped: no
-business, audience, market, or first-party data is assumed or invented. Never
+business, audience, market, or first-party data is assumed or invented. The
+audience default still applies: with no context file the reader is the
+traveller, and industry-intelligence topics are not page candidates. Never
 ask for `context.md`; its absence is a supported, open-ended mode.
 
 Bulk default: return 10 to 20 candidates. Fewer is correct when the idea gates kill
@@ -72,8 +74,11 @@ Bulk output compounds when pages reinforce each other. For each candidate:
 Fail any gate and the idea dies here. State which gate killed it. Do not soften
 a fail into a maybe.
 
-1. **Named reader job.** One reader, one situation, one decision the page
-   changes. "General awareness" is not a reader job.
+1. **Named travel reader job.** One travel participant (traveller or
+   travel-participant), one situation, one decision the page changes. An
+   industry-intelligence reader (a marketer, operator, host, analyst, or
+   investor) fails this gate: a context file narrows the niche and market,
+   never the audience. "General awareness" is not a reader job.
 2. **Differentiation asset.** At least one of: a first-party datum, named
    operational experience, a primary-source synthesis, or a genuinely new
    comparison. "Better written" fails.
@@ -93,7 +98,7 @@ a fail into a maybe.
    rule, fee, date, procedure, statistic, and contradiction types; dated
    trend rows (statistic or anecdote rows carrying dated demand evidence)
    count toward this floor, and one dated trend row may substitute for one
-   rule row. The topic also needs something a reader would call interesting:
+   rule row. The topic also needs something a traveller would call interesting:
    tension between sources, money at stake, a dated change, a
    counterintuitive fact, or a correction of what currently ranks. A topic
    with one supportable fact is killed here or merged into its cluster's
@@ -112,7 +117,7 @@ Score 1 to 5 per criterion, apply the weight, and show the arithmetic.
 | Differentiation | 25% | The datum or experience exists nowhere else |
 | Reader value | 20% | It removes a real cost: money, delay, rejection, risk |
 | Evidence strength | 15% | Primary sources and first-party numbers already in hand |
-| Business fit | 10% | The reader this page serves is the reader the business sells to |
+| Business fit (context runs) / Traveller relevance (context-less runs) | 10% | With a context file: the reader this page serves is the reader the business sells to. Without one: 5 = directly changes a trip decision; 3 = travel-adjacent; 1 = industry-only. The context-less scale has no neutral value. |
 | Trust fit | 10% | The business is a credible, nameable source for this |
 | Timing | 15% | A dated rising or peaking demand wave with a live-by date inside it; a stable-demand topic scores at most 3 |
 | Build cost | 5% | Fits capacity without displacing better pages |
@@ -121,8 +126,9 @@ Rules:
 
 - Any candidate scoring below 3 on Differentiation is dropped regardless of its
   total.
-- Any candidate scoring below 3 on Business fit must justify its slot in one
-  sentence (a trust or audience-building play), or it is dropped.
+- Any candidate scoring below 3 on Business fit (or below 3 on Traveller
+  relevance in a context-less run) is dropped. In a context-less run no
+  justification path exists for an industry-only reader.
 - Interest and density potential are judged inside Reader value and
   Differentiation, not as a separate score: the denser, more decision-loaded
   candidate scores higher, and a thin topic that slipped past the gates is
@@ -132,6 +138,10 @@ Rules:
   dated trend row from Step 1 showing the reader is incurring this cost now.
 - A slate that is all one page type, one intent, or one cluster is a warning.
   Say so.
+- In a context-less run, administration topics (visas, entry documents, fees,
+  taxes, compensation) may fill at most half the slate; the rest must be
+  trip-experience or trip-decision pages (where to go, when to go, what a visit
+  involves, how to book, pay, or prepare).
 - Show the per-criterion scores and the weighted arithmetic for every
   survivor; no bare round numbers.
 
@@ -223,8 +233,9 @@ The brief is the input to the writing step. No idea enters writing without one.
 
 1. Every candidate traces to a harvest source.
 2. Every survivor passed all eight gates; every kill names its gate.
-3. Every score shows its arithmetic; no sub-3 differentiation survived, and any
-   sub-3 business fit carries its one-sentence justification.
+3. Every score shows its arithmetic; no sub-3 differentiation survived, and no
+   sub-3 traveller relevance survived in a context-less run (there is no
+   justification path for an industry-only reader).
 4. Every build idea has a brief, a demand signal, a cluster and role, an
    intent class, and a live-by date where timing matters.
 5. The slate is not several copies of one page, and not all one page type, one

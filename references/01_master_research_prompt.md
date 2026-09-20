@@ -20,7 +20,10 @@ in `in_scope` are prioritized. Depth follows the operator's markets and reader
 decisions. If no context file exists, the sweep runs unscoped: the whole
 travel universe, an open freshness window unless the operator sets one, and no
 business, audience, market, keywords, or first-party data invented to fill the
-gap. The freshness window decides what counts as new for this batch.
+gap. The audience anchor still holds in this mode: research collects
+industry-intelligence material for context, but every page topic carries an
+Audience label, and industry-intelligence topics are page-ineligible. The
+freshness window decides what counts as new for this batch.
 
 ---
 
@@ -383,7 +386,9 @@ trip from a stranded one, with attribution.
 
 Cover the traveller, the operator or agent who processes bookings and
 documents, the regulator or issuer, and the business itself. Missing
-perspectives are a coverage gap and must be reported as one.
+perspectives are a coverage gap and must be reported as one. Perspectives
+shape the research; they do not change the page audience. Every page topic
+carries an Audience label, and industry-intelligence topics never become pages.
 
 ## Demand and result-page signals
 
@@ -442,9 +447,15 @@ organized in three levels:
   with one page that can serve as the hub the others link to.
 - **Page topic.** One reader, one situation, one decision. If two candidate
   topics would produce the same page outline, they are one topic.
+- **Audience.** Every page topic carries one label: `traveller` (a person
+  travelling or planning a trip), `travel-participant` (a trip-taker in a
+  specific role, for example a driver, hiker, or camper), or
+  `industry-intelligence` (a supply-side business role, for example a marketer,
+  operator, host, analyst, or investor). Industry-intelligence topics are
+  research assets; they never become pages.
 
-For each page topic: the reader it serves, its dates, its sources, and its
-cluster. The taxonomy is what lets the idea step build internal linking and
+For each page topic: the reader it serves, its Audience label, its dates, its
+sources, and its cluster. The taxonomy is what lets the idea step build internal linking and
 spot template risk before writing starts.
 
 ## Claim ledger
@@ -555,7 +566,7 @@ Return one research document with these sections:
    page topic names its cluster and the cluster's hub candidate.
 3. **Topics in scope.** Every distinct topic inside the freshness window.
    For each:
-   - Working title and the reader it serves.
+   - Working title, the reader it serves, and its Audience label.
    - What changed or what matters, with the date.
    - The source, with URL, issue date, language, and tier.
    - Why it is new relative to what the site already covers.

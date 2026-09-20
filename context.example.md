@@ -30,6 +30,10 @@ batch. Research scope stays open unless `research_scope` narrows it.
 
 ## Audience
 
+No context file is required. With none, the pipeline assumes the reader is the
+traveller; a context file narrows the niche and market but never removes the
+travel essence, and industry-intelligence topics stay out of page slates.
+
 ```
 primary_reader:        # the person doing the task
 markets_served:        # countries and regions
