@@ -148,8 +148,9 @@ specific market, the specific document, the specific date, and the specific
 reader it affects.
 
 Depth per page topic, not just per theme: a page topic that survives the sweep
-should carry at least three claim-ledger rows across rule, fee, date,
-procedure, statistic, and contradiction types, so the writing step can build a
+should carry at least three claim-ledger rows across the rule, fee, date,
+procedure, and statistic types, or a row carrying a `contradicts` value, so the
+writing step can build a
 dense, informative page without re-researching. Where a topic ends the sweep
 with fewer, mark it `depth-thin` in the taxonomy with the number of rows it
 has; the idea step treats depth-thin topics as merge or kill candidates rather
@@ -168,7 +169,9 @@ markets: rising travel queries for the freshness window, destination news
 velocity, airline-route and hotel and attraction openings, and event
 calendars. The output is a short ranked list of what is moving, written into
 the plan. It shapes the budgets that follow: themes the trend sweep hits get
-their query budget first and doubled, themes it shows nothing about get half.
+their queries first and their budget doubled; themes it shows nothing about are
+researched last, on the standard budget, so their saturation threshold stays
+reachable.
 
 ### Part 1: Entry rules, visas, and border systems
 
@@ -389,7 +392,7 @@ trip from a stranded one, with attribution.
 ### Part 13: Novel, innovative, and offbeat travel
 
 **This is the most important lane in the sweep.** Budget the lane first,
-never halve it when the trend sweep shows nothing, and spend its one theme
+never cut it when the trend sweep shows nothing, and spend its one theme
 budget on the sub-lanes the trend sweep shows movement in.
 
 This lane is additive to the twelve thematic parts above. It exists so the
@@ -626,11 +629,11 @@ Open scope does not mean infinite scope.
 
 Begin by writing the plan into the run as a record, not a checkpoint: which
 sweep parts are in play given `context.md` (when one exists), the themes to
-sweep, the trend sweep's ranked list of what is moving and the budget skew
-it sets, the seed queries per theme, the markets to search and the languages
+sweep, the seed queries per theme, the markets to search and the languages
 to search in, the named Tier 1 sources to open first, the per-theme query
 budget, the saturation threshold, and the freshness window. Then run the
-sweep at once. There is no
+sweep at once. When Part 0 finishes, write its ranked list of what is moving
+and the budget skew it sets into the plan. There is no
 approval wait. The operator reads the plan and can amend scope, window, budget,
 or saturation while the sweep is under way; record any amendment and its effect
 in the run log.

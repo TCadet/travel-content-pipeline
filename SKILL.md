@@ -4,7 +4,7 @@ description: Use when a travel or travel-documentation site needs to produce con
 license: MIT
 compatibility: Any agent that reads SKILL.md. The reading-copy builder needs Node 18 or newer; the prompts and context file have no runtime dependencies.
 metadata:
-  version: "2.5.0"
+  version: "2.6.0"
 ---
 
 # Travel Content Pipeline
@@ -29,10 +29,10 @@ file the default reader is the traveller. Never treat the absence of
 `context.md` as a blocker and never ask the operator for one.
 
 The run stops for the operator exactly twice: Checkpoint 1 (after Step 2, the
-idea slate) and Checkpoint 2 (after Step 4, the audit, fix, and verify). There
+idea slate) and Checkpoint 2 (after Step 5, the audit, fix, and verify). There
 is no checkpoint at invocation and no third stop anywhere. Failure escalations
 inside a step (a missing ledger row, a template collision) are recorded in the
-run notes; they stop that page, not the run.
+run log; they stop that page, not the run.
 
 Do not stop for any of these before Checkpoint 1:
 
@@ -57,11 +57,19 @@ question for the operator before Checkpoint 1.
    audiences: with no context file the default reader is the traveller, and
    industry-intelligence subjects stay out of page slates. The skill never
    fabricates a context, a business, an audience, or first-party data to fill
-   the gap.
+   the gap. `voice.md` is optional in the same way: the path in `context.md`'s
+   `voice_file` wins when set, otherwise look for it in the skill directory,
+   the working directory, then the run directory; with none, the writing and
+   editing steps use the default voice card at `references/voice-default.md`.
 2. **Run directory.** `runs/<YYYY-MM-DD>/` in the working directory, unless
-   `context.md` sets `content_root` or the operator names one. All artifacts
-   land there: `research.md`, `idea-slate.md`, `drafts/`, `audit/`,
-   `translations/`, `ALL_ARTICLES.html`, and the run log.
+   `context.md` sets `runs_root` or the operator names one. All artifacts
+   land there: `research.md`, `idea-slate.md`, `drafts/`, `editor/`, `audit/`,
+   `translations/`, `ALL_ARTICLES.html`, and the run log, `run-log.md`.
+   Translation runs also update the shared `termbase.md`, which lives beside
+   the run directories for reuse across cycles (Step 6). An optional `voice.md`
+   sits beside `context.md`
+   and overrides the default voice card; when `context.md` sets `voice_file`,
+   that path wins.
 3. **Freshness window.** From `context.md` when present. With none, the window
    is open (any time) and each item's vintage is marked instead.
 4. **Capacity.** From `capacity_per_cycle` when present. With none, slate 10
@@ -70,12 +78,12 @@ question for the operator before Checkpoint 1.
 
 ## Overview
 
-A five-step pipeline that turns research across the travel topic universe into
+A six-step pipeline that turns research across the travel topic universe into
 audited, fixed, verified, and optionally localized pages. The freshness window
 is an operator setting, from any time to the last few days.
 Built for bulk: one run produces a travel research map, a scored slate of
-candidate pages, drafts for the kept ones, an audit-fix-verify pass, and
-localized versions on request.
+candidate pages, drafts for the kept ones, an editor pass, an
+audit-fix-verify pass, and localized versions on request.
 
 Core principle: a page earns its place only when a reader cannot get the same
 thing anywhere else and a search engine cannot mass-produce it. The idea gates
@@ -104,8 +112,9 @@ Do not use this skill for:
 Step 1  Research      travel industry sweep    launches at once
 Step 2  Ideas         scored candidate slate   CHECKPOINT 1: keep, redo research, or reselect
 Step 3  Writing       drafts for kept ideas
-Step 4  Audit+fix+verify  English quality pass   CHECKPOINT 2: review content, choose translation
-Step 5  Translation   optional, only when chosen at Checkpoint 2
+Step 4  Editor pass   voice, rhythm, and padding cuts
+Step 5  Audit+fix+verify  English quality pass   CHECKPOINT 2: review content, choose translation
+Step 6  Translation   optional, only when chosen at Checkpoint 2
 ```
 
 Each step is a prompt in `references/`. A fresh run works them in order, and
@@ -120,8 +129,9 @@ run, see Resuming a run below.
 | 1 | `references/01_master_research_prompt.md` | `research.md` with a dated topic list and a claim ledger |
 | 2 | `references/02_content_idea_generation_prompt.md` | `idea-slate.md` with scored candidates |
 | 3 | `references/03_content_writing_prompt.md` | `drafts/<slug>.md`, one file per kept idea |
-| 4 | `references/04_content_audit_prompt.md` | `audit/<slug>.md` per draft: audit, fixes, and verification, ending in a verdict |
-| 5 | `references/05_translation_prompt.md` | `translations/<slug>.<locale>.md`, only for what Checkpoint 2 chose |
+| 4 | `references/04_editor_pass_prompt.md` | `editor/<slug>.md` per draft: the cuts applied and the voice-floor result |
+| 5 | `references/05_content_audit_prompt.md` | `audit/<slug>.md` per draft: audit, fixes, and verification, ending in a verdict |
+| 6 | `references/06_translation_prompt.md` | `translations/<slug>.<locale>.md`, only for what Checkpoint 2 chose |
 
 ## Run Shape
 
@@ -142,17 +152,19 @@ Bulk is the default:
 - Step 3 drafts only the ideas kept at Checkpoint 1, and rebuilds
   `ALL_ARTICLES.html`, one readable file with every article in the run and
   its citations.
-- Step 4 audits, fixes, and verifies every draft. Nothing reaches Checkpoint 2
+- Step 4 runs the editor pass on every draft: the voice, rhythm, and padding
+  cuts, recorded at `editor/<slug>.md`, with the reading copy rebuilt after it.
+- Step 5 audits, fixes, and verifies every draft. Nothing reaches Checkpoint 2
   unaudited or unfixed. Checkpoint 2 follows: the operator reads the audited,
   fixed, and verified content and chooses which pages, if any, to translate.
-- Step 5 runs only for the pages and locales chosen at Checkpoint 2.
+- Step 6 runs only for the pages and locales chosen at Checkpoint 2.
 
 Keep one dated run directory per cycle. Every artifact carries its date, its
 sources, and the claim ledger rows behind its factual statements.
 
 ## Resuming a run
 
-The full five-step run happens once per research cycle. The common case after
+The full six-step run happens once per research cycle. The common case after
 that is smaller: the operator asks for more articles from the same run.
 
 - If the request maps to ideas already on the kept slate, re-enter at
@@ -163,8 +175,9 @@ that is smaller: the operator asks for more articles from the same run.
 - Never re-run Step 1 to satisfy an article request. Fresh research is a new
   run. The one exception: when the freshness window has moved past a ledger
   row the new drafts will cite, re-verify that row live before drafting.
-- Step 4 still applies to every new draft: nothing reaches Checkpoint 2
-  unaudited or unfixed, and the operator still chooses translation at Checkpoint 2.
+- The editor pass (Step 4) and the audit (Step 5) still apply to every new
+  draft: nothing reaches Checkpoint 2 unaudited or unfixed, and the operator
+  still chooses translation at Checkpoint 2.
 - Rebuild `ALL_ARTICLES.html` whenever the draft set changes, so the file
   always covers every article in the run.
 
@@ -172,10 +185,10 @@ that is smaller: the operator asks for more articles from the same run.
 
 The run stops for the operator exactly twice. Failure escalations inside a step
 (a missing ledger row, a template collision) stop that page and go in the run
-notes; they are not operator checkpoints.
+log; they are not operator checkpoints.
 
 Between them the run never waits. Step 1 launches without approval, Steps 2
-through 4 run on their own, and no question halts the run before Checkpoint 1
+through 5 run on their own, and no question halts the run before Checkpoint 1
 or between the checkpoints.
 
 Step 1 has no checkpoint: it writes its research plan into the run and launches
@@ -188,9 +201,9 @@ chooses one of three paths: keep it and draft the selected ideas, send it back
 for more research, or select different ideas. Only the ideas kept here go to
 Step 3. Everything else is killed with a named reason.
 
-**Checkpoint 2, after Step 4 (audit, fix, and verify).** The operator reads the
+**Checkpoint 2, after Step 5 (audit, fix, and verify).** The operator reads the
 audited, fixed, and verified content and decides whether to translate any of it,
-and into which locales. Step 5 runs only for what is chosen here. No translation
+and into which locales. Step 6 runs only for what is chosen here. No translation
 starts before this decision.
 
 ## Rules That Apply to Every Step
@@ -213,6 +226,10 @@ starts before this decision.
   page with a noun swapped is a template and gets killed.
 - Real specificity: names, numbers, dates, and procedures must constrain the
   claim or help the reader act. Decorative specificity is a tell, not a fix.
+- Voice and register: every page is written in the house voice (`voice.md` or
+  the default voice card at `references/voice-default.md`); procedures keep the
+  STE limits; editorial prose stays in plain English; every page passes the
+  editor pass's voice floor before the audit.
 - Density floor: every article fully answers its reader's decision at
   practitioner depth. The writing step and the audit enforce a minimum of
   1,200 words of article body (the Sources section excluded); a thinner draft
@@ -222,7 +239,8 @@ starts before this decision.
   distinct, openable sources. A draft with fewer does not pass the writing
   step; a single-source page stops there until a second source exists.
 - No content optimized against AI-detector scores. Detector output is not a
-  quality signal and is not a ranking signal.
+  quality signal, is not a ranking signal, and never decides an audit finding on
+  its own; it may only corroborate one.
 - No em dash characters in any copy (U+2014).
 - Capacity governs volume. Never draft faster than the checkpoints can clear.
 
@@ -230,8 +248,10 @@ starts before this decision.
 
 The audit step is the quality gate: every draft gets one record at
 `audit/<slug>.md` with the audit, the fixes, and the verification, ending in a
-PASS or BLOCKED verdict. Nothing reaches Checkpoint 2 unaudited or unfixed, and
-no translation runs before its English original passes.
+PASS or BLOCKED verdict. Before that, every draft gets an editor record at
+`editor/<slug>.md` with the cuts applied and the voice-floor result. Nothing
+reaches Checkpoint 2 unaudited or unfixed, and no translation runs before its
+English original passes.
 
 The reading copy is rebuilt when the draft set changes:
 
@@ -247,13 +267,13 @@ dependencies.
 
 Change `context.md` only. The prompts are written against the context fields,
 not against one company. A tour operator, a visa service, a travel-insurance
-broker, or a destination guide can run the same five steps by filling in their
+broker, or a destination guide can run the same six steps by filling in their
 own lane, markets, locales, data assets, and capacity.
 
 ## Files
 
 - `context.example.md` the configuration template to copy and fill
 - `README.md` install, quickstart, and design rules
-- `references/` the five step prompts
+- `references/` the six step prompts and the default voice card
 - `scripts/build-all-articles.mjs` the `ALL_ARTICLES.html` builder
 - `LICENSE` MIT

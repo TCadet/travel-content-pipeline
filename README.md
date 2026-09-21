@@ -1,14 +1,14 @@
 # travel-content-pipeline
 
-A five-step content pipeline for travel and travel-documentation businesses. It
+A six-step content pipeline for travel and travel-documentation businesses. It
 turns open-ended research across the travel topic universe into differentiated
-pages that have been audited, fixed, and verified, and optionally into localized
-versions. The freshness window is yours to set, from any time to the last few
-days.
+pages that have been editor-passed, audited, fixed, and verified, and optionally
+into localized versions. The freshness window is yours to set, from any time to
+the last few days.
 
 Built for bulk: one cycle produces a travel research map, a scored slate of
-candidate pages, drafts for the kept ones, an audit-fix-verify pass on every
-draft, and translations when asked.
+candidate pages, drafts for the kept ones, an editor pass and an
+audit-fix-verify pass on every draft, and translations when asked.
 
 ## Why it exists
 
@@ -78,11 +78,12 @@ builder needs Node 18 or newer.
 Step 1  references/01_master_research_prompt.md         launches immediately
 Step 2  references/02_content_idea_generation_prompt.md CHECKPOINT 1: keep, redo research, or reselect
 Step 3  references/03_content_writing_prompt.md
-Step 4  references/04_content_audit_prompt.md           CHECKPOINT 2: review content, choose translation
-Step 5  references/05_translation_prompt.md             optional, only if chosen at Checkpoint 2
+Step 4  references/04_editor_pass_prompt.md             voice, rhythm, and padding cuts
+Step 5  references/05_content_audit_prompt.md           CHECKPOINT 2: review content, choose translation
+Step 6  references/06_translation_prompt.md             optional, only if chosen at Checkpoint 2
 ```
 
-5. Nothing reaches Checkpoint 2 unaudited or unfixed. Step 4 audits, fixes, and
+5. Nothing reaches Checkpoint 2 unaudited or unfixed. Step 5 audits, fixes, and
    verifies the English version, and translation runs only for the pages and
    locales chosen at Checkpoint 2.
 
@@ -93,8 +94,9 @@ Step 5  references/05_translation_prompt.md             optional, only if chosen
 | 1 Research | Travel map, topic taxonomy, dated topic list, claim ledger | Find every topic that matters across the travel universe, trend-first, filtered by the freshness window you set |
 | 2 Ideas | Scored slate of 10 to 20 candidates, each carrying its demand signal, most killed by idea gates | Decide what deserves writing time |
 | 3 Writing | One draft per kept idea, plus `ALL_ARTICLES.html` combining every draft in the run | Produce the pages the business stands behind |
-| 4 Audit, fix, verify | Per-page findings, the fixes applied, and the verification of each | Catch and correct unsupported, misleading, templated, or policy-risky content |
-| 5 Translation | Localized pages, checked in the target language | Reach every locale the business serves, without machine-translated releases |
+| 4 Editor pass | Per-page cuts: derivable arithmetic, restatement, signposting, slop constructions, filler; voice-floor check | Make the prose read like a person wrote it, before anyone audits the facts |
+| 5 Audit, fix, verify | Per-page findings, the fixes applied, and the verification of each | Catch and correct unsupported, misleading, templated, or policy-risky content |
+| 6 Translation | Localized pages, checked in the target language | Reach every locale the business serves, without machine-translated releases |
 
 Two checkpoints keep bulk work honest: Checkpoint 1 on the idea slate and
 Checkpoint 2 on the audited, fixed, and verified content. Both are operator
@@ -124,7 +126,14 @@ between the two checkpoints.
 - Density floor. Every article answers its reader's decision at practitioner
   depth: at least 1,200 words of body text (the Sources section excluded),
   with the substance to justify every one of them. The writing step enforces
-  the count; the audit kills filler.
+  the count; the editor pass and the audit kill filler.
+- Voice and register. Every page is written in the house voice: the path in
+  `voice_file` when set, otherwise `voice.md` from the skill, working, or run
+  directory, otherwise the default voice card at `references/voice-default.md`. Procedures keep the ASD-STE100 limits;
+  editorial prose stays in plain English with contractions, direct address,
+  and varied sentence lengths. Every page passes the editor pass's voice floor
+  before the audit, and no two pages in a batch share an outline, an opening
+  shape, or a closing shape.
 - Citation floor. Every article carries at least two distinct, openable
   sources in its Sources section. The writing step enforces it; the audit
   flags a draft with fewer as a Major finding.
@@ -138,7 +147,7 @@ between the two checkpoints.
 
 Everything business-specific lives in `context.md`. The prompts are written
 against those fields, so a tour operator, a visa service, a travel-insurance
-broker, or a destination guide can run the same five steps.
+broker, or a destination guide can run the same six steps.
 
 `context.md` is your copy of `context.example.md`, filled in. It is the only
 file that changes from one business to another, and it is yours: your business
@@ -161,8 +170,10 @@ context, and the content inventory.
 
 The audit step is the quality gate: one record per draft at `audit/<slug>.md`
 with the audit, the fixes, and the verification, ending in a PASS or BLOCKED
-verdict. Nothing reaches Checkpoint 2 unaudited, and no translation runs before
-its English original passes.
+verdict. Before that, the editor pass leaves one record per draft at
+`editor/<slug>.md` with the cuts applied and the voice-floor result. Nothing
+reaches Checkpoint 2 unaudited, and no translation runs before its English
+original passes.
 
 To rebuild the reading copy:
 

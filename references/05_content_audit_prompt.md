@@ -1,30 +1,55 @@
-# Step 4: Content Audit, Fix, and Verify Prompt
+# Step 5: Content Audit, Fix, and Verify Prompt
 
-Step 4 runs three phases on every draft from the writing step: audit, fix, and
-verify. The audit finds and evidences every issue, the fix applies the
-corrections to the draft, and the verify phase re-checks each fix and sets the
-final verdict. This is the last quality check before an English page is final.
-Never run the translation step before it passes.
+Step 5 runs three phases on every draft that has been through the editor pass
+(Step 4): audit, fix, and verify. The audit finds and evidences every issue,
+the fix applies the corrections to the draft, and the verify phase re-checks
+each fix and sets the final verdict. This is the last quality check before an
+English page is final. Never run the translation step (Step 6) before it
+passes.
 
 Two values are parameterised so the audit stays reusable across travel
-businesses: `{{CONTENT_ROOT}}` is the directory holding the pages under audit,
-and `{{INDUSTRY}}` is the industry name for the domain-specific checks in
-Section 6. This pipeline serves the travel niche only: `{{INDUSTRY}}` resolves
-to travel, narrowed by the `sub_niche` field in `context.md` (for example visa
-services, guided tours, cruises, or destination guides). Replace both from
-`context.md` when one exists; with no `context.md`, resolve `{{INDUSTRY}}` to
-`travel`, set `{{CONTENT_ROOT}}` to the run's `drafts/` directory, and record the
-unscoped run.
+businesses: the pages under audit are always the run's `drafts/`; `{{CONTENT_ROOT}}`
+is the existing-site directory from `context.md`'s `content_root`, scanned when
+supplied for duplication, internal links, and coverage context; and `{{INDUSTRY}}`
+is the industry name for the domain-specific checks in Section 6. This pipeline
+serves the travel niche only: `{{INDUSTRY}}` resolves to travel, narrowed by the
+`sub_niche` field in `context.md` (for example visa services, guided tours,
+cruises, or destination guides). With no `context.md`, `{{INDUSTRY}}` resolves to
+`travel`, there is no corpus so `{{CONTENT_ROOT}}` stays unset, and the run is
+recorded as unscoped. Checks inherited from the generic marketing template that presuppose a
+marketing-agency or software business (for example codebase size) are marked
+not applicable and skipped, not reported as findings; any cost or platform
+claim that does appear on a travel page is still checked.
+
+**Pre-flight: the editor pass.** Before the audit phases, confirm that the
+editor pass ran: `editor/<slug>.md` exists, quotes the pre-edit text verbatim
+for every cut so it can be diffed against the draft, reports the cut count by
+category, the body word count before and after, and the elements and voice-floor
+results. A zero cut total is acceptable only when those checks are reported in
+full, and the audit re-scans the draft for the cut categories before accepting
+it. Spot-check the diffs against the draft. If the record is missing or
+rubber-stamped, or the draft still shows any cut category (derivable
+arithmetic, restatement, signposting, filler phrases, slop constructions,
+no-presence sentences, em-dash density, abstract-for-concrete, paragraph shape,
+a slop title or heading, filler table cells) or a failed
+voice-floor item, record a Major finding for the affected page and send it back
+to Step 4. The editor record is evidence, not a formality: this audit checks
+that editorial judgment was exercised, not just that a file exists.
 
 The audit framework below is the complete audit: ten core sections, followed
-by Section 11, policy compliance, Section 12, current AI-generation tells,
-and Section 13, the quality scorecard.
+by Section 11, policy compliance, Section 12, current AI-generation tells, and
+Section 13, the quality scorecard.
 
 Run it per draft. Write one record per page at `audit/<slug>.md` with three
 sections, `## Audit`, `## Fix`, and `## Verify`, and end it with a verdict line:
 PASS (no open Critical or Major findings after the fixes and the verification) or
 BLOCKED (the blockers listed). The audit step requires one record per draft,
-with a verdict.
+with a verdict. The OUTPUT STRUCTURE below is the required content of the
+record: the coverage and findings parts go in `## Audit`, the recommended
+actions and fix entries in `## Fix`, and the fix-and-verify results and verdict
+in `## Verify`. Its run-level rows (coverage report, subagent coverage,
+duplication map, including the batch-voice judgment) are filled once at the run
+level, not repeated on every page.
 
 ---
 
@@ -40,7 +65,7 @@ Audit the content (do not edit it during this phase; fixes happen in the fix pha
 
 ### SUBAGENT REQUIREMENT (MANDATORY - VERY IMPORTANT)
 
-You must use subagents for this audit. Only exception to this rule is if you do not have access to subagents.
+You must use subagents for this audit. The only exception is if you do not have access to subagents; in that case run the adversarial verification in a fresh context and record it as a fresh-context check.
 
 Do not do the entire audit in a single monolithic pass.
 
@@ -51,7 +76,7 @@ Do not do the entire audit in a single monolithic pass.
 - One subagent for duplication and cross-page consistency
 - One subagent for AI-generated-text detection
 
-If the codebase/page count is large, use additional subagents to split pages into groups so coverage is complete and parallelized.
+If the draft/page count is large, use additional subagents to split pages into groups so coverage is complete and parallelized.
 
 **Subagent rules:**
 
@@ -98,7 +123,9 @@ If the codebase/page count is large, use additional subagents to split pages int
   - No source at all?
 - **Recency check**: What year is the data from? Flag anything:
   - Over 2 years old as "STALE - VERIFY"
-  - Over 5 years old as "OUTDATED - REPLACE"
+  - Over 5 years old as "OUTDATED - REPLACE" for statistics, prices, and dated
+    claims; standing rules, statutes, fees, and official documents are exempt
+    when re-checked live and dated
   - With no date as "UNDATED - HIGH RISK"
   - In fast-moving domains (AI tools, SEO/algorithm behavior, ad-platform features, pricing, CPC/CPM), over 12 months old as "STALE - VERIFY"
   - From a recurring survey or annual report: search for a newer edition; if one exists, flag regardless of age (this is the strongest, least arbitrary staleness test)
@@ -256,6 +283,7 @@ Generic business checks:
 - **Contradictions**: Does the content contradict itself?
 - **Unsupported conclusions**: Are conclusions drawn that don't follow from presented evidence?
 - **Missing context**: Are important caveats or conditions omitted?
+- **Internal links**: The hub link and the sibling links named in the brief are present, with descriptive anchor text that varies between pages.
 - **Survivorship bias**: Only citing successes while ignoring failure rates?
 - **Correlation vs. causation**: Implying causation from correlational data?
 - **Cherry-picking**: Selective use of data that misrepresents the full picture?
@@ -284,7 +312,7 @@ Generic business checks:
 
 ### 9. CONTENT DUPLICATION
 
-**Check for content duplication across the whole run's draft set, and across every page in `{{CONTENT_ROOT}}` when a corpus is supplied.**
+**Check for content duplication across the whole run's draft set, and against the existing-site corpus in `{{CONTENT_ROOT}}` when one is supplied.**
 
 **For duplication findings, specify:**
 
@@ -318,7 +346,7 @@ Generic business checks:
 - Em dashes (the U+2014 character) used correctly and frequently, where humans typically use hyphens (THESE SHOULD BE BANNED)
 - Oxford commas used consistently
 - Semicolons and parentheses rarely appear
-- Contractions ("we've," "don't") rarely used
+- Note: contractions are NOT an AI tell in this pipeline. Measured paired-corpus research shows AI rewriting strips contractions (the most one-sided change in the corpus), so in editorial prose their absence is a coldness signal, checked under the voice criterion (13.8). Do not flag their presence.
 
 **Reliability: MEDIUM-HIGH.** Individual words can be found-and-replaced; phrase patterns in combination are harder to eliminate.
 
@@ -438,7 +466,7 @@ Generic business checks:
 
 - Humanizer tools: StealthWriter, BypassGPT, HIX Bypass, Undetectable.ai, QuillBot AI Humanizer
 - Manual editing: swapping flagged words, cutting formulaic openings, adding imperfections
-- Adding intentional contractions, sentence fragments, personal anecdotes
+- Adding sentence fragments or personal anecdotes (contractions are not a masking signal in this pipeline; see the note under the punctuation tells)
 
 **Signs of humanizer use:**
 
@@ -586,7 +614,7 @@ Provide your audit in this format:
 
 ### COVERAGE REPORT
 
-Scope: the run's draft set, or every file in `{{CONTENT_ROOT}}` when a corpus is supplied.
+Scope: the run's draft set. The existing-site corpus in `{{CONTENT_ROOT}}`, when supplied, is scanned for duplication and internal links; it is not audited page by page.
 
 - Total files discovered: [#]
 - Total files audited: [#]
@@ -615,7 +643,7 @@ A missing guideline mark means that check was skipped for that file. Do not prom
 - Major issues (should fix): [#]
 - Minor issues (consider fixing): [#]
 - AI-likelihood issues found: [#]
-- Content trust score: [1-10]
+- Scorecard summary: the eight Section 13 criterion scores, each out of 10
 
 ### CRITICAL ISSUES
 
@@ -659,6 +687,9 @@ A missing guideline mark means that check was skipped for that file. Do not prom
 
 ## ADDITIONAL CONTEXT (Optional)
 
+In a pipeline run, any value already in `context.md` wins over a value repeated
+here; this block is for standalone use.
+
 - Content created or last updated date: [If known]
 - Target audience: [If known]
 - Content purpose: [Thought leadership / Lead gen / SEO / etc.]
@@ -668,10 +699,12 @@ A missing guideline mark means that check was skipped for that file. Do not prom
 
 ## FINAL CHECK (confirm each before submitting)
 
+Sections 11 to 13 appear below; read them before running this check.
+
 1. Every file is listed with all 13 guideline areas marked.
 2. Every finding shows the exact excerpt and evidence before its verdict and severity.
 3. Nothing believed-from-memory is marked VERIFIED.
-4. Every Critical/Major finding survived a verifier that saw only the excerpt and evidence.
+4. Every Critical/Major finding survived a verifier that saw only the excerpt and evidence (or a recorded fresh-context check where no subagents exist).
 5. No invented perplexity/burstiness numbers or AI-percentage scores; no AI finding rests on a lone vocabulary tell.
 6. All coverage gaps are listed, not hidden.
 7. The density floor holds: at least 1,200 words of article body, with the
@@ -737,7 +770,13 @@ only where evidence supports it:
 
 - **Scaled content abuse.** Pages produced at scale that add little value,
   whether by automation, humans, or a mix. Look for near-identical pages that
-  differ by a swapped noun, location, or outline order.
+  differ by a swapped noun, location, or outline order. Current search guidance
+  draws the line at editorial oversight, not at authorship: the named spam
+  pattern is volume published without a human editorial decision per page. The
+  editor pass (Step 4) is where that judgment happens in this pipeline; this
+  audit confirms it happened and that the batch does not share one scaffold.
+  Sites hit by the 2026 core and spam updates lost traffic on exactly the
+  unedited, mass-produced pattern.
 - **Site reputation abuse.** Content placed on the site to exploit its
   authority rather than its expertise.
 - **Doorway pages.** Pages that funnel readers to a destination without adding
@@ -890,7 +929,7 @@ These are the dangerous ones, because they imitate credibility:
 
 ---
 
-### 13. QUALITY SCORECARD (experience, expertise, accountability)
+### 13. QUALITY SCORECARD (experience, expertise, accountability, voice)
 
 Score the page 1 to 10 on each criterion, with the reasoning recorded in two
 to four sentences before the number. A score below 6 on any criterion produces
@@ -931,14 +970,28 @@ sections that could be cut without loss, generic advice that fits any
 destination, and padding. Every section must earn its place. Confirm the
 density floor: at least 1,200 words of article body, with the substance to
 justify every one of them. Below the floor is a Major finding; filler above
-it is a finding too.
+it is a finding too. After the editor pass, every section must still carry at
+least one specific fact; a section stripped by a cut is a finding against the
+editor record.
 
 #### 13.7 Writing quality
-Lexical variety, article text inside the STE sentence limits (maximum 20
-words in an instruction and 25 in a description), active voice, limited
-hedge adverbs. Note specific passages, not impressions.
+Lexical variety; procedures inside the STE sentence limits (maximum 20 words in
+an instruction and 25 in a description); editorial prose in plain English per
+the register split, with contractions and varied sentence lengths; active
+voice; limited hedge adverbs. Note specific passages, not impressions.
 
-Report the seven scores with their reasoning in the audit's summary section.
+#### 13.8 Voice and humanity
+Is there a person on the page? Check the editor pass's voice floor: contractions
+present, the reader addressed as "you", sentence openers varied (repeated
+openers are a human trait, so do not penalize them), and paragraph lengths
+uneven. A failed floor item forces this criterion below 6 and is a Major
+finding. The batch-voice judgment (the same voice across pages rather than each
+page taking its rhythm from its topic) sits with the duplication/consistency
+pass, which sees all drafts; a batch that sounds like several writers is a
+Major finding there. Contraction stuffing over cold prose is still a finding:
+the floor asks for a voice, not a quota.
+
+Report the eight scores with their reasoning in the audit's summary section.
 
 ---
 
@@ -975,7 +1028,7 @@ or still open with the reason. Then set the verdict line:
 Mark a finding closed only when the corrected claim now survives the check that
 failed it, never because a sentence changed. Adversarially re-verify every
 Critical and Major fix with a second subagent that sees only the fixed excerpt and
-the evidence, not the fixer's reasoning.
+the evidence, not the fixer's reasoning (fresh context where no subagents exist).
 
 ---
 
@@ -983,5 +1036,5 @@ the evidence, not the fixer's reasoning.
 
 This is the second and last checkpoint of the run. Report the audited, fixed, and
 verified content and stop. The operator reads it and decides whether to translate
-any of it, and into which locales. Step 5 runs only for the pages and locales
+any of it, and into which locales. Step 6 runs only for the pages and locales
 chosen here. Do not start translation on your own initiative.

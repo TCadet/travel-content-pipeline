@@ -62,6 +62,7 @@ competitors to copy.
 data_asset:            # one block per asset; repeat this block for each
   name:                # for example seasonality of demand
   date_range:
+  method:              # how it was collected, for example booking-system export or a 2026 survey of 400 customers
   constraint:
 ```
 
@@ -84,14 +85,23 @@ competitors:           # named, if comparison pages are allowed
 ## Voice and identity
 
 ```
-voice:                 # how the business speaks to readers
+voice:                 # how the business speaks to readers, in one line
+voice_file:            # optional: path to voice.md with 3 to 5 real samples of the business's writing
 point_of_view:         # first person plural, second person, or both
 brand_rules:           # words and claims the brand uses or avoids
 ```
 
+With no `voice_file`, the pipeline looks for `voice.md` in the skill, working,
+and run directories; with none, it uses the default voice card at
+`references/voice-default.md`. A `voice.md` should carry, in order: 3 to 5
+samples of the business's real writing (their best pages), a one-line note on
+each sample's traits, the house-voice checklist, and anything the business
+never wants said.
+
 ## Technical context
 
 ```
+runs_root:             # optional: directory where run folders are created (default: the working directory)
 content_root:          # directory holding pages, used by the audit
 url_pattern:           # how slugs and locales are addressed
 schema_available:      # Article and other structured data types the site supports

@@ -143,8 +143,8 @@ a fail into a maybe.
 
 1. **Named travel reader job.** One travel participant (traveller or
    travel-participant), one situation, one decision the page changes. An
-   industry-intelligence reader (a marketer, operator, host, analyst, or
-   investor) fails this gate: a context file narrows the niche and market,
+   industry-intelligence reader (a marketer, a supplier, a host, an analyst, or
+   an investor) fails this gate: a context file narrows the niche and market,
    never the audience. "General awareness" is not a reader job.
 2. **Differentiation asset.** At least one of: a first-party datum, named
    operational experience, a primary-source synthesis, or a genuinely new
@@ -162,7 +162,8 @@ a fail into a maybe.
    page publicly, and every claim traces to a source a reader can open.
 8. **Density and interest bar.** The topic has the substance to sustain the
    writing step's density floor: at least three supportable claim rows across
-   rule, fee, date, procedure, statistic, and contradiction types; dated
+   the rule, fee, date, procedure, and statistic types, or a row carrying a
+   `contradicts` value; dated
    trend rows (statistic or anecdote rows carrying dated demand evidence)
    count toward this floor, and one dated trend row may substitute for one
    rule row. The topic also needs something a traveller would call interesting:
@@ -258,15 +259,24 @@ ID | Working title | Reader job | Intent | Cluster (hub/spoke) | Differentiation
 - Primary sources to obtain: named authority, statute, issuer, document
 - Named entities required: correct official names
 - Answer shapes required: definitions, comparisons, procedures, numbers
+- Page shape and voice: the shape this page uses (scene lead, decision table,
+  procedure, comparison, timeline) and the voice-card trait it leads with. No
+  two briefs in a batch name the same shape and trait.
 - Density plan: the sections this page will carry and the specific facts,
-  figures, tables, worked examples, or failure points that fill each one, to
-  meet the writing step's density floor
+  figures, tables, comparisons, or failure points that fill each one, to meet
+  the writing step's density floor. Do not plan a worked example unless the
+  decision needs a calculation the reader cannot do from the page's own
+  numbers.
 - Internal links to place: hub page and sibling pages from the same cluster
 - What this page must not become: the template trap for this topic
 - Kill criterion: the finding that would kill or rewrite this page
 ```
 
 The brief is the input to the writing step. No idea enters writing without one.
+
+A batch of briefs that all name the same shape is a template in advance. Vary
+the shapes across the batch before drafting starts, and carry each brief's
+voice-card trait into the writing step.
 
 ---
 

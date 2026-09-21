@@ -1,4 +1,4 @@
-# Step 5: Translation and Localization Prompt
+# Step 6: Translation and Localization Prompt
 
 Optional. This step runs only for the pages and locales the operator chose at
 Checkpoint 2, and only after the English page has passed the audit, fix, and
@@ -20,7 +20,7 @@ That check is part of the translation, not a new operator stop.
 Check the live site for the languages it actually offers (a locale switcher,
 language links, or page-level language annotations). Reconcile what you find
 with `context.md` when one exists and with the locales chosen at Checkpoint 2,
-and record any difference in the run notes. Translate only the locales chosen at
+and record any difference in the run log. Translate only the locales chosen at
 Checkpoint 2.
 
 ---
@@ -43,6 +43,10 @@ Checkpoint 2.
   consistently, with the source page identified.
 - **Trust layer.** The source article's sources and dates carry over to the
   locale, not dropped.
+- **Voice and register.** The localized page keeps the house voice, adapted to
+  the locale: contractions, direct address, and varied sentence lengths natural
+  to that language, with procedures still written as plain instructions. A
+  translation that reads like a regulation fails.
 
 ## What localization must not do
 
@@ -83,7 +87,7 @@ For every localized page, before it leaves this step:
   version, not to the English original.
 - **URL convention.** The slug and locale path match the pattern in
   `context.md` when one exists; otherwise match the pattern the live site
-  already uses and record it in the run notes.
+  already uses and record it in the run log.
 - **Direction and rendering.** Right-to-left locales render with correct
   direction, punctuation, and numeral conventions. Mixed-direction strings
   (an English document name inside Arabic prose) are wrapped so they do not
@@ -112,7 +116,7 @@ terms_used: <termbase reference>
 [localized body]
 ```
 
-Localization notes (terms kept in the source language, conversions, intentional omissions, and the checklist result) go in your run notes or handoff message, never in the page file.
+Localization notes (terms kept in the source language, conversions, intentional omissions, and the checklist result) go in your run log or handoff message, never in the page file.
 
 ---
 
@@ -126,6 +130,8 @@ Confirm, in the target language:
 - [ ] Numbers, dates, currency, and units are correct and natural.
 - [ ] Nothing was added that the English page does not say.
 - [ ] The page reads as written by a person from this locale, not translated.
+- [ ] The house voice carries over, adapted to the locale; procedures read as
+  instructions, not as prose.
 - [ ] The source article's sources and dates are carried over and accurate.
 - [ ] Language annotations are reciprocal and the canonical points to this
   locale's version.

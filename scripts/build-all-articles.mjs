@@ -101,4 +101,4 @@ for (const f of files) {
 const html = `<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n<title>All articles</title>\n<style>body{font:16px/1.6 Georgia,serif;max-width:760px;margin:2rem auto;padding:0 1rem}h1{margin-top:2.5rem}table{border-collapse:collapse}th,td{border:1px solid #999;padding:.35rem .6rem;text-align:left}</style>\n</head>\n<body>\n${sections.join("\n")}\n</body>\n</html>\n`;
 
 fs.writeFileSync(path.join(runDir, "ALL_ARTICLES.html"), html);
-console.log(`ALL_ARTICLES.html built: ${files.length} articles`);
+console.log(`ALL_ARTICLES.html built: ${sections.length} articles`);
