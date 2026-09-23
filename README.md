@@ -1,6 +1,6 @@
 # travel-content-skill
 
-A six-step content skill for travel and travel-documentation businesses. It
+A six-step skill for travel and travel-documentation businesses. It
 turns open-ended research across the travel topic universe into differentiated
 pages that have been editor-passed, audited, fixed, and verified, and optionally
 into localized versions. The freshness window is yours to set, from any time to

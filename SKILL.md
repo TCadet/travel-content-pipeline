@@ -4,7 +4,7 @@ description: Use when a travel or travel-documentation site needs to produce con
 license: MIT
 compatibility: Any agent that reads SKILL.md. The reading-copy builder needs Node 18 or newer; the prompts have no runtime dependencies.
 metadata:
-  version: "2.7.0"
+  version: "2.8.0"
 ---
 
 # Travel Content Skill
@@ -126,7 +126,7 @@ operator between the intake and Checkpoint 1.
 
 ## Overview
 
-A six-step skill that turns research across the travel topic universe into
+This skill runs six steps that turn research across the travel topic universe into
 audited, fixed, verified, and optionally localized pages. The freshness window
 is an operator setting, from any time to the last few days.
 Built for bulk: one run produces a travel research map, a scored slate of

@@ -690,7 +690,7 @@ A missing guideline mark means that check was skipped for that file. Do not prom
 
 ## ADDITIONAL CONTEXT (Optional)
 
-In a skill run, any value already in the intake answers wins over a value
+In a run, any value already in the intake answers wins over a value
 repeated here; this block is for standalone use.
 
 - Content created or last updated date: [If known]
