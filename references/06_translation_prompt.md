@@ -7,7 +7,8 @@ verify. It never runs on the model's own initiative.
 **Precondition:** the English audit, fix, and verify for the page shows no open Critical or Major
 findings. If any remain, stop and say which, and do not translate.
 
-The pages and locales come from Checkpoint 2. If the operator chose none, stop.
+The pages and locales come from Checkpoint 2; record the choice (pages and
+locales, or none) in the run log before starting. If the operator chose none, stop.
 For pages that affect legality, money, safety, or health in a locale, a local
 market check is mandatory, not optional: someone who knows the local rules
 confirms the page is correct for that market, not just correctly translated.
@@ -17,11 +18,14 @@ That check is part of the translation, not a new operator stop.
 
 ## Confirm the target locales
 
-Check the live site for the languages it actually offers (a locale switcher,
-language links, or page-level language annotations). Reconcile what you find
-with `context.md` when one exists and with the locales chosen at Checkpoint 2,
-and record any difference in the run log. Translate only the locales chosen at
-Checkpoint 2.
+When the site's address is known (it came with the input files, or the working
+directory is the site), check it for the languages it actually offers (a
+locale switcher, language links, or page-level language annotations), and
+reconcile what you find with the intake answers and the locales chosen at
+Checkpoint 2. When it is not, state which locales you are assuming and record
+that the live check could not run. Record any difference in the run log, and
+report it in the Step 6 handoff before the pages are treated as final.
+Translate only the locales chosen at Checkpoint 2.
 
 ---
 
@@ -38,12 +42,14 @@ Checkpoint 2.
   from the quote.
 - **Numbers, dates, currency, and units.** Reformat to the locale's convention,
   and convert units where the locale expects them. Never change a value.
-- **Structured data and metadata.** Title, description, slug convention,
-  canonical annotations, language annotations, and schema fields localized
-  consistently, with the source page identified.
+- **Structured data and metadata.** Localize the title, description, and slug,
+  and carry the site's language and canonical annotations, with the source page
+  identified; where the English page carries no metadata fields, derive the
+  localized title and description from the localized page and record the
+  derivation.
 - **Trust layer.** The source article's sources and dates carry over to the
   locale, not dropped.
-- **Voice and register.** The localized page keeps the house voice, adapted to
+- **Voice and register.** The localized page keeps the voice, adapted to
   the locale: contractions, direct address, and varied sentence lengths natural
   to that language, with procedures still written as plain instructions. A
   translation that reads like a regulation fails.
@@ -55,7 +61,9 @@ Checkpoint 2.
 - Drop caveats, exceptions, or market-specific conditions because they read
   awkwardly in the target language.
 - Machine-translate and release without a language check. A human who reads
-  the language must check the page first.
+  the language must check the page first; the operator names that person and
+  the date in the translation request or the handoff, and a page
+  without that record stays `draft`.
 - Reuse one locale's phrasing in another.
 
 ---
@@ -72,7 +80,9 @@ Use it consistently across every page in the batch. Where a locale has more than
 one accepted term, pick one, record the choice, and use it everywhere. Keep the
 termbase between cycles. Keep it at `termbase.md` beside the run directories:
 it is a growing asset, and each batch starts from the previous batch's
-termbase rather than rebuilding it.
+termbase rather than rebuilding it. Review the inherited termbase against this
+batch first; a term that contradicts the batch is replaced, and the change is
+recorded.
 
 ---
 
@@ -85,9 +95,10 @@ For every localized page, before it leaves this step:
   each version points to every other version and to itself.
 - **Canonical.** The canonical annotation points to the page's own locale
   version, not to the English original.
-- **URL convention.** The slug and locale path match the pattern in
-  `context.md` when one exists; otherwise match the pattern the live site
-  already uses and record it in the run log.
+- **URL convention.** The slug and locale path match the pattern the live site
+  already uses; if the site has no clear pattern, follow the closest equivalent
+  page on the site, and if none exists, keep the English slug and record the
+  choice in the run log. Do not stop to ask.
 - **Direction and rendering.** Right-to-left locales render with correct
   direction, punctuation, and numeral conventions. Mixed-direction strings
   (an English document name inside Arabic prose) are wrapped so they do not
@@ -116,7 +127,7 @@ terms_used: <termbase reference>
 [localized body]
 ```
 
-Localization notes (terms kept in the source language, conversions, intentional omissions, and the checklist result) go in your run log or handoff message, never in the page file.
+Localization notes (terms kept in the source language, conversions, intentional omissions, and the checklist result) go in your run log or handoff message, never in the page file. A page still `draft` at handoff is reported as unreviewed in the handoff message.
 
 ---
 
@@ -130,7 +141,7 @@ Confirm, in the target language:
 - [ ] Numbers, dates, currency, and units are correct and natural.
 - [ ] Nothing was added that the English page does not say.
 - [ ] The page reads as written by a person from this locale, not translated.
-- [ ] The house voice carries over, adapted to the locale; procedures read as
+- [ ] The voice carries over, adapted to the locale; procedures read as
   instructions, not as prose.
 - [ ] The source article's sources and dates are carried over and accurate.
 - [ ] Language annotations are reciprocal and the canonical points to this

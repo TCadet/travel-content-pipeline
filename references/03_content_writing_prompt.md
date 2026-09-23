@@ -2,14 +2,12 @@
 
 Write one draft per kept idea. Inputs for each draft:
 
-- `context.md` (optional) for audience, markets, locales, voice, and identity. If
-  no context file exists, write for a general travel reader and invent nothing
-  about the business.
-- The voice file, found by the search order in SKILL.md: the path in
-  `context.md`'s `voice_file` when set, otherwise `voice.md` in the skill
-  directory, the working directory, or the run directory; otherwise the skill's
-  default voice card at `references/voice-default.md`. Read the samples before
-  you read the brief. Samples beat adjectives.
+- The run log's Intake section for the content type, any stated audience,
+  markets, and locales, and the voice. With no answers, write for a general
+  travel reader and invent nothing about the business.
+- The voice: a voice or writing samples supplied at the intake, otherwise the
+  default at `references/voice-default.md`. Read the samples before you read
+  the brief. Samples beat adjectives.
 - `research.md` and its claim ledger for the facts.
 - The idea brief from the kept slate for the reader job and the shape.
 
@@ -62,7 +60,7 @@ needs research; do not write around the gap.
 
 ## Hard floors
 
-Two requirements are hard for every article this pipeline produces. A draft that
+Two requirements are hard for every article this skill produces. A draft that
 misses either one does not leave this step, and the final check below and the
 audit both enforce them.
 
@@ -84,7 +82,8 @@ audit both enforce them.
   openable sources the reader can visit. A page whose claims rest on one
   document stops here until a second source exists, either by researching one
   more ledger row or by splitting the page. A draft with fewer than two
-  citations does not leave this step.
+  citations does not leave this step; record the stall and the missing source in
+  the run log.
 
 ---
 
@@ -104,7 +103,7 @@ audit both enforce them.
 - Where a rule differs by market or locale, state each variant rather than
   generalizing.
 - Where the business has first-party data, include it with its date range and
-  collection method, anonymized as the context file requires, when one exists.
+  collection method, anonymized as the intake's input files require.
   Only data the business has actually supplied counts. If an asset is empty,
   illustrative, missing, or withheld, the page makes no reference to it or to
   its absence.
@@ -151,7 +150,9 @@ substance gets found and trusted. Every draft includes them.
   brand is why the reader clicks.
 - **Internal links.** Every draft links to its cluster's hub and to the
   sibling pages named in its brief, with descriptive anchor text that varies
-  between pages. Link only to pages that exist or are drafted in the same batch.
+  between pages. Link only to pages that exist or are drafted in the same batch;
+  when the cluster hub is not drafted, record the hub and the link-back plan in
+  the run log instead, and do not link to a page that does not exist.
   Link-back planning (which existing pages should point to the new one) goes
   in your run log, never in the draft.
 - **Accessibility.** Heading levels descend without skips, tables have header
@@ -232,12 +233,12 @@ date, and name.
 - Keyword stuffing, hidden text, or query variants stacked for crawlers.
 - Rewriting against an AI-detector score in a loop.
 - Producing at volume with thinner pages than the last batch.
-- Checklists, auditor notes, revision logs, or any pipeline commentary inside
+- Checklists, auditor notes, revision logs, or any skill commentary inside
   the draft file. The file is the page.
 - Byline blocks, about-this-page sections, corrections footers, or automation
   disclosures in the body.
 - Claim ids, ledger row lists, bracketed citation markers such as [C-1-001],
-  footnote apparatus, or any other pipeline reference anywhere in the file.
+  footnote apparatus, or any other skill reference anywhere in the file.
 - References to first-party data the business has not actually supplied, and
   notes about data that is missing, illustrative, or withheld. Absent data
   means silence, not a disclaimer.
@@ -263,7 +264,7 @@ The article.
 The article ends at its Sources section. Nothing follows it.
 
 No process material in the draft file: no checklists, no notes to the auditor,
-no revision logs, no commentary about the pipeline. The draft is the page a
+no revision logs, no commentary about the skill. The draft is the page a
 reader would see. Answer the checks below in your run log or handoff
 message, never inside the file:
 
@@ -278,17 +279,18 @@ message, never inside the file:
 
 ## Reading copy
 
-After the batch's drafts are written, after the editor pass, and again whenever
+After the batch's drafts are written, and again whenever
 the draft set changes, rebuild `ALL_ARTICLES.html` at the run root from every
 file in `drafts/`. One HTML file, one section per article: the title from the H1
 line, then the article body rendered from markdown, ending at its sources
 section. Each section carries an id equal to the draft's slug. Everything
 after the sources section is dropped. No navigation, no status
-labels, no pipeline commentary: the file contains the articles and their
+labels, no skill commentary: the file contains the articles and their
 citations, nothing else. New drafts from later passes are added by rebuilding
 the file, so it always covers the whole run.
-`scripts/build-all-articles.mjs <run-directory>` does the rebuild; use it
-instead of hand-rolling a renderer per run.
+`node "<skill-directory>/scripts/build-all-articles.mjs" <run-directory>` does the rebuild; use it
+instead of hand-rolling a renderer per run. If Node is unavailable, record that
+the reading copy could not be rebuilt.
 
 ---
 
@@ -298,7 +300,7 @@ When Step 4 returns a page (below the word floor, or a section stripped of its
 last fact), revise only the flagged sections, keep the rest of the page as it
 stands, and add no padding. The editor record travels with the draft. Revise
 once and hand the page back to Step 4; a second return is recorded in the run
-log and the page waits for the operator.
+log, and the page is marked BLOCKED and reported at Checkpoint 2.
 
 ---
 

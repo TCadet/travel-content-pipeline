@@ -9,14 +9,15 @@ passes.
 
 Two values are parameterised so the audit stays reusable across travel
 businesses: the pages under audit are always the run's `drafts/`; `{{CONTENT_ROOT}}`
-is the existing-site directory from `context.md`'s `content_root`, scanned when
-supplied for duplication, internal links, and coverage context; and `{{INDUSTRY}}`
-is the industry name for the domain-specific checks in Section 6. This pipeline
-serves the travel niche only: `{{INDUSTRY}}` resolves to travel, narrowed by the
-`sub_niche` field in `context.md` (for example visa services, guided tours,
-cruises, or destination guides). With no `context.md`, `{{INDUSTRY}}` resolves to
-`travel`, there is no corpus so `{{CONTENT_ROOT}}` stays unset, and the run is
-recorded as unscoped. Checks inherited from the generic marketing template that presuppose a
+is an existing-site directory supplied through the intake's input files (a
+file labelled existing pages), scanned
+when supplied for duplication, internal links, and coverage context; and
+`{{INDUSTRY}}` is the industry name for the domain-specific checks in Section 6.
+This skill serves the travel niche only: `{{INDUSTRY}}` resolves to travel,
+narrowed by the intake answer (for example visa services, guided tours,
+cruises, or destination guides). With no corpus supplied, `{{CONTENT_ROOT}}`
+stays unset, and the audit records that no corpus was supplied. Resolve both
+from the run log's Intake section before starting. Checks inherited from the generic marketing template that presuppose a
 marketing-agency or software business (for example codebase size) are marked
 not applicable and skipped, not reported as findings; any cost or platform
 claim that does appear on a travel page is still checked.
@@ -45,11 +46,12 @@ sections, `## Audit`, `## Fix`, and `## Verify`, and end it with a verdict line:
 PASS (no open Critical or Major findings after the fixes and the verification) or
 BLOCKED (the blockers listed). The audit step requires one record per draft,
 with a verdict. The OUTPUT STRUCTURE below is the required content of the
-record: the coverage and findings parts go in `## Audit`, the recommended
-actions and fix entries in `## Fix`, and the fix-and-verify results and verdict
-in `## Verify`. Its run-level rows (coverage report, subagent coverage,
-duplication map, including the batch-voice judgment) are filled once at the run
-level, not repeated on every page.
+record: the per-page findings go in `## Audit`, the recommended actions and fix
+entries in `## Fix`, and the fix-and-verify results and verdict in `## Verify`.
+Its run-level rows (the coverage report totals, subagent coverage, and the
+duplication map including the batch-voice judgment) are filled once in the run
+log, not repeated on every page; the per-page rows of the same sections stay in
+the record.
 
 ---
 
@@ -65,7 +67,7 @@ Audit the content (do not edit it during this phase; fixes happen in the fix pha
 
 ### SUBAGENT REQUIREMENT (MANDATORY - VERY IMPORTANT)
 
-You must use subagents for this audit. The only exception is if you do not have access to subagents; in that case run the adversarial verification in a fresh context and record it as a fresh-context check.
+You must use subagents for this audit. The only exception is if you do not have access to subagents; in that case run each required role's pass in a fresh context and record the coverage report as fresh-context passes instead of subagents.
 
 Do not do the entire audit in a single monolithic pass.
 
@@ -107,7 +109,7 @@ If the draft/page count is large, use additional subagents to split pages into g
 - **If a claim appears on multiple pages, audit every occurrence and also flag the duplication**
 - **Apply a stricter standard of proof** to legal, compliance, competitor, pricing, performance, ROI, rankings, and testimonial claims
 - **Check implied claims and material omissions**, not just literal wording, when evaluating whether a page is misleading
-- **Memory is not verification**: a claim you believe is true but did not confirm with a live web search during this audit is UNVERIFIABLE, never VERIFIED; "could not confirm" is an expected outcome, not a failure
+- **Memory is not verification**: a claim you believe is true but did not confirm with a live web search during this audit is UNVERIFIABLE, never VERIFIED; "could not confirm" is an expected outcome, not a failure. First-party rows are the exception: confirm them against the supplied file and its ledger row, and say so
 - **Evidence before verdict**: in every finding, present the exact excerpt and the verification evidence BEFORE stating the status/verdict and severity, never the reverse (verdict-first output produces backwards rationalization)
 - **Verify neutrally**: restate each claim in neutral, self-contained wording (subject, number, unit, date, source as stated) before searching; build search queries from that restatement rather than the page's persuasive phrasing, and run at least one search phrased to find DISCONFIRMING evidence
 - **For every Critical/Major finding, also state what would make it NOT an issue**, and if that is checkable (a URL, a date, a number), check it before finalizing the finding
@@ -263,7 +265,7 @@ Travel-domain checks:
 - **Transport and access**: Do route, timetable, permit, and booking-window claims match the current operator or authority?
 - **Local law and custom**: Are driving, cash, and tipping claims correct for the specific market?
 
-Generic business checks:
+Generic business checks (apply only when the page mentions such things; otherwise record them not applicable):
 
 - **Platform feature accuracy**: Do referenced features/tools still exist as described?
 - **Algorithm claims**: Are SEO/social algorithm claims current or based on outdated understanding?
@@ -283,7 +285,7 @@ Generic business checks:
 - **Contradictions**: Does the content contradict itself?
 - **Unsupported conclusions**: Are conclusions drawn that don't follow from presented evidence?
 - **Missing context**: Are important caveats or conditions omitted?
-- **Internal links**: The hub link and the sibling links named in the brief are present, with descriptive anchor text that varies between pages.
+- **Internal links**: The hub link and the sibling links named in the brief are present, with descriptive anchor text that varies between pages (or the undrafted-hub fallback is recorded in the run log).
 - **Survivorship bias**: Only citing successes while ignoring failure rates?
 - **Correlation vs. causation**: Implying causation from correlational data?
 - **Cherry-picking**: Selective use of data that misrepresents the full picture?
@@ -331,7 +333,7 @@ Generic business checks:
 **High-frequency AI vocabulary (verified through corpus analysis):**
 
 - **Nouns to flag**: tapestry, realm, landscape, beacon, testament, symphony, cornerstone, pillar, interplay, endeavor, prowess, intricacies, facet, nuance
-- **Verbs heavily favored by AI**: delve (appears **1,000× more frequently** in AI text than human writing), navigate, embark, foster, harness, leverage, underscore, illuminate, reimagine, unravel, transcend, elevate, revolutionize, streamline
+- **Verbs heavily favored by AI**: delve (overrepresented in AI text; a weak signal, never a verdict), navigate, embark, foster, harness, leverage, underscore, illuminate, reimagine, unravel, transcend, elevate, revolutionize, streamline
 - **Overused adjectives**: multifaceted, intricate, nuanced, pivotal, paramount, seamless, holistic, transformative, groundbreaking, cutting-edge, comprehensive, vibrant, meticulous, invaluable, unwavering
 - **Adverb red flags**: meticulously, seamlessly, profoundly, notably, crucially, tirelessly, relentlessly, indelibly, strategically
 
@@ -346,7 +348,7 @@ Generic business checks:
 - Em dashes (the U+2014 character) used correctly and frequently, where humans typically use hyphens (THESE SHOULD BE BANNED)
 - Oxford commas used consistently
 - Semicolons and parentheses rarely appear
-- Note: contractions are NOT an AI tell in this pipeline. Measured paired-corpus research shows AI rewriting strips contractions (the most one-sided change in the corpus), so in editorial prose their absence is a coldness signal, checked under the voice criterion (13.8). Do not flag their presence.
+- Note: contractions are NOT an AI tell in this skill. Measured paired-corpus research shows AI rewriting strips contractions (the most one-sided change in the corpus), so in editorial prose their absence is a coldness signal, checked under the voice criterion (13.8). Do not flag their presence.
 
 **Reliability: MEDIUM-HIGH.** Individual words can be found-and-replaced; phrase patterns in combination are harder to eliminate.
 
@@ -466,7 +468,7 @@ Generic business checks:
 
 - Humanizer tools: StealthWriter, BypassGPT, HIX Bypass, Undetectable.ai, QuillBot AI Humanizer
 - Manual editing: swapping flagged words, cutting formulaic openings, adding imperfections
-- Adding sentence fragments or personal anecdotes (contractions are not a masking signal in this pipeline; see the note under the punctuation tells)
+- Adding sentence fragments or personal anecdotes (contractions are not a masking signal in this skill; see the note under the punctuation tells)
 
 **Signs of humanizer use:**
 
@@ -620,7 +622,8 @@ Scope: the run's draft set. The existing-site corpus in `{{CONTENT_ROOT}}`, when
 - Total files audited: [#]
 - Total files with no substantive content: [#]
 - Confirm every file in scope was audited: [Yes/No]
-- Confirm required subagents were used: [Yes/No]
+- Confirm required subagents were used: [Yes/No, or fresh-context passes where no subagents exist]
+- List any check or role skipped, and why: [none, or the list]
 
 ### SUBAGENT COVERAGE
 
@@ -687,8 +690,8 @@ A missing guideline mark means that check was skipped for that file. Do not prom
 
 ## ADDITIONAL CONTEXT (Optional)
 
-In a pipeline run, any value already in `context.md` wins over a value repeated
-here; this block is for standalone use.
+In a skill run, any value already in the intake answers wins over a value
+repeated here; this block is for standalone use.
 
 - Content created or last updated date: [If known]
 - Target audience: [If known]
@@ -760,7 +763,7 @@ belongs to, match a named spam policy".
   available: a first-party datum, named operational experience, a primary-source
   synthesis, or a new comparison. "More complete" is not a finding of value.
 - **Sitewide pattern.** Whether the page's outline, section order, opening
-  shape, or conclusion shape repeats across the site. Repetition across
+  shape, or closing shape repeats across the site. Repetition across
   unrelated topics is a scaled-content signal even when each page is accurate.
 
 #### 11.3 Spam policies
@@ -773,7 +776,7 @@ only where evidence supports it:
   differ by a swapped noun, location, or outline order. Current search guidance
   draws the line at editorial oversight, not at authorship: the named spam
   pattern is volume published without a human editorial decision per page. The
-  editor pass (Step 4) is where that judgment happens in this pipeline; this
+  editor pass (Step 4) is where that judgment happens in this skill; this
   audit confirms it happened and that the batch does not share one scaffold.
   Sites hit by the 2026 core and spam updates lost traffic on exactly the
   unedited, mass-produced pattern.
@@ -929,7 +932,7 @@ These are the dangerous ones, because they imitate credibility:
 
 ---
 
-### 13. QUALITY SCORECARD (experience, expertise, accountability, voice)
+### 13. QUALITY SCORECARD
 
 Score the page 1 to 10 on each criterion, with the reasoning recorded in two
 to four sentences before the number. A score below 6 on any criterion produces
@@ -956,7 +959,7 @@ low-quality or absent support get flagged with the claim quoted.
 #### 13.4 Effort and replicability
 How hard would this page be to replicate? Original data, direct testing,
 primary-source synthesis, and transparent method score high. A page a
-competitor could produce in an hour scores low and fails the pipeline's core
+competitor could produce in an hour scores low and fails the skill's core
 principle.
 
 #### 13.5 Originality
@@ -982,9 +985,9 @@ voice; limited hedge adverbs. Note specific passages, not impressions.
 
 #### 13.8 Voice and humanity
 Is there a person on the page? Check the editor pass's voice floor: contractions
-present, the reader addressed as "you", sentence openers varied (repeated
-openers are a human trait, so do not penalize them), and paragraph lengths
-uneven. A failed floor item forces this criterion below 6 and is a Major
+present, the reader addressed as "you", sentence openers varied where natural
+(repeated openers are a human trait, so do not penalize them), and paragraph
+lengths uneven. A failed floor item forces this criterion below 6 and is a Major
 finding. The batch-voice judgment (the same voice across pages rather than each
 page taking its rhythm from its topic) sits with the duplication/consistency
 pass, which sees all drafts; a batch that sounds like several writers is a
@@ -1019,7 +1022,9 @@ Rules for the fix phase:
 
 Re-check the fixed draft against every finding, using the same evidence standard
 as the audit. Record the result under `## Verify`, one entry per finding: closed,
-or still open with the reason. Then set the verdict line:
+or still open with the reason. Re-check the density and citation floors after
+the fixes: a fix that cuts a claim can drop the word count or remove a source.
+Then set the verdict line:
 
 - PASS when no Critical or Major finding remains open after the fixes and the
   verification.
@@ -1034,7 +1039,9 @@ the evidence, not the fixer's reasoning (fresh context where no subagents exist)
 
 ## Checkpoint 2
 
-This is the second and last checkpoint of the run. Report the audited, fixed, and
-verified content and stop. The operator reads it and decides whether to translate
+This is the second and last checkpoint of the run. Report any BLOCKED page
+first, with its blockers, then the audited, fixed, and verified content, and
+stop. Ask the operator for the pages and locales, and for the name of the
+person who will check each translation. The operator reads it and decides whether to translate
 any of it, and into which locales. Step 6 runs only for the pages and locales
 chosen here. Do not start translation on your own initiative.

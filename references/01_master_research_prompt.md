@@ -1,29 +1,27 @@
 # Step 1: Master Research Prompt, Travel Industry Sweep
 
-Invoked, this step starts at once. Do not ask the operator anything before or
-during the sweep: `context.md` is optional, and with none this is an
-open-ended run across the whole travel universe. The plan is written into the
-run as a record and research starts immediately; the run's first stop is
-Checkpoint 1, after Step 2.
+Invoked, this step starts as soon as the intake is answered. Do not ask the
+operator anything further before or during the sweep: the intake answers are
+recorded in the run log, and with none this is an open-ended run across the
+whole travel universe. The plan is written into the run as a record and
+research starts at once; the run's next stop is Checkpoint 1, after Step 2.
 
 This file is the research prompt. It is not a template for generating one.
-Run it as written, against the operator's `context.md` if one exists. The context
-file is optional; with none, the sweep runs unscoped.
+Run it as written, against the intake answers in the run log. With no answers,
+the sweep runs unscoped.
 
-Check silently for `context.md` (skill directory, working directory, run
-directory) before anything else. If it exists, read it first: the
-business, sub-niche, markets, locales, audience, keywords, first-party data,
-research scope, and freshness window in that file scope how the sweep below is
-applied. Every part is considered; if `research_scope` narrows the sweep, the
-plan says what drops and why, topics in `out_of_scope` are excluded, and topics
-in `in_scope` are prioritized. Depth follows the operator's markets and reader
-decisions. If no context file exists, the sweep runs unscoped: the whole
-travel universe, an open freshness window unless the operator sets one, and no
-business, audience, market, keywords, or first-party data invented to fill the
-gap. The audience anchor still holds in this mode: research collects
-industry-intelligence material for context, but every page topic carries an
-Audience label, and industry-intelligence topics are page-ineligible. The
-freshness window decides what counts as new for this batch.
+Create the run log if it does not exist and write the Intake record from the
+intake exchange first, then read it: the content type and
+niche, any stated markets and locales, any input files, and the voice answer scope how the sweep below is
+applied. Every part is considered; if the intake narrowed the sweep, the plan
+says what drops and why. Depth follows the intake's markets and reader
+decisions. With no answers, the sweep runs unscoped: the whole travel
+universe, an open freshness window, and no business, audience, market,
+keywords, or first-party data invented to fill the gap. The audience anchor
+still holds in this mode: research collects industry-intelligence material for
+context, but every page topic carries an Audience label, and
+industry-intelligence topics are page-ineligible. The freshness window decides
+what counts as new for this batch.
 
 ---
 
@@ -42,9 +40,9 @@ report about a different industry.
 
 ## Search method
 
-- Build seed queries from `context.md` first (when one exists): one per combination of the
-  business's sub-niche, each market served, and each reader decision, plus
-  the keywords list, before any creative phrasing. Then each theme gets its
+- Build seed queries from the intake answers first: one per combination of the
+  stated niche, any stated markets, and the reader decisions the content type
+  implies, before any creative phrasing. Then each theme gets its
   trend-surface queries before anything else: rising queries, autocomplete,
   People Also Ask, and year-paired phrasings for the freshness window
   ("travel to X 2027"), one per market served. Rising phrasings found this
@@ -165,7 +163,8 @@ part. Its budget is the lane-level exception stated in Part 13.
 ### Part 0: Trend sweep (runs first)
 
 Before the twelve thematic parts, sweep what is moving now in the operator's
-markets: rising travel queries for the freshness window, destination news
+markets: rising travel queries for the freshness window when one is set,
+otherwise for the most recent period the sources publish, destination news
 velocity, airline-route and hotel and attraction openings, and event
 calendars. The output is a short ranked list of what is moving, written into
 the plan. It shapes the budgets that follow: themes the trend sweep hits get
@@ -391,9 +390,10 @@ trip from a stranded one, with attribution.
 
 ### Part 13: Novel, innovative, and offbeat travel
 
-**This is the most important lane in the sweep.** Budget the lane first,
-never cut it when the trend sweep shows nothing, and spend its one theme
-budget on the sub-lanes the trend sweep shows movement in.
+**This is the most important lane in the sweep.** The lane's budget is one
+theme budget of its own, spent first: budget it before the twelve parts, never
+cut it when the trend sweep shows nothing, and spend it on the sub-lanes the
+trend sweep shows movement in.
 
 This lane is additive to the twelve thematic parts above. It exists so the
 sweep does not lean on government and regulatory documents alone. It carries
@@ -517,8 +517,8 @@ the idea step.
 
 ## First-party data anchoring
 
-When a context file exists, it lists the data assets the business uniquely holds. Turn
-each asset into research questions:
+When the intake supplied input files with data the business uniquely holds,
+turn each asset into research questions:
 
 - What patterns does the asset show (seasonality, failure modes, repeated
   questions, regional differences) that no competitor can see?
@@ -529,16 +529,16 @@ each asset into research questions:
 
 Record for each asset: the date range it covers, the privacy constraint that
 applies, and the topics it touches. Research that ignores first-party data
-produces a slate anyone could produce, which fails the pipeline's core
-principle before writing starts. If no context file exists, or it lists no real
-assets, or marks them as illustrative or withheld, this section produces nothing:
-never simulate first-party data, and never let a later step reference data the
-business has not supplied.
+produces a slate anyone could produce, which fails the skill's core
+principle before writing starts. If the intake supplied no data files, or they
+are illustrative or withheld, this section produces nothing: never simulate
+first-party data, and never let a later step reference data the business has
+not supplied.
 
 ## Taxonomy, not a list
 
 The output is every distinct, reader-relevant subject the sweep surfaces,
-organized in three levels:
+organized in three levels, with an audience label on every page topic:
 
 - **Theme.** A broad area of the travel universe (for example, entry rules
   for a region, or a transport mode's booking practices).
@@ -574,8 +574,12 @@ confidence | locales_affected | contradicts
 - `locales_affected`: the markets and languages the claim holds for, or
   `all`.
 - `contradicts`: the id of any ledger row it disagrees with, or empty.
+- First-party rows: `source_url` reads `first-party: <asset name>`,
+  `source_title` names the asset, `source_date` is the asset's date range,
+  `exact_excerpt` quotes the figure or pattern with its method,
+  `accessed_date` is the date the file was received or read, and `tier` is 1.
 
-The ledger is the backbone of the pipeline: the writing step is forbidden
+The ledger is the backbone of the skill: the writing step is forbidden
 from asserting anything that is not a row here. The article file itself
 carries no claim ids, no row lists, and no citation markers; it cites only
 through the links in its Sources section.
@@ -611,7 +615,7 @@ Open scope does not mean infinite scope.
   page topic, no new Tier 1 source, and no new contradiction.
 - Each theme gets a query budget, stated in the plan, so one deep rabbit
   hole cannot consume the whole run. The default scales with scope: 5
-  queries per theme when `research_scope` narrows the sweep, 8 per theme
+  queries per theme when the intake narrows the sweep, 8 per theme
   when the run is unscoped across the whole travel universe, because an
   unscoped sweep at the narrower budget ends every theme budget-exhausted
   before saturation can fire, and shallow rows starve the density the later
@@ -628,7 +632,7 @@ Open scope does not mean infinite scope.
 ## Launch: state the plan, then research immediately
 
 Begin by writing the plan into the run as a record, not a checkpoint: which
-sweep parts are in play given `context.md` (when one exists), the themes to
+sweep parts are in play given the intake answers, the themes to
 sweep, the seed queries per theme, the markets to search and the languages
 to search in, the named Tier 1 sources to open first, the per-theme query
 budget, the saturation threshold, and the freshness window. Then run the
@@ -657,7 +661,7 @@ in the run log.
 
 ## Output document
 
-Return one research document with these sections:
+Return one research document, `research.md`, with these sections:
 
 1. **Travel map.** The themes in play, one paragraph each, with the state of
    play as of the run date.
@@ -668,7 +672,8 @@ Return one research document with these sections:
    - Working title, the reader it serves, and its Audience label.
    - What changed or what matters, with the date.
    - The source, with URL, issue date, language, and tier.
-   - Why it is new relative to what the site already covers.
+   - Why it is new relative to what the site already covers (when an
+     existing-page inventory was supplied), or relative to what currently ranks.
    - How durable it is: a one-week item, a one-month item, or a permanent
      requirement.
    - Demand and result-page signals: phrasings travellers use, who ranks
@@ -699,8 +704,8 @@ Return one research document with these sections:
 Before the document leaves this step, run this check and record the results
 in the verification report:
 
-1. Every ledger row has a source URL, an exact excerpt, an access date, a
-   tier, and a confidence label.
+1. Every ledger row has a source URL (or a first-party asset name), an exact
+   excerpt, an access date, a tier, and a confidence label.
 2. Every source in the source log was actually opened; anything reached
    only through a summary is downgraded or removed.
 3. Every claim framed as news or change sits inside the freshness window

@@ -1,11 +1,10 @@
-# Default voice card: the New York Times register
+# Default voice: the New York Times register
 
-Use this card when a run has no `voice.md` of its own. It teaches the house
-voice for editorial prose: plain words, concrete detail, dry warmth, the reader
-addressed as a person, and no regulation-speak.
+Use this default when the intake supplies no voice and no writing samples. It
+sets the voice for editorial prose: plain words, concrete detail, dry warmth,
+the reader addressed as a person, and no regulation-speak.
 
-A run with its own `voice.md` uses that file instead. Client samples always
-beat this card.
+A voice or samples supplied at the intake always beat this default.
 
 The five writers below are calibrations, not impersonations. The samples are
 original pastiches written for this file to demonstrate the register; never
@@ -86,7 +85,7 @@ specificity about when rather than what.
 
 ---
 
-## The house voice
+## The default voice
 
 Synthesized from the five: plain words, concrete detail, dry warmth, direct
 address, and a rhythm that varies on purpose. It is a newspaper voice, not a
@@ -106,14 +105,14 @@ Checklist for any page:
 
 Across a batch, rotate the leading trait: one page may lead with scene, the
 next with dry advice, the next with place and season. Every page still passes
-the house-voice checklist, and no two pages share an outline, an opening shape,
+the default-voice checklist, and no two pages share an outline, an opening shape,
 or a closing shape. The audit checks this across the batch.
 
-## Replacing this card
+## Replacing this default
 
-A client `voice.md` should carry, in this order: 3 to 5 samples of the client's
-real writing (their best pages, not aspirational copy), a one-line note on each
-sample's traits, the house-voice checklist, and anything the client never
-wants said. Samples beat adjectives: two or three real passages tell a writer
-more than any description of tone. Keep the card under two pages; research on
-style imitation plateaus after a handful of samples.
+A voice answer at the intake can be a one-line description, or 3 to 5 samples
+of real writing (the best pages, not aspirational copy) with a note on each
+sample's traits and anything the business never wants said. Samples beat
+adjectives: two or three real passages tell a writer more than any description
+of tone. Keep supplied material under two pages; research on style imitation
+plateaus after a handful of samples.

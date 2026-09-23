@@ -4,12 +4,11 @@ Turn the Step 1 research document into a scored, gated slate of pages worth
 building this cycle. This is the decision step. Its job is to kill weak ideas
 before anyone spends writing time on them.
 
-Read `research.md` from the current run before starting, and `context.md` if one
-exists. The context file is optional. If no context file exists, run unscoped: no
-business, audience, market, or first-party data is assumed or invented. The
-audience default still applies: with no context file the reader is the
-traveller, and industry-intelligence topics are not page candidates. Never
-ask for `context.md`; its absence is a supported, open-ended mode.
+Read `research.md` from the current run before starting, and the run log's
+Intake section. With no intake answers, run unscoped: no business, audience,
+market, or first-party data is assumed or invented. The audience default still
+applies: the reader is the traveller, and industry-intelligence topics are not
+page candidates. Never ask for input beyond the intake.
 
 Bulk default: return 10 to 20 candidates. Fewer is correct when the idea gates kill
 the rest. Padding the slate to hit a number is a failure of this step.
@@ -23,10 +22,9 @@ these sources, and must name the source that produced it:
 
 - **Reader question backlog.** Support requests, refund reasons, questions staff
   answer repeatedly, and questions the site leaves unanswered.
-- **First-party data seams.** Anything in the context file's data assets (when
-  one exists) with a number, a pattern, a season, or a failure mode that
-  competitors cannot see.
-  If the assets are illustrative, empty, or withheld, this source produces
+- **First-party data seams.** Anything in the intake's input files with a
+  number, a pattern, a season, or a failure mode that competitors cannot see.
+  If the files are illustrative, empty, or withheld, this source produces
   nothing; never harvest from data the business has not actually supplied.
 - **Regulatory and issuer movement.** Changes to statutes, conventions, entry
   rules, document requirements, fees, or processing times, from the topics in
@@ -58,7 +56,7 @@ that are otherwise equal (including reader value), keep the offbeat one.
 
 Part 13 of the Step 1 sweep surfaces novel, innovative, and offbeat travel
 subjects. Candidates from it enter this step like every other candidate and
-pass or fail the same eight gates. In a context-less run they count toward the
+pass or fail the same eight gates. With no intake answers they count toward the
 trip-experience and trip-decision share of the slate, never toward the
 administration half.
 
@@ -144,7 +142,7 @@ a fail into a maybe.
 1. **Named travel reader job.** One travel participant (traveller or
    travel-participant), one situation, one decision the page changes. An
    industry-intelligence reader (a marketer, a supplier, a host, an analyst, or
-   an investor) fails this gate: a context file narrows the niche and market,
+   an investor) fails this gate: intake answers narrow the niche and market,
    never the audience. "General awareness" is not a reader job.
 2. **Differentiation asset.** At least one of: a first-party datum, named
    operational experience, a primary-source synthesis, or a genuinely new
@@ -170,7 +168,7 @@ a fail into a maybe.
    tension between sources, money at stake, a dated change, a
    counterintuitive fact, or a correction of what currently ranks. A topic
    with one supportable fact is killed here or merged into its cluster's
-   hub, because a one-fact page is a fragment, not an article. The ledger
+   hub, because a one-fact page is a fragment, not an article. The taxonomy
    marks topics as depth-thin when Step 1 left them with fewer rows; a
    depth-thin topic does not survive this gate as a standalone page.
 
@@ -185,7 +183,7 @@ Score 1 to 5 per criterion, apply the weight, and show the arithmetic.
 | Differentiation | 25% | The datum or experience exists nowhere else |
 | Reader value | 20% | It removes a real cost: money, delay, rejection, risk |
 | Evidence strength | 15% | Primary sources and first-party numbers already in hand |
-| Business fit (context runs) / Traveller relevance (context-less runs) | 10% | With a context file: the reader this page serves is the reader the business sells to. Without one: 5 = directly changes a trip decision; 3 = travel-adjacent; 1 = industry-only. The context-less scale has no neutral value. |
+| Business fit (intake answered) / Traveller relevance (defaults) | 10% | With intake answers: the reader this page serves is the reader the business sells to. Without: 5 = directly changes a trip decision; 3 = travel-adjacent; 1 = industry-only. The default scale has no neutral value. |
 | Trust fit | 10% | The business is a credible, nameable source for this |
 | Timing | 15% | A dated rising or peaking demand wave with a live-by date inside it; a stable-demand topic scores at most 3 |
 | Build cost | 5% | Fits capacity without displacing better pages |
@@ -195,7 +193,7 @@ Rules:
 - Any candidate scoring below 3 on Differentiation is dropped regardless of its
   total.
 - Any candidate scoring below 3 on Business fit (or below 3 on Traveller
-  relevance in a context-less run) is dropped. In a context-less run no
+  relevance with no intake answers) is dropped. With no intake answers, no
   justification path exists for an industry-only reader.
 - Interest and density potential are judged inside Reader value and
   Differentiation, not as a separate score: the denser, more decision-loaded
@@ -206,7 +204,7 @@ Rules:
   dated trend row from Step 1 showing the reader is incurring this cost now.
 - A slate that is all one page type, one intent, or one cluster is a warning.
   Say so.
-- In a context-less run, administration topics (visas, entry documents, fees,
+- With no intake answers, administration topics (visas, entry documents, fees,
   taxes, compensation) may fill at most half the slate; the rest must be
   trip-experience or trip-decision pages (where to go, when to go, what a visit
   involves, how to book, pay, or prepare).
@@ -217,9 +215,11 @@ Rules:
 
 ## Deduplicate against the corpus and against each other
 
-The corpus is the `content_inventory` list in `context.md` when one exists, plus
-the run's own candidates. For each survivor, name the closest existing page and the
-relationship:
+The corpus is any existing-page inventory supplied in the intake's input
+files, plus the run's own candidates and the drafts and slates of earlier runs
+in the working directory. For each survivor, name the closest page
+from that corpus and the relationship (or the closest candidate on this slate
+when no inventory was supplied):
 
 - **Verbatim or near-verbatim:** update or merge, do not create a new page.
 - **Conceptual:** same reader job already served. Merge into the existing page
@@ -255,12 +255,13 @@ ID | Working title | Reader job | Intent | Cluster (hub/spoke) | Differentiation
 - Live-by: [date, if a seasonal or deadline window applies]
 - Demand signal: momentum, window, exact rising phrasings
 - Primary query and 3 to 5 real phrasings:
-- First-party evidence to include: asset, figures, date range, privacy limits
+- First-party evidence to include: asset, figures, date range, privacy limits;
+  when the intake supplied none, write `none supplied`.
 - Primary sources to obtain: named authority, statute, issuer, document
 - Named entities required: correct official names
 - Answer shapes required: definitions, comparisons, procedures, numbers
 - Page shape and voice: the shape this page uses (scene lead, decision table,
-  procedure, comparison, timeline) and the voice-card trait it leads with. No
+  procedure, comparison, timeline) and the voice trait it leads with. No
   two briefs in a batch name the same shape and trait.
 - Density plan: the sections this page will carry and the specific facts,
   figures, tables, comparisons, or failure points that fill each one, to meet
@@ -276,7 +277,7 @@ The brief is the input to the writing step. No idea enters writing without one.
 
 A batch of briefs that all name the same shape is a template in advance. Vary
 the shapes across the batch before drafting starts, and carry each brief's
-voice-card trait into the writing step.
+voice trait into the writing step.
 
 ---
 
@@ -290,7 +291,7 @@ voice-card trait into the writing step.
 - Word-count targets as a quality proxy.
 - Topics with no first-party or primary evidence, however popular the query.
 - Competitor pages rewritten with synonyms.
-- Comparison pages against competitors not named in `competitors`.
+- Comparison pages that do not name the competitor and the basis of comparison.
 - Invented facts, studies, experts, or consensus.
 - Numbers without a source, a date, and a denominator where the number is a
   share.
@@ -313,7 +314,7 @@ voice-card trait into the writing step.
 1. Every candidate traces to a harvest source.
 2. Every survivor passed all eight gates; every kill names its gate.
 3. Every score shows its arithmetic; no sub-3 differentiation survived, and no
-   sub-3 traveller relevance survived in a context-less run (there is no
+   sub-3 traveller relevance survived with no intake answers (there is no
    justification path for an industry-only reader).
 4. Every build idea has a brief, a demand signal, a cluster and role, an
    intent class, and a live-by date where timing matters.
@@ -329,9 +330,11 @@ voice-card trait into the writing step.
 
 ## Checkpoint 1
 
-This is the first of the run's two checkpoints, and the run's first stop of any
-kind. The operator reads the slate and chooses one of three paths: keep it and
+This is the first of the run's two review checkpoints; the intake precedes it.
+The operator reads the slate and chooses one of three paths: keep it and
 draft the selected ideas, send it back for more research against the same
-ledger or a fresh Step 1, or select a different set of ideas. Nothing enters
+ledger (fresh research is a new run), or select a different set of ideas.
+Record the choice and every kill with its reason in the run log. If every idea
+is killed, the run ends there with the kill list as its output. Nothing enters
 the writing step until this choice is made. Do not pause for anything else
 before this point.

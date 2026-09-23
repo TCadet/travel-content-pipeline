@@ -8,10 +8,9 @@ add claims, and does not change the reader job or the page's structure. It
 edits sentences, headings, table cells, list items, and anchor text.
 
 Inputs: the draft, its brief, the run's claim ledger (`research.md`) for the
-facts the draft relies on, and the voice file: the path in `context.md`'s
-`voice_file` when set, otherwise `voice.md` from the search order in SKILL.md,
-otherwise the default voice card at `references/voice-default.md`. Keep the
-brief and the ledger out of the draft file.
+facts the draft relies on, and the voice: a voice or writing samples supplied
+at the intake, otherwise the default at `references/voice-default.md`. Keep
+the brief and the ledger out of the draft file.
 
 ---
 
@@ -28,10 +27,10 @@ brief and the ledger out of the draft file.
 
 ## Voice
 
-Read the voice card before you edit. The page must sound like the same person
+Read the voice before you edit. The page must sound like the same person
 as its siblings in the batch. Voice stability is the trait readers notice: a
-page whose rhythm changes with its topic reads machine-made. Use the house
-voice, and vary which traits lead from page to page without changing the
+page whose rhythm changes with its topic reads machine-made. Use the voice,
+and vary which traits lead from page to page without changing the
 publication behind them.
 
 ## The cut list
@@ -149,4 +148,5 @@ and every fact value unchanged. If the pass leaves a page below the 1,200-word
 floor, or removes a section's last specific fact against the cut-list rule,
 record the gap and send the page back to Step 3 with the editor record attached. Step 3's revision rule (see
 the writing prompt) governs: revise once and return to Step 4; a second failure
-goes in the run log. Do not pad the page back with filler.
+goes in the run log, and the page is marked BLOCKED for Checkpoint 2. Do not
+pad the page back with filler.
