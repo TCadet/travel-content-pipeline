@@ -4,7 +4,7 @@ description: Use when a travel or travel-documentation site needs to produce con
 license: MIT
 compatibility: Any agent that reads SKILL.md. The reading-copy builder needs Node 18 or newer; the prompts have no runtime dependencies.
 metadata:
-  version: "2.8.0"
+  version: "2.9.0"
 ---
 
 # Travel Content Skill

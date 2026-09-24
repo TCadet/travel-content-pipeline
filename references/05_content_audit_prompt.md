@@ -354,6 +354,25 @@ Generic business checks (apply only when the page mentions such things; otherwis
 
 **Era caveat (2026):** these vocabulary lists are model-generation-specific and go stale. "Delve" peaked in 2023 to mid-2024 output and largely disappeared from 2025-era models, and human writers increasingly absorb AI-associated vocabulary (word-list matches are a documented source of false positives on human text). Treat lexical matches as weak corroborators of stronger signals, never the basis of a finding on their own.
 
+**Additional tell categories (the classic lists miss these; check every one):**
+
+- **Copula avoidance.** Long forms stand in for plain ones: serves as / stands as / functions as / operates as / represents / marks (a) / boasts (a) / features (a) / offers (a) / maintains (a) / holds the distinction of being. Replace with is, are, or has. A page that almost never writes "is" is generated.
+- **Significance and legacy dressing.** is a testament or reminder, plays a crucial/pivotal/vital/key role, underscores or highlights its importance, reflects broader, symbolizing its ongoing or lasting, contributing to the, setting the stage for, marking or shaping the, represents a shift, key turning point, evolving landscape, focal point, indelible mark, deeply rooted, generates debate, prompted broader reflection, raising philosophical questions.
+- **Notability and coverage dressing.** independent coverage, local, regional, or national outlets, trade publications, cited or featured in, written by a leading expert, active social media presence, maintains a strong digital presence, over N followers, ongoing public presence in respected media.
+- **Aphorism dressing.** the real question is, at its core, in reality, what really matters, fundamentally, the deeper issue, the heart of the matter, X is the language or currency of Y, X becomes a trap, X is not a tool but a mirror.
+- **Arguing with no one (unraised objections).** This isn't mainly about, I'm not saying, To be clear, Don't get me wrong, This is not to say, Some might say ... but, A tempting approach would be, One might be tempted to, An obvious approach would be. Keep only objections the page attributes and answers in full.
+- **One-line closers and dramatic fragments.** That is the real win, Read that again, Let that sink in, the same closer after several sections, rows of fragments (No queues. No guesswork.), one word in ALL CAPS, emphasis by full stops between words.
+- **Formulaic closings and stock sections.** In conclusion / In summary / In essence, Overall with a full recap, Despite these challenges ... continues to thrive, Challenges and Legacy, Future Outlook, Future Prospects, Awards and recognition, the future looks bright, exciting times ahead, a step in the right direction. End on the last concrete fact instead.
+- **Chatbot residue (delete outright).** I hope this helps, Of course!, Certainly!, Great question!, You're absolutely right!, Would you like ..., Let me know, here is a ..., a more detailed breakdown.
+- **Knowledge-cutoff disclaimers and gap speculation.** as of my last update, while specific details are limited or scarce, not widely documented, based on available information, maintains a low profile, keeps personal details private, likely grew up or studied or began, it is believed that.
+- **Placeholder and template leftovers.** [Your Name], [link to source list], INSERT_SOURCE_URL, placeholder dates, "Delete this section before submission", advice addressed to the writer instead of the reader, and text that mentions the style guide or platform it was written for.
+
+**Era table (vocabulary moves fast; treat a lone match as weak):**
+
+- 2023 to mid-2024: Additionally, boasts, bolstered, crucial, delve, emphasizing, enduring, garner, intricate, interplay, key, landscape, meticulous, pivotal, underscore, tapestry, testament, valuable, vibrant.
+- Mid-2024 to mid-2025: align with, bolstered, crucial, emphasizing, enhance, enduring, fostering, highlighting, pivotal, showcasing, underscore, vibrant.
+- Mid-2025 on: emphasizing, enhance, highlighting, showcasing, plus notability and coverage dressing.
+
 #### Structural markers
 
 **Paragraph-level tells:**
@@ -430,6 +449,12 @@ Generic business checks (apply only when the page mentions such things; otherwis
 
 - Similar patterns to ChatGPT with Google's training data influence
 - May reference more recent information
+
+**Grok tells:**
+
+- Overuses "scientific" words (causal, empirical, correlate)
+- Reversed "Y rather than X" parallelism
+- Continues to overuse "underscore"
 
 **Reliability: MEDIUM-LOW.** Tool-specific tells vary across model versions and can be masked with simple prompts.
 
@@ -1015,8 +1040,32 @@ Rules for the fix phase:
   missing; it stays a blocker.
 - Fixes preserve the page's reader job, structure, and voice. A fix corrects the
   claim or the wording; it does not rewrite the page.
+- Cut staging and keep the fact. Remove run-ups, fake objections, one-line
+  closers, sentence-final -ing riders, significance and notability dressing, and
+  copula avoidance, but keep the fact underneath. Rewrite the sentence around its
+  main point instead of patching flagged phrases one at a time.
+- Vary the rhythm on purpose. Alternate short sentences with long ones, and read
+  the passage aloud to break any metronome. Use contractions in editorial prose
+  where the register allows. Do not apply the Oxford comma mechanically.
+  Semicolons and parentheses are human; use them in moderation.
 - Replace every em dash character and every em dash entity.
 - After the fixes, rebuild `ALL_ARTICLES.html` from the fixed drafts.
+
+Humanization checklist (run before rebuilding):
+
+- [ ] No em dashes, en dash connectors, or double hyphens used as dashes.
+- [ ] No banned vocabulary clusters (delve, tapestry, pivotal, testament, leverage).
+- [ ] No copula avoidance where is, are, or has would read plainer.
+- [ ] No formulaic openers, transitions, recap closers, or chatbot residue.
+- [ ] No significance, notability, or aphorism dressing.
+- [ ] No unraised objections (to be clear, I'm not saying, don't get me wrong).
+- [ ] No sentence-final -ing significance clauses; the fact stands without the rider.
+- [ ] No negative parallelism unless the contrast is real and needed.
+- [ ] Sentence lengths vary; at least one short sentence per few paragraphs.
+- [ ] Contractions present in editorial prose where the register allows.
+- [ ] Paragraph lengths uneven; the page does not end on a generic uplift line.
+- [ ] Triads only where the meaning has three parts.
+- [ ] Every claim, name, number, date, quote, and citation preserved; nothing invented.
 
 ## VERIFY PHASE
 
