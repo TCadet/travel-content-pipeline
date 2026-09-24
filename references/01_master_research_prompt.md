@@ -1,10 +1,15 @@
 # Step 1: Master Research Prompt, Travel Industry Sweep
 
-Invoked, this step starts as soon as the intake is answered. Do not ask the
-operator anything further before or during the sweep: the intake answers are
-recorded in the run log, and with none this is an open-ended run across the
-whole travel universe. The plan is written into the run as a record and
-research starts at once; the run's next stop is Checkpoint 1, after Step 2.
+Invoked, this step starts as soon as the intake is answered, with one required
+exception: the prior-research stop in the skill's Invocation section. If any
+earlier run directory or research file already exists in the working directory,
+stop and ask the operator whether to reuse it or run a fresh sweep, and wait for
+the answer. Only after that answer does this step run.
+
+Do not ask the operator anything else before or during the sweep: the intake
+answers are recorded in the run log, and with none this is an open-ended run
+across the whole travel universe. The plan is written into the run as a record
+and research starts at once; the run's next stop is Checkpoint 1, after Step 2.
 
 This file is the research prompt. It is not a template for generating one.
 Run it as written, against the intake answers in the run log. With no answers,

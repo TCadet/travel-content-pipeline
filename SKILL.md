@@ -4,7 +4,7 @@ description: Use when a travel or travel-documentation site needs to produce con
 license: MIT
 compatibility: Any agent that reads SKILL.md. The reading-copy builder needs Node 18 or newer; the prompts have no runtime dependencies.
 metadata:
-  version: "2.9.0"
+  version: "2.10.0"
 ---
 
 # Travel Content Skill
@@ -29,8 +29,9 @@ audience: every page serves a travel participant. The skill never fabricates a
 business, an audience, or first-party data, and it never asks the operator for
 anything beyond the intake.
 
-The run stops for the operator three times: the intake, Checkpoint 1 (after
-Step 2, the idea slate), and Checkpoint 2 (after Step 5, the audit, fix, and
+The run stops for the operator four times: the intake, the prior-research
+question when previous research is found (see below), Checkpoint 1 (after Step
+2, the idea slate), and Checkpoint 2 (after Step 5, the audit, fix, and
 verify). Failure escalations inside a step (a missing ledger row, a template
 collision) are recorded in the run log; they stop that page, not the run.
 
@@ -44,8 +45,36 @@ Do not stop for any of these between the intake and Checkpoint 1:
   run as a record while the sweep starts)
 - summarizing the skill back instead of running it
 
-If you notice yourself forming a question for the operator between the intake
-and Checkpoint 1, the answer is in this file: proceed with the defaults.
+The one exception is the prior-research question below. When previous research
+exists, asking it is required, not optional.
+
+If you notice yourself forming any other question for the operator between the
+intake and Checkpoint 1, the answer is in this file: proceed with the defaults.
+
+### Prior research is never assumed (required stop before Step 1)
+
+Before Step 1 starts, look for research that already exists in the working
+directory: a `runs/` directory, any earlier run directory, a `research.md`, an
+idea slate, or a claim ledger from a previous cycle.
+
+- If nothing is found, proceed to Step 1 normally.
+- If anything is found, STOP before Step 1 and ask the operator this question,
+  listing every directory you found and its date:
+
+  > I found research from previous runs: [list each run directory and its date].
+  > Do you want me to reuse that research, or run a fresh sweep?
+
+Wait for an explicit answer. Do not decide this yourself, do not reuse old
+files to save time, and do not assume which option the operator wants.
+
+- **Reuse** only when the operator says to reuse. Name the directory being
+  reused, read its research and ledger, record the decision in the new run log
+  under Intake, and follow "Resuming a run" instead of starting a sweep.
+- **Fresh sweep** when the operator says so, or when the answer is missing,
+  ambiguous, or not an explicit instruction to reuse. Create the new run
+  directory and run Step 1 in full. Never carry an old ledger into a fresh
+  sweep.
+- Never reuse previous research silently, and never skip Step 1 silently.
 
 ## Intake
 
@@ -109,8 +138,11 @@ operator between the intake and Checkpoint 1.
    fabricates a business, an audience, or first-party data to fill the gap.
    The default voice is `references/voice-default.md`; a voice or samples
    supplied in the intake override it for Steps 2 through 6.
-2. **Run directory.** `runs/<YYYY-MM-DD>/` in the working directory, or the
-   directory the operator names; when that directory already exists, suffix it
+2. **Run directory.** Before creating it, apply the required prior-research
+   stop in the Invocation section: if any earlier run directory or research
+   file exists, ask the operator whether to reuse it or sweep fresh, and wait
+   for the answer. Then use `runs/<YYYY-MM-DD>/` in the working directory, or
+   the directory the operator names; when that directory already exists, suffix it
    (`<YYYY-MM-DD>-2`, then `-3`) and record the choice. The run's artifacts land there: `research.md`,
    `idea-slate.md`, `drafts/`, `editor/`, `audit/`, `translations/`,
    `ALL_ARTICLES.html`, and the run log, `run-log.md`. Translation runs also
